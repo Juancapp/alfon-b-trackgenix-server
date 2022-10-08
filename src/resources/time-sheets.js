@@ -16,4 +16,18 @@ router.delete('/delete/:id', (req, res) => {
   });
 });
 
+router.put('/put/:id', (req, res) => {
+  const reqId = req.params.id;
+  const filtered = timeSheets.filter((timeSheet) => timeSheet.id !== reqId);
+  filtered.push(req.body);
+
+  fs.writeFile('src/data/time-sheets.json', JSON.stringify(filtered), (err) => {
+    if (err) {
+      res.send('Cannot edit user');
+    } else {
+      res.send('User edited');
+    }
+  });
+});
+
 module.exports = router;
