@@ -19,9 +19,9 @@ router.delete('/delete/:id', (req, res) => {
   const reqId = req.params.id;
   const filtered = employees.filter((emp) => emp.id !== reqId);
   // console.log(filtered);
-  fs.writeFile('../data/employees.json', JSON.stringify(filtered), (err) => {
+  fs.writeFile('src/data/employees.json', JSON.stringify(filtered), (err) => {
     if (err) {
-      res.send('Cannot delete user');
+      res.send(`Cannot delete user ${err}`);
     } else {
       res.send('User deleted');
     }
