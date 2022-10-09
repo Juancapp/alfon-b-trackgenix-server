@@ -5,7 +5,7 @@ const employees = require('../data/employees.json');
 
 const router = express.Router();
 
-router.get('/getAll', (req, res) => {
+router.get('/list', (req, res) => {
   if (employees) {
     res.send(employees);
   } else {
@@ -21,7 +21,7 @@ router.get('/getById/:id', (req, res) => {
     res.send(`Can´t find user ID: ${employeeId}`);
   }
 });
-router.post('/post', (req, res) => {
+router.post('/create', (req, res) => {
   const newEmployee = req.body;
   employees.push(newEmployee);
   fs.writeFile('src/data/employees.json', JSON.stringify(employees), (err) => {
