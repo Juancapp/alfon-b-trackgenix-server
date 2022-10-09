@@ -20,9 +20,11 @@ router.put('/put/:id', (req, res) => {
   const found = employees.some((emp) => emp.id === parseInt(reqId, 10));
   if (found) {
     const putEmp = req.body;
+    putEmp.id = parseInt(reqId, 10);
     const filtered = employees.filter((emp) => emp.id !== parseInt(reqId, 10));
     if ((Object.keys(putEmp)).length === 8) {
       filtered.push(putEmp);
+      filtered.sort((a, b) => a.id - b.id);
       fs.writeFile('src/data/employees.json', JSON.stringify(filtered), (err) => {
         if (err) {
           res.send(`Cannot edit user ${err}`);
