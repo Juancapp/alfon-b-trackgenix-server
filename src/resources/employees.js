@@ -8,6 +8,15 @@ const router = express.Router();
 router.get('/getAll', (req, res) => {
   res.send(employees);
 });
+router.get('/getById/:id', (req, res) => {
+  const employeeId = req.params.id;
+  const employee = employees.find((employ) => `${employ.id}` === employeeId);
+  if (employee) {
+    res.send(employee);
+  } else {
+    res.send(`Can´t find user ID: ${employeeId}`);
+  }
+});
 router.post('/post', (req, res) => {
   const newEmployee = req.body;
   employees.push(newEmployee);
