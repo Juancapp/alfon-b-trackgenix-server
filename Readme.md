@@ -40,7 +40,6 @@ npm run lint:fix
 
 ### Members
 
-
 |Photo | Name  | Mail | Github
 | :-----: | :-----: | :-----: | :-----: |
 <img src="https://avatars.githubusercontent.com/u/111073225?v=4" height="50" width="50">| Amadeo, Ramiro | raamiroamadeo@gmail.com | [@RamiroAmadeo](https://github.com/RamiroAmadeo)
