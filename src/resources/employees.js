@@ -6,7 +6,11 @@ const employees = require('../data/employees.json');
 const router = express.Router();
 
 router.get('/getAll', (req, res) => {
-  res.send(employees);
+  if (employees) {
+    res.send(employees);
+  } else {
+    res.send('There isn\'t any employee created');
+  }
 });
 router.get('/getById/:id', (req, res) => {
   const employeeId = req.params.id;
