@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 // Project route
-app.use(projectRouter);
+app.use('/project', projectRouter);
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
