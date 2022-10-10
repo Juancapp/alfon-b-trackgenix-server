@@ -23,10 +23,18 @@ router.put('/:id', (req, res) => {
     const updAdmin = req.body;
     admins.forEach((admin) => {
       if (admin.id === parseInt(req.params.id, 10)) {
-        admin.first_name = updAdmin.first_name ? updAdmin.first_name : admin.first_name; // eslint-disable-line
-        admin.last_name = updAdmin.last_name ? updAdmin.last_name : admin.last_name; // eslint-disable-line
-        admin.email = updAdmin.email ? updAdmin.email : admin.email; // eslint-disable-line
-        admin.password = updAdmin.password ? updAdmin.password : admin.password; // eslint-disable-line
+        if (updAdmin.first_name) {
+          filteredAdmin.first_name = updAdmin.first_name;
+        }
+        if (updAdmin.last_name) {
+          filteredAdmin.last_name = updAdmin.last_name;
+        }
+        if (updAdmin.email) {
+          filteredAdmin.email = updAdmin.email;
+        }
+        if (updAdmin.password) {
+          filteredAdmin.password = updAdmin.password;
+        }
         fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
           if (err) {
             res.send('Problem when editing admin');
