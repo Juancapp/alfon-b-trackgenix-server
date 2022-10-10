@@ -47,33 +47,24 @@ router.get('/filter?', (req, res) => {
     if (filterProjectName) {
       filter = projects.filter((project) => project.projectName.includes(filterProjectName));
     }
+
     if (filterProjectManagerId) {
-      // eslint-disable-next-line max-len
       filter = projects.filter((project) => project.projectManagerId === filterProjectManagerId);
-      if (filter.length !== 0) {
-        res.status(200).send(filter);
-      } else {
-        res.status(400).json({
-          msg: 'Invalid id',
-        });
-      }
-    } else {
-      res.status(400).json({
-        msg: 'Invalid id',
-      });
     }
+
     if (filterProjectStartDate) {
       // eslint-disable-next-line max-len
       filter = projects.filter((project) => project.projectStartDate.includes(filterProjectStartDate));
     }
-    res.status(200).json({
-      project: filter,
-    });
+  }
+  if (filter.length !== 0) {
+    res.status(200).send(filter);
   } else {
-    res.status(404).json({
-      msg: 'Project not found',
+    return res.status(400).json({
+      msg: 'Invalid value',
     });
   }
+  return res.send();
 });
 
 module.exports = router;
