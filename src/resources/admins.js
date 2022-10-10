@@ -7,7 +7,6 @@ const router = express.Router();
 router.delete('/delete/:id', (req, res) => {
   const adminId = req.params.id;
   const filteredAdmin = admins.filter((admin) => admin.id !== adminId);
-  // console.log(filteredAdmin);
   fs.writeFile('src/data/admins.json', JSON.stringify(filteredAdmin), (err) => {
     if (err) {
       res.send('Admin cannot be deleted');
@@ -30,7 +29,7 @@ router.put('/:id', (req, res) => {
         admin.password = updAdmin.password ? updAdmin.password : admin.password; // eslint-disable-line
         fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
           if (err) {
-            res.send('Problem when adding admin');
+            res.send('Problem when editing admin');
           } else {
             res.send('Admin created');
           }
