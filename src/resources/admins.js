@@ -1,5 +1,3 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable no-empty */
 const express = require('express');
 const fs = require('fs');
 const admins = require('../data/admins.json');
@@ -11,42 +9,22 @@ router.get('/getAll', (req, res) => {
 });
 
 router.get('/getById/:id', (req, res) => {
-  const adminID = req.params.id;
-  const result = admins.find((admin) => admin.id == adminID);
+  const adminID = parseInt(req.params.id, 10);
+  const result = admins.find((admin) => admin.id === adminID);
   if (result) {
-    res.send(result);
+    res.status(200).send(result);
   } else {
-    res.send('Admin by ID not found');
+    res.status(400).send(`Admin by ID not found: ${adminID}`);
   }
 });
 
 router.get('/getByFN/:first_name', (req, res) => {
   const adminFN = req.params.first_name;
-  const result = admins.find((admin) => admin.first_name == adminFN);
+  const result = admins.find((admin) => admin.first_name === adminFN);
   if (result) {
-    res.send(result);
+    res.status(200).send(result);
   } else {
-    res.send('Admin by name not found');
-  }
-});
-
-router.get('/getByLN/:last_name', (req, res) => {
-  const adminLN = req.params.last_name;
-  const result = admins.find((admin) => admin.last_name == adminLN);
-  if (result) {
-    res.send(result);
-  } else {
-    res.send('Admin by surname not found');
-  }
-});
-
-router.get('/getByEmail/:email', (req, res) => {
-  const adminEmail = req.params.email;
-  const result = admins.find((admin) => admin.email == adminEmail);
-  if (result) {
-    res.send(result);
-  } else {
-    res.send('Admin by email not found');
+    res.status(400).send(`Admin by first name not found: ${adminFN}`);
   }
 });
 
@@ -55,9 +33,9 @@ router.post('/add', (req, res) => {
   admins.push(newAdmin);
   fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
     if (err) {
-      res.send('Cannot submit new admin');
+      res.status(400).send(`Cannot submit new admin: ${newAdmin}`);
     } else {
-      res.send('Admin(s) created');
+      res.status(200).send(`Admin created: ${newAdmin}`);
     }
   });
 });
