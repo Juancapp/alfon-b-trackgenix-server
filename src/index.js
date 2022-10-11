@@ -5,7 +5,7 @@ import express from 'express';
 const superAdminsRouter = require('./resources/super-admins');
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use('/super-admins', superAdminsRouter);
