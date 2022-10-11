@@ -48,10 +48,10 @@ router.put('/update/:id', (req, res) => {
         msg: 'Project not found',
       },
     );
-  } else if (Object.keys(reqBody).length !== 5) {
+  } else if (Object.keys(reqBody).length < 5) {
     res.status(400).json(
       {
-        msg: 'Must contains 5 fields',
+        msg: 'Must contains al least 5 fields',
       },
     );
   } else if (empty.length !== 0) {
