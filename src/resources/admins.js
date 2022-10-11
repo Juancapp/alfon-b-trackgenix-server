@@ -9,9 +9,9 @@ router.delete('/delete/:id', (req, res) => {
   const filteredAdmin = admins.filter((admin) => admin.id !== adminId);
   fs.writeFile('src/data/admins.json', JSON.stringify(filteredAdmin), (err) => {
     if (err) {
-      res.send('Admin cannot be deleted');
+        res.status(400).send('Admin cannot be deleted');
     } else {
-      res.send(`Admin with id ${adminId} deleted`);
+        res.status(200).json( {message: 'Admin deleted', });
     }
   });
 });
