@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use('/employees', employeesRouter);
+app.use('/emp', employeesRouter);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
