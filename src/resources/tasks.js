@@ -1,7 +1,5 @@
 const express = require('express');
-
 const fs = require('fs');
-
 const tasks = require('../data/tasks.json');
 
 const router = express.Router();
@@ -13,55 +11,102 @@ router.get('/list', (req, res) => {
 });
 
 router.get('/list/:id', (req, res) => {
-  const taskId = req.params.id;
-  const findTask = tasks.find((task) => task.id === taskId);
+  // const taskId = parseInt(req.params.id, 10);
+  const findTask = tasks.find((task) => task.id === parseInt(req.params.id, 10));
   if (findTask) {
-    res.send(findTask);
+    res.status(200).json({
+      data: findTask,
+    });
   } else {
-    res.send('task not found');
+    res.status(404).json({
+      message: 'task not found',
+    });
   }
 });
 
 router.delete('/delete/:id', (req, res) => {
-  const taskId = req.params.id;
-  const filterTask = tasks.filter((task) => task.id !== taskId);
+  const filterTask = tasks.filter((task) => task.id !== parseInt(req.params.id, 10));
   fs.writeFile('src/data/tasks.json', JSON.stringify(filterTask), (err) => {
     if (err) {
-      res.send('Cannot delete task');
+      res.status(404).json({
+        message: 'Cannot delete task',
+      });
     } else {
-      res.send('task deleted');
+      res.status(200).json({
+        message: 'task deleted',
+      });
     }
   });
 });
 
 router.post('/create', (req, res) => {
-  let newId = tasks.length + 1;
+  let newId = parseInt(tasks.length + 1, 10);
   const newTask = req.body;
-  let findTask = tasks.find((task) => task.id === newId.toString());
+  let findTask = tasks.find((task) => task.id === newId);
   const findTaskName = tasks.find((task) => task.taskName === newTask.taskName);
-  while (findTask !== undefined) {
+  while (findTask) {
     newId += 1;
-    const newIdStr = newId.toString();
+    const newIdStr = newId;
     findTask = tasks.find((task) => task.id === newIdStr);
   }
   if (findTaskName) {
-    res.send('There is already a task with that name. Try a new one.');
+    res.status(404).send({
+      message: 'There is already a task with that name. Try a new one.',
+    });
   } else {
-    newTask.id = newId.toString();
-    tasks.push(newTask);
-    fs.writeFile('src/data/tasks.json', JSON.stringify(tasks), (err) => {
+    newTask.id = newId;
+    fs.writeFile('src/data/tasks.json', JSON.stringify([...tasks, newTask]), (err) => {
       if (err) {
-        res.send('Cannot save new task');
+        res.status(404).send({
+          message: 'Cannot save new task',
+        });
       } else {
-        res.send('task created');
+        res.status(200).send({
+          message: 'task created',
+        });
       }
     });
   }
 });
 
 router.put('/update/:id', (req, res) => {
-  //   const taskId = req.params.id;
-  res.send('funciona');
+  const taskId = parseInt(req.params.id, 10);
+  const taskReq = req.body;
+  const findTaskId = tasks.find((task) => task.id === taskId);
+  const findTaskName = tasks.find((task) => task.taskName === taskReq.taskName);
+  const newArrTask = tasks.filter((task) => task.id !== parseInt(req.params.id, 10));
+  if (taskReq.taskName === undefined || taskReq.taskName === '') {
+    return res.status(404).send({
+      message: 'The task must have a name',
+    });
+  }
+  if (taskReq.taskDescription === undefined || taskReq.taskDescription === '') {
+    return res.status(404).send({
+      message: 'The task must have a description',
+    });
+  }
+  if (findTaskId === undefined) {
+    return res.status(404).send({
+      message: 'task not found',
+    });
+  }
+  if (!findTaskName && findTaskId) {
+    taskReq.id = taskId;
+    fs.writeFile('src/data/tasks.json', JSON.stringify([...newArrTask, taskReq]), (err) => {
+      if (err) {
+        res.status(400).send({
+          message: 'An error occurred',
+        });
+      } else {
+        res.status(200).send({
+          message: 'Task updated',
+        });
+      }
+    });
+  }
+  return res.status(404).send({
+    message: 'A task with that name already exists',
+  });
 });
 
 module.exports = router;
