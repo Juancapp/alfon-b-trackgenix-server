@@ -21,25 +21,25 @@ router.get('/getByid/:id', (req, res) => {
 router.post('/add', (req, res) => {
   const newUser = req.body;
   const foundUser = timeSheets.find((user) => user.id === newUser.id);
-  const empty = Object.values(newUser).some((value) => value === "" );
-  const complete = Object.values (newUser).length === 6;
- // const repeatedId =
+  const empty = Object.values(newUser).some((value) => value === '');
+  const complete = Object.values(newUser).length === 6;
+  // const repeatedId =
 
-  if (!complete){
-    res.send ("Missing fields to be completed");
-  }else if (empty){
-    res.send ("There are empty fields");
-  }else if (foundUser){
-    res.send ("This id already exist");
-  }else{
-      timeSheets.push(newUser);
-      fs.writeFile('src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
-        if (err) {
-          res.send('Cant save new user');
-        } else {
-          res.send('User created');
-        }
-      });
+  if (!complete) {
+    res.send('Missing fields to be completed');
+  } else if (empty) {
+    res.send('There are empty fields');
+  } else if (foundUser) {
+    res.send('This id already exist');
+  } else {
+    timeSheets.push(newUser);
+    fs.writeFile('src/data/time-sheets.json', JSON.stringify(timeSheets), (err) => {
+      if (err) {
+        res.send('Cant save new user');
+      } else {
+        res.send('User created');
+      }
+    });
   }
 });
 
