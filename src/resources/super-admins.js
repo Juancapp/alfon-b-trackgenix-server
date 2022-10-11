@@ -8,7 +8,7 @@ router.get('/getAllSupera', (req, res) => {
   res.send(supera);
 });
 
-router.get('getById/:id', (req, res) => {
+router.get('/getById/:id', (req, res) => {
   const superId = parseInt(req.params.id, 10);
   const foundSupera = supera.find((sup) => sup.id === superId);
   if (foundSupera) {
