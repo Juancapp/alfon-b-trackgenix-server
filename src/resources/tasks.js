@@ -1,17 +1,17 @@
-const express = require('express');
+import express from 'express';
+
 const fs = require('fs');
 const tasks = require('../data/tasks.json');
 
 const router = express.Router();
 
-router.get('/list', (req, res) => {
+router.get('/', (req, res) => {
   res.status(200).json({
     data: tasks,
   });
 });
 
-router.get('/list/:id', (req, res) => {
-  // const taskId = parseInt(req.params.id, 10);
+router.get('/:id', (req, res) => {
   const findTask = tasks.find((task) => task.id === parseInt(req.params.id, 10));
   if (findTask) {
     res.status(200).json({
@@ -24,7 +24,7 @@ router.get('/list/:id', (req, res) => {
   }
 });
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const filterTask = tasks.filter((task) => task.id !== parseInt(req.params.id, 10));
   fs.writeFile('src/data/tasks.json', JSON.stringify(filterTask), (err) => {
     if (err) {
@@ -39,7 +39,7 @@ router.delete('/delete/:id', (req, res) => {
   });
 });
 
-router.post('/create', (req, res) => {
+router.post('/', (req, res) => {
   let newId = parseInt(tasks.length + 1, 10);
   const newTask = req.body;
   let findTask = tasks.find((task) => task.id === newId);
@@ -69,7 +69,7 @@ router.post('/create', (req, res) => {
   }
 });
 
-router.put('/update/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const taskId = parseInt(req.params.id, 10);
   const taskReq = req.body;
   const findTaskId = tasks.find((task) => task.id === taskId);
@@ -109,4 +109,4 @@ router.put('/update/:id', (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;
