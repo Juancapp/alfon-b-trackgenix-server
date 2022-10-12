@@ -1,6 +1,6 @@
 import express from 'express';
+import fs from 'fs';
 
-const fs = require('fs');
 const tasks = require('../data/tasks.json');
 
 const router = express.Router();
