@@ -9,7 +9,6 @@ const adminsRouter = require('./resources/admins');
 
 app.use(express.json());
 
-// Admins route
 app.use('/admins', adminsRouter);
 
 app.get('/', async (req, res) => {

@@ -1,10 +1,11 @@
-const express = require('express');
-const fs = require('fs');
+import express from 'express';
+import fs from 'fs';
+
 const admins = require('../data/admins.json');
 
 const router = express.Router();
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const adminId = req.params.id;
   const filteredAdmin = admins.filter((admin) => admin.id !== adminId);
   fs.writeFile('src/data/admins.json', JSON.stringify(filteredAdmin), (err) => {
@@ -50,4 +51,4 @@ router.put('/:id', (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
