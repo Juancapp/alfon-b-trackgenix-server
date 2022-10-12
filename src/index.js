@@ -1,14 +1,11 @@
-// use "import" to import libraries
 import express from 'express';
-
-// use "require" to import JSON files
-const employeesRouter = require('./resources/employees');
+import router from './resources/employees';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use('/employee', employeesRouter);
+app.use('/employee', router);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
