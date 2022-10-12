@@ -10,7 +10,7 @@ router.delete('/:id', (req, res) => {
   const filteredAdmin = admins.filter((admin) => admin.id !== adminId);
   fs.writeFile('src/data/admins.json', JSON.stringify(filteredAdmin), (err) => {
     if (err) {
-      res.status(400).send('Admin cannot be deleted');
+      res.status(400).json({ message: 'Admin cannot be deleted' });
     } else {
       res.status(200).json({ message: 'Admin deleted' });
     }
@@ -38,16 +38,16 @@ router.put('/:id', (req, res) => {
         }
         fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
           if (err) {
-            res.status(400).send('Problem when editing admin');
+            res.status(400).json({ message: 'Problem when editing admin' });
           } else {
-            res.status(200).send('Admin created');
+            res.status(200).json({ message: 'Admin created' });
           }
         });
-        res.json({ msg: 'Admin updated', admin });
+        res.json({ message: 'Admin updated', admin });
       }
     });
   } else {
-    res.send(`No admin with the id ${adminId} found`);
+    res.json({ message: `No admin with the id ${adminId} found` });
   }
 });
 
