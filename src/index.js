@@ -1,13 +1,13 @@
-// use "import" to import libraries
 import express from 'express';
+
+import employeeRouter from './resources/employees';
 
 const app = express();
 const port = process.env.PORT || 3000;
-const employeeRouter = require('./resources/employees');
 
 app.use(express.json());
 
-app.use('/emp', employeeRouter);
+app.use('/employees', employeeRouter);
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');

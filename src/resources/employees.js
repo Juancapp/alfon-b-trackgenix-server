@@ -1,21 +1,12 @@
-// put delete
-// import express from 'express';
+import express from 'express';
 
-const express = require('express');
+import fs from 'fs';
 
-const fs = require('fs');
-// import fs from 'fs';
-
-// use "require" to import JSON files
 const employees = require('../data/employees.json');
 
 const router = express.Router();
 
-router.get('/getAll', (req, res) => {
-  res.send(employees);
-});
-
-router.put('/put/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const reqId = req.params.id;
   const found = employees.some((emp) => emp.id === parseInt(reqId, 10));
   if (found) {
@@ -27,28 +18,28 @@ router.put('/put/:id', (req, res) => {
       filtered.sort((a, b) => a.id - b.id);
       fs.writeFile('src/data/employees.json', JSON.stringify(filtered), (err) => {
         if (err) {
-          res.send(`Cannot edit user ${err}`);
+          res.status(404).json({ messagge: `Cannot edit user ${err}` });
         } else {
-          res.send('User edited');
+          res.status(200).json({ messagge: 'User edited' });
         }
       });
-    } else { res.send('Missing data to edit'); }
-  } else { res.send('User not found'); }
+    } else { res.status(200).json({ messagge: 'Missing data to edit' }); }
+  } else { res.status(404).json({ messagge: 'User not found' }); }
 });
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const reqId = req.params.id;
   const found = employees.some((emp) => emp.id === parseInt(reqId, 10));
   const filtered = employees.filter((emp) => emp.id !== parseInt(reqId, 10));
   if (found) {
     fs.writeFile('src/data/employees.json', JSON.stringify(filtered), (err) => {
       if (err) {
-        res.send(`Cannot delete user ${err}`);
+        res.status(404).json({ messagge: `Cannot delete user ${err}` });
       } else {
-        res.send(`User deleted ${filtered}`);
+        res.status(200).json({ messagge: 'User deleted' });
       }
     });
-  } else { res.send('User not found'); }
+  } else { res.status(404).json({ messagge: 'User not found' }); }
 });
 
-module.exports = router;
+export default router;
