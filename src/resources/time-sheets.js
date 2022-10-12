@@ -1,27 +1,28 @@
-const express = require('express');
-const fs = require('fs');
+import express from 'express';
+import fs from 'fs';
+
 const timeSheets = require('../data/time-sheets.json');
 
 const router = express.Router();
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const reqId = req.params.id;
   const filtered = timeSheets.filter((timeSheet) => timeSheet.id !== reqId);
   const elementExists = timeSheets.some((object) => object.id === reqId);
   if (elementExists) {
     fs.writeFile('src/data/time-sheets.json', JSON.stringify(filtered), (err) => {
       if (err) {
-        res.send('Cannot delete timesheet');
+        res.status(500).json({ message: 'Cannot delete timesheet' });
       } else {
-        res.send('Timesheet deleted');
+        res.status(200).json({ message: 'Timesheet deleted' });
       }
     });
   } else {
-    res.send('Id not found');
+    res.status(404).json({ message: 'Id not found' });
   }
 });
 
-router.put('/put', (req, res) => {
+router.put('/', (req, res) => {
   const reqId = req.body.id;
   let filtered = timeSheets.filter((timeSheet) => timeSheet.id !== reqId);
   const toFilter = Object.keys(timeSheets.find((timeSheet) => timeSheet.id !== reqId));
@@ -51,16 +52,16 @@ router.put('/put', (req, res) => {
   if (validate && elementExists) {
     fs.writeFile('src/data/time-sheets.json', JSON.stringify(filtered), (err) => {
       if (err) {
-        res.send('Cannot edit user');
+        res.status(500).json({ message: 'Cannot edit user' });
       } else {
-        res.send('User edited');
+        res.status(201).json({ message: 'User edited' });
       }
     });
   } else if (!elementExists) {
-    res.send('Id not found');
+    res.status(404).json({ message: 'Id not found' });
   } else {
-    res.send('Invalid input');
+    res.status(400).json({ message: 'Invalid input' });
   }
 });
 
-module.exports = router;
+export default router;
