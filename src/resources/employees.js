@@ -7,18 +7,18 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   if (employees) {
-    res.status(200).send(employees);
+    res.status(200).json({ message: `${employees}` });
   } else {
-    res.status(404).send('There isn\'t any employee created');
+    res.status(404).json({ message: 'There isn\'t any employee created' });
   }
 });
 router.get('/:id', (req, res) => {
   const employeeId = req.params.id;
   const employee = employees.find((employ) => `${employ.id}` === employeeId);
   if (employee) {
-    res.status(200).send(employee);
+    res.status(200).json({ message: `${employee}` });
   } else {
-    res.status(404).send(`Can´t find user ID: ${employeeId}`);
+    res.status(404).json({ message: `Can´t find user ID: ${employeeId}` });
   }
 });
 router.post('/', (req, res) => {
@@ -27,13 +27,13 @@ router.post('/', (req, res) => {
   const bodyComplete = Object.values(newEmployee).length === 8;
 
   if (!bodyComplete) {
-    res.status(400).send('There are some properties missing');
+    res.status(400).json({ message: 'There are some properties missing' });
   } else if (emptyValues) {
-    res.status(400).send('There are some empty properties');
+    res.status(400).json({ message: 'There are some empty properties' });
   } else {
     employees.forEach((emp) => {
       if (`${emp.id}` === newEmployee.id) {
-        res.status(404).send('Already exist employee with this id');
+        res.status(404).json({ message: 'Already exist employee with this id' });
       }
     });
   }
@@ -41,9 +41,9 @@ router.post('/', (req, res) => {
     employees.push(newEmployee);
     fs.writeFile('src/data/employees.json', JSON.stringify(employees), (err) => {
       if (err) {
-        res.status(400).send(`Can't create user ID:${newEmployee.id}`);
+        res.status(400).json({ message: `Can't create user ID:${newEmployee.id}` });
       } else {
-        res.status(201).send(`User created ID:${newEmployee.id}`);
+        res.status(201).json({ message: `User created ID:${newEmployee.id}` });
       }
     });
   }
