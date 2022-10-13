@@ -4,28 +4,38 @@ import fs from 'fs';
 const router = express.Router();
 const superAdmins = require('../data/super-admins.json');
 
-router.delete('/:id', (req, res) => {
-  const reqId = req.params.id;
-  const deleted = superAdmins.filter((sup) => sup.id !== parseInt(reqId, 10));
+router.get('/', (req, res) => {
+  res.send(superAdmins);
+});
 
-  if (deleted.length !== superAdmins.length) {
-    fs.writeFile('src/data/super-admins.json', JSON.stringify(deleted, null, 2), (err) => (err ? res.status(404).json(
-      {
-        msg: 'Cannot delete Super Admin',
-      },
-    ) : res.json(
-      {
-        msg: 'Super Admin deleted',
-      },
-    )
-    ));
+router.get('/:id', (req, res) => {
+  const superId = parseInt(req.params.id, 10);
+  const foundSupera = superAdmins.find((sup) => sup.id === superId);
+  if (foundSupera) {
+    res.status(200).send(foundSupera);
   } else {
-    res.status(404).json(
-      {
-        msg: 'Invalid id',
-      },
-    );
+    res.status(400).json({ message: 'Super Admin not found' });
   }
+});
+
+router.post('/', (req, res) => {
+  const newSuperAdmins = req.body;
+  if (newSuperAdmins.id === '' || newSuperAdmins.name === '' || newSuperAdmins.lastName === '' || newSuperAdmins.email === '' || newSuperAdmins.password === '') {
+    res.status(400).json({ message: 'All fiels are required' });
+  }
+  const repeatId = superAdmins.find((sup) => sup.id === newSuperAdmins.id);
+  if (repeatId === undefined) {
+    superAdmins.push(newSuperAdmins);
+  } else {
+    res.status(400).json({ message: 'The id cannot be repeted.' });
+  }
+  fs.writeFile('src/data/super-admins.json', JSON.stringify(superAdmins, null, 2), (err) => {
+    if (err) {
+      res.status(400).json({ message: 'Cannot save the new Super Admin.' });
+    } else {
+      res.status(200).json({ message: 'Super Admin created.' });
+    }
+  });
 });
 
 router.put('/:id', (req, res) => {
@@ -80,6 +90,30 @@ router.put('/:id', (req, res) => {
       msg: 'Super Admin updated',
     },
   );
+});
+
+router.delete('/:id', (req, res) => {
+  const reqId = req.params.id;
+  const deleted = superAdmins.filter((sup) => sup.id !== parseInt(reqId, 10));
+
+  if (deleted.length !== superAdmins.length) {
+    fs.writeFile('src/data/super-admins.json', JSON.stringify(deleted, null, 2), (err) => (err ? res.status(404).json(
+      {
+        msg: 'Cannot delete Super Admin',
+      },
+    ) : res.json(
+      {
+        msg: 'Super Admin deleted',
+      },
+    )
+    ));
+  } else {
+    res.status(404).json(
+      {
+        msg: 'Invalid id',
+      },
+    );
+  }
 });
 
 export default router;

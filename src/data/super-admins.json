@@ -1,4 +1,5 @@
-[{
+[
+  {
     "id": 1,
     "name": "Wittie",
     "lastName": "Foot",
@@ -67,4 +68,5 @@
     "lastName": "Coolbear",
     "email": "mcoolbear9@usda.gov",
     "password": "w5hjCoTnI6SF"
-  }]
+  }
+]
