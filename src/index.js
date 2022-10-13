@@ -1,23 +1,22 @@
-// use "import" to import libraries
 import express from 'express';
-
-import admins from './data/admins.json';
+import superAdminRouter from './resources/super-admins';
+import projectRouter from './resources/projects';
 import timeSheetsRouter from './resources/time-sheets';
+import employeesRouter from './resources/employees';
+import adminsRouter from './resources/admins';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use('/super-admin', superAdminRouter);
+app.use('/projects', projectRouter);
 app.use('/time-sheets', timeSheetsRouter);
+app.use('/employees', employeesRouter);
+app.use('/admins', adminsRouter);
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
-});
-
-app.get('/admins', (req, res) => {
-  res.status(200).json({
-    data: admins,
-  });
 });
 
 app.listen(port, () => {
