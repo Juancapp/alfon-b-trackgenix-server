@@ -12,9 +12,8 @@ app.use(express.json());
 app.use('/super-admin', superAdminRouter);
 app.use('/projects', projectRouter);
 app.use('/time-sheets', timeSheetsRouter);
-app.use('/employee', employeesRouter);
+app.use('/employees', employeesRouter);
 app.use('/admins', adminsRouter);
-app.use('/project', projectRouter);
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
