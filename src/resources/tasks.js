@@ -50,18 +50,18 @@ router.post('/', (req, res) => {
     findTask = tasks.find((task) => task.id === newIdStr);
   }
   if (findTaskName) {
-    res.status(404).send({
+    res.status(404).json({
       message: 'There is already a task with that name. Try a new one.',
     });
   } else {
     newTask.id = newId;
     fs.writeFile('src/data/tasks.json', JSON.stringify([...tasks, newTask]), (err) => {
       if (err) {
-        res.status(404).send({
+        res.status(404).json({
           message: 'Cannot save new task',
         });
       } else {
-        res.status(200).send({
+        res.status(200).json({
           message: 'task created',
         });
       }
@@ -76,17 +76,17 @@ router.put('/:id', (req, res) => {
   const findTaskName = tasks.find((task) => task.taskName === taskReq.taskName);
   const newArrTask = tasks.filter((task) => task.id !== parseInt(req.params.id, 10));
   if (taskReq.taskName === undefined || taskReq.taskName === '') {
-    return res.status(404).send({
+    return res.status(404).json({
       message: 'The task must have a name',
     });
   }
   if (taskReq.taskDescription === undefined || taskReq.taskDescription === '') {
-    return res.status(404).send({
+    return res.status(404).json({
       message: 'The task must have a description',
     });
   }
   if (findTaskId === undefined) {
-    return res.status(404).send({
+    return res.status(404).json({
       message: 'task not found',
     });
   }
@@ -94,17 +94,17 @@ router.put('/:id', (req, res) => {
     taskReq.id = taskId;
     fs.writeFile('src/data/tasks.json', JSON.stringify([...newArrTask, taskReq]), (err) => {
       if (err) {
-        res.status(400).send({
+        res.status(400).json({
           message: 'An error occurred',
         });
       } else {
-        res.status(200).send({
+        res.status(200).json({
           message: 'Task updated',
         });
       }
     });
   }
-  return res.status(404).send({
+  return res.status(404).json({
     message: 'A task with that name already exists',
   });
 });
