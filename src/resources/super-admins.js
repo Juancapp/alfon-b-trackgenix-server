@@ -1,41 +1,42 @@
-const express = require('express');
-const fs = require('fs');
-const supera = require('../data/super-admins.json');
+import express from 'express';
+import fs from 'fs';
+
+const superAdmins = require('../data/super-admins.json');
 
 const router = express.Router();
 
-router.get('/getAllSupera', (req, res) => {
-  res.send(supera);
+router.get('/', (req, res) => {
+  res.send(superAdmins);
 });
 
-router.get('/getById/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const superId = parseInt(req.params.id, 10);
-  const foundSupera = supera.find((sup) => sup.id === superId);
+  const foundSupera = superAdmins.find((sup) => sup.id === superId);
   if (foundSupera) {
     res.status(200).send(foundSupera);
   } else {
-    res.status(400).json({ msg: 'Super Admin not found' });
+    res.status(400).json({ message: 'Super Admin not found' });
   }
 });
 
-router.post('/add', (req, res) => {
-  const newSupera = req.body;
-  if (newSupera.id === '' || newSupera.name === '' || newSupera.lastName === '' || newSupera.email === '' || newSupera.password === '') {
-    res.status(400).json({ msj: 'All fiels are required' });
+router.post('/', (req, res) => {
+  const newSuperAdmins = req.body;
+  if (newSuperAdmins.id === '' || newSuperAdmins.name === '' || newSuperAdmins.lastName === '' || newSuperAdmins.email === '' || newSuperAdmins.password === '') {
+    res.status(400).json({ message: 'All fiels are required' });
   }
-  const repeatId = supera.find((sup) => sup.id === newSupera.id);
+  const repeatId = superAdmins.find((sup) => sup.id === newSuperAdmins.id);
   if (repeatId === undefined) {
-    supera.push(newSupera);
+    superAdmins.push(newSuperAdmins);
   } else {
-    res.status(400).json({ msj: 'The id cannot be repeted.' });
+    res.status(400).json({ message: 'The id cannot be repeted.' });
   }
-  fs.writeFile('src/data/super-admins.json', JSON.stringify(supera, null, 2), (err) => {
+  fs.writeFile('src/data/super-admins.json', JSON.stringify(superAdmins, null, 2), (err) => {
     if (err) {
-      res.status(400).json({ msj: 'Cannot save the new Super Admin.' });
+      res.status(400).json({ message: 'Cannot save the new Super Admin.' });
     } else {
-      res.status(200).json({ msj: 'Super Admin created.' });
+      res.status(200).json({ message: 'Super Admin created.' });
     }
   });
 });
 
-module.exports = router;
+export default router;
