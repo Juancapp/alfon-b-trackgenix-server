@@ -1,4 +1,5 @@
 import express from 'express';
+import taskRouter from './resources/tasks';
 import superAdminRouter from './resources/super-admins';
 import projectRouter from './resources/projects';
 import timeSheetsRouter from './resources/time-sheets';
@@ -9,6 +10,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use('/task', taskRouter);
 app.use('/super-admin', superAdminRouter);
 app.use('/projects', projectRouter);
 app.use('/time-sheets', timeSheetsRouter);
