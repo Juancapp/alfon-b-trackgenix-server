@@ -1,6 +1,7 @@
 [
     {
-        "userName": "ProDIGY",
+        "id": 1,
+        "userName": "cstuchburie0",
         "name": "Chancey",
         "lastName": "Stuchburie",
         "email": "cstuchburie0@cyberchimps.com",
@@ -12,8 +13,7 @@
         "rates": [
             27,
             55
-        ],
-        "id": 1
+        ]
     },
     {
         "id": 2,
