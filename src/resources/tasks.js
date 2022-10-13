@@ -24,21 +24,6 @@ router.get('/:id', (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
-  const filterTask = tasks.filter((task) => task.id !== parseInt(req.params.id, 10));
-  fs.writeFile('src/data/tasks.json', JSON.stringify(filterTask), (err) => {
-    if (err) {
-      res.status(404).json({
-        message: 'Cannot delete task',
-      });
-    } else {
-      res.status(200).json({
-        message: 'task deleted',
-      });
-    }
-  });
-});
-
 router.post('/', (req, res) => {
   let newId = parseInt(tasks.length + 1, 10);
   const newTask = req.body;
@@ -106,6 +91,21 @@ router.put('/:id', (req, res) => {
   }
   return res.status(404).json({
     message: 'A task with that name already exists',
+  });
+});
+
+router.delete('/:id', (req, res) => {
+  const filterTask = tasks.filter((task) => task.id !== parseInt(req.params.id, 10));
+  fs.writeFile('src/data/tasks.json', JSON.stringify(filterTask), (err) => {
+    if (err) {
+      res.status(404).json({
+        message: 'Cannot delete task',
+      });
+    } else {
+      res.status(200).json({
+        message: 'task deleted',
+      });
+    }
   });
 });
 
