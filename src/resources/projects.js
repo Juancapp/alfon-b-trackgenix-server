@@ -1,10 +1,11 @@
-const express = require('express');
-const fs = require('fs');
+import express from 'express';
+import fs from 'fs';
+
 const projects = require('../data/projects.json');
 
 const router = express.Router();
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const reqId = req.params.id;
   const deleted = projects.filter((project) => project.id !== parseInt(reqId, 10));
 
@@ -28,7 +29,7 @@ router.delete('/delete/:id', (req, res) => {
   }
 });
 
-router.put('/update/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const { id } = req.params;
   const reqBody = req.body;
   const updated = projects.find((project) => project.id === parseInt(id, 10));
@@ -83,7 +84,7 @@ router.put('/update/:id', (req, res) => {
   );
 });
 
-router.get('/filter?', (req, res) => {
+router.get('/projects?', (req, res) => {
   const queryParams = req.query;
   let filter = projects;
 
@@ -102,8 +103,9 @@ router.get('/filter?', (req, res) => {
     }
 
     if (filterProjectStartDate) {
-      // eslint-disable-next-line max-len
-      filter = projects.filter((project) => project.projectStartDate.includes(filterProjectStartDate));
+      filter = projects.filter(
+        (project) => project.projectStartDate.includes(filterProjectStartDate),
+      );
     }
   }
   if (filter.length !== 0) {
@@ -119,4 +121,4 @@ router.get('/filter?', (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

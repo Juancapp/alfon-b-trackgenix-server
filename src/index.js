@@ -1,8 +1,6 @@
 // use "import" to import libraries
 import express from 'express';
-
-// use "require" to import JSON files
-const projectRouter = require('./resources/projects');
+import projectRouter from './resources/projects';
 
 const app = express();
 const port = process.env.PORT || 3000;
