@@ -1,10 +1,10 @@
 import express from 'express';
-import taskRouter from './resources/tasks';
-import superAdminRouter from './resources/super-admins';
-import projectRouter from './resources/projects';
-import timeSheetsRouter from './resources/time-sheets';
-import employeesRouter from './resources/employees';
-import adminsRouter from './resources/admins';
+import taskRouter from './controllers/tasks';
+import superAdminRouter from './controllers/super-admins';
+import projectRouter from './controllers/projects';
+import timeSheetsRouter from './controllers/time-sheets';
+import employeesRouter from './controllers/employees';
+import adminsRouter from './controllers/admins';
 
 const app = express();
 const port = process.env.PORT || 3000;
