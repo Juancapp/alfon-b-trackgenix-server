@@ -1,27 +1,29 @@
 import express from 'express';
-import taskRouter from './resources/tasks';
-import superAdminRouter from './resources/super-admins';
-import projectRouter from './resources/projects';
-import timeSheetsRouter from './resources/time-sheets';
-import employeesRouter from './resources/employees';
-import adminsRouter from './resources/admins';
+import mongoose from 'mongoose';
+import routes from './routes/index';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 5000;
 
 app.use(express.json());
-app.use('/task', taskRouter);
-app.use('/super-admin', superAdminRouter);
-app.use('/projects', projectRouter);
-app.use('/time-sheets', timeSheetsRouter);
-app.use('/employees', employeesRouter);
-app.use('/admins', adminsRouter);
 
-app.get('/', async (req, res) => {
-  res.send('Hello World!');
-});
+app.use('/', routes);
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Example app listening on port ${port}`);
-});
+const MONGO_URL = 'mongodb+srv://grupo-b:U7uZZXO4erJxLY5v@cluster0.xg4xgte.mongodb.net/?retryWrites=true&w=majority';
+
+mongoose.connect(
+  MONGO_URL,
+  (error) => {
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.log('Failed connection to database', error);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('Connected to database');
+      app.listen(port, () => {
+        // eslint-disable-next-line no-console
+        console.log(`Server ready on port ${port}`);
+      });
+    }
+  },
+);
