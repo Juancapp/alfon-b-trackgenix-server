@@ -1,14 +1,14 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
-import routes from './routes/index';
+import projectRoutes from './routes/projects';
 
 const app = express();
 const port = 5000;
 
 app.use(express.json());
 
-app.use('/', routes);
+app.use('/projects', projectRoutes);
 
 const MONGO_URL = 'mongodb+srv://grupo-b:U7uZZXO4erJxLY5v@cluster0.xg4xgte.mongodb.net/?retryWrites=true&w=majority';
 
