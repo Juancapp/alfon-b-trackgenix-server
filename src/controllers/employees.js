@@ -36,3 +36,30 @@ export const getEmployeeById = async (req, res) => {
     });
   }
 };
+
+export const createEmployee = async (req, res) => {
+  try {
+    const employeeCreated = new Employees({
+      name: req.body.name,
+      last_name: req.body.last_name,
+      phone: req.body.phone,
+      email: req.body.email,
+      password: req.body.password,
+      dni: req.body.dni,
+    });
+
+    const result = await employeeCreated.save();
+
+    return res.status(201).json({
+      message: 'Employee created',
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: 'Error creating employee',
+      data: undefined,
+      error: true,
+    });
+  }
+};
