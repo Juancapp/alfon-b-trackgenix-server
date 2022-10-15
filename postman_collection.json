@@ -1,17 +1,92 @@
 {
-    "info": {
-        "_postman_id": "99971e4c-8e72-4e00-bf0f-64694401b0c3",
-        "name": "postman_collection",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
-        {
-            "name": "localhost:5000/projects",
-            "request": {
-                "method": "GET",
-                "header": []
-            },
-            "response": []
-        }
-    ]
+	"info": {
+		"_postman_id": "9e3580e3-2117-4448-9884-dcff8bb5f973",
+		"name": "postman_collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23735222"
+	},
+	"item": [
+		{
+			"name": "employee",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/employees/",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"employees",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/employees/634b0649590517d1e56006e8",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"employees",
+								"634b0649590517d1e56006e8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"cristian\",\r\n    \"last_name\": \"Schiavi\",\r\n    \"phone\": \"123456789\",\r\n    \"email\": \"user@radium.com\",\r\n    \"password\": \"abcd123456\",\r\n    \"dni\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/employees/",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"employees",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "localhost:5000/projects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
 }
