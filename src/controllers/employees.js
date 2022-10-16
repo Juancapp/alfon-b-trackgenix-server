@@ -1,6 +1,6 @@
 import Employees from '../models/Employees';
 
-export const getAllEmployees = async (req, res) => {
+const getAllEmployees = async (req, res) => {
   try {
     const employees = await Employees.find();
 
@@ -11,14 +11,13 @@ export const getAllEmployees = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: error,
-      data: undefined,
+      message: `Cannot find employees ${error}`,
       error: true,
     });
   }
 };
 
-export const getEmployeeById = async (req, res) => {
+const getEmployeeById = async (req, res) => {
   const { id } = req.params;
   try {
     const employee = await Employees.findById(id);
@@ -30,14 +29,13 @@ export const getEmployeeById = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: error,
-      data: undefined,
+      message: `Cannot find employees ${error}`,
       error: true,
     });
   }
 };
 
-export const createEmployee = async (req, res) => {
+const createEmployee = async (req, res) => {
   try {
     const employeeCreated = new Employees({
       name: req.body.name,
@@ -57,9 +55,14 @@ export const createEmployee = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: 'Error creating employee',
-      data: undefined,
+      message: `Error creating employee ${error}`,
       error: true,
     });
   }
+};
+
+export default {
+  getAllEmployees,
+  getEmployeeById,
+  createEmployee,
 };
