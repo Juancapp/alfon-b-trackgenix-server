@@ -18,7 +18,7 @@ const getAllProjects = async (req, res) => {
 
 const getProjectsById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = { id: Number(req.body.id) };
     const project = await Projects.findById(id);
     return res.status(200).json({
       message: 'Project found',
@@ -33,7 +33,29 @@ const getProjectsById = async (req, res) => {
   }
 };
 
+const createProject = async (req, res) => {
+  try {
+    const project = new Projects({
+      employees: req.body.employees,
+      name: req.body.name,
+      startDate: req.body.startDate,
+      description: req.body.description,
+    });
+    return res.status(201).json({
+      message: 'Project created successfully',
+      data: project,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: 'Cannot add new project',
+      error: true,
+    });
+  }
+};
+
 export default {
   getAllProjects,
   getProjectsById,
+  createProject,
 };
