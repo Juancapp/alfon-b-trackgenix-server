@@ -10,7 +10,7 @@ const getAllProjects = async (req, res) => {
     });
   } catch (error) {
     return res.json({
-      message: 'There was an error',
+      message: `Cannot find all projects ${error}`,
       error: true,
     });
   }
@@ -18,7 +18,7 @@ const getAllProjects = async (req, res) => {
 
 const getProjectsById = async (req, res) => {
   try {
-    const id = { id: Number(req.body.id) };
+    const { id } = req.params;
     const project = await Projects.findById(id);
     return res.status(200).json({
       message: 'Project found',
@@ -27,7 +27,7 @@ const getProjectsById = async (req, res) => {
     });
   } catch (error) {
     return res.json({
-      message: 'There was an error',
+      message: `Cannot find project by id ${error}`,
       error: true,
     });
   }
@@ -40,15 +40,18 @@ const createProject = async (req, res) => {
       name: req.body.name,
       startDate: req.body.startDate,
       description: req.body.description,
+      clientName: req.body.clientName,
+      active: req.body.active,
     });
+    const result = await project.save();
     return res.status(201).json({
       message: 'Project created successfully',
-      data: project,
+      data: result,
       error: false,
     });
   } catch (error) {
     return res.json({
-      message: 'Cannot add new project',
+      message: `Cannot add new project ${error}`,
       error: true,
     });
   }

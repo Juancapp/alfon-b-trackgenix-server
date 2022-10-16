@@ -9,7 +9,10 @@ const validateCreation = (req, res, next) => {
   const projectValidation = Joi.object({
     name: Joi.string().min(3).max(50).required(),
     startDate: Joi.date().required(),
+    endDate: Joi.date().greater(Joi.ref('startDate')),
     description: Joi.string().min(10).max(50).required(),
+    clientName: Joi.string().min(3).max(50).required(),
+    active: Joi.boolean().required(),
     employees: Joi.array().items(employeeValidation),
   });
 
