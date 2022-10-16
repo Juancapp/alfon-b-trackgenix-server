@@ -7,7 +7,7 @@ const port = 5000;
 
 app.use(express.json());
 
-app.use('/', routes);
+app.use(routes);
 
 const MONGO_URL = 'mongodb+srv://grupo-b:U7uZZXO4erJxLY5v@cluster0.xg4xgte.mongodb.net/?retryWrites=true&w=majority';
 
