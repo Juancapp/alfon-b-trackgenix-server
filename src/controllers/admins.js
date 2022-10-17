@@ -1,14 +1,5 @@
+import mongoose from 'mongoose';
 import Admins from '../models/Admins';
-
-const { ObjectId } = require('mongoose').Types;
-
-const isValidObjectId = (id) => {
-  if (ObjectId.isValid(id)) {
-    if ((String)(new ObjectId(id)) === id) { return true; }
-    return false;
-  }
-  return false;
-};
 
 const getAllAdmins = async (req, res) => {
   try {
@@ -27,10 +18,9 @@ const getAllAdmins = async (req, res) => {
   }
 };
 const getAdminById = async (req, res) => {
-  if (isValidObjectId(req.param.id)) {
-    return res.status(400).json({
-      message: 'Invalid ID',
-      error: true,
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: 'Not found',
     });
   }
   try {
