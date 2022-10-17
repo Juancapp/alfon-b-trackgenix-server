@@ -3,7 +3,7 @@ import Projects from '../models/Projects';
 const updateProject = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Projects.findByIdUpdate(
+    const result = await Projects.findByIdAndUpdate(
       { _id: id },
       { ...req.body },
       { new: true },
