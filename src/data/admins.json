@@ -1,71 +1,42 @@
-[
+{
+  "client": "Thunder Client",
+  "collectionName": "Admins",
+  "dateExported": "2022-10-17T21:13:36.700Z",
+  "version": "1.1",
+  "folders": [],
+  "requests": [
     {
-        "id":1,
-        "first_name":"Octavia",
-        "last_name":"Emanulsson",
-        "email":"oemanulsson0@miibeian.gov.cn",
-        "password":"vlLJf9Q"
+      "_id": "87261bd6-0aa4-4ca7-a1fe-8e4766af581e",
+      "colId": "88b2ebfd-7d99-43d6-9ef4-3cfbb8e72673",
+      "containerId": "",
+      "name": "DeleteAdmin",
+      "url": "localhost:5000/admins/634daeea02cbb806da2874fe",
+      "method": "DELETE",
+      "sortNum": 10000,
+      "created": "2022-10-17T20:40:17.607Z",
+      "modified": "2022-10-17T20:43:59.400Z",
+      "headers": [],
+      "params": [],
+      "tests": []
     },
     {
-        "id":2,
-        "first_name":"Lanita",
-        "last_name":"Tome",
-        "email":"ltome1@cyberchimps.com",
-        "password":"puWNONAz"
-    },
-    {
-        "id":3,
-        "first_name":"Ivan",
-        "last_name":"Gabbot",
-        "email":"igabbot2@newsvine.com",
-        "password":"1mgkYQbvtuz"
-    },
-    {
-        "id":4,
-        "first_name":"Fidelio",
-        "last_name":"Ruddy",
-        "email":"fruddy3@behance.net",
-        "password":"m2L9PX9M"
-    },
-    {
-        "id":5,
-        "first_name":"Ede",
-        "last_name":"Butt Gow",
-        "email":"ebuttgow4@fda.gov",
-        "password":"RPqGgoAOOrT"
-    },
-    {
-        "id":6,
-        "first_name":"Maurine",
-        "last_name":"Cason",
-        "email":"mcason5@pen.io",
-        "password":"zbT67J"
-    },
-    {
-        "id":7,
-        "first_name":"Zuzana",
-        "last_name":"Olesen",
-        "email":"zolesen6@guardian.co.uk",
-        "password":"EjNHWlY9U4RH"
-    },
-    {
-        "id":8,
-        "first_name":"Harriet",
-        "last_name":"Mulmuray",
-        "email":"hmulmuray7@networksolutions.com",
-        "password":"Ddc4ewet"
-    },
-    {
-        "id":9,
-        "first_name":"Candida",
-        "last_name":"Chivrall",
-        "email":"cchivrall8@weebly.com",
-        "password":"Ed78jkg"
-    },
-    {
-        "id":10,
-        "first_name":"Becca",
-        "last_name":"Jirzik",
-        "email":"bjirzik9@china.com.cn",
-        "password":"zDJkhvtIUzqr"
-    }]
+      "_id": "265df7f8-f2a3-4ca2-a45a-1b6828e0223d",
+      "colId": "88b2ebfd-7d99-43d6-9ef4-3cfbb8e72673",
+      "containerId": "",
+      "name": "UpdateAdmin",
+      "url": "localhost:5000/admins/634dbea8121070cfe5008375",
+      "method": "PUT",
+      "sortNum": 20000,
+      "created": "2022-10-17T20:45:03.775Z",
+      "modified": "2022-10-17T21:13:27.442Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n    \"name\": \"Maxi\",\n    \"lastName\": \"Delfino\",\n    \"email\": \"maxi@gmail.com\",\n    \"password\": \"asd123asd\"\n  }",
+        "form": []
+      },
+      "tests": []
+    }
+  ]
+}

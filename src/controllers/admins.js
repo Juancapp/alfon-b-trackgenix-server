@@ -6,12 +6,12 @@ const deleteAdmins = async (req, res) => {
     const admins = await Admins.findByIdAndDelete(id);
 
     return res.status(200).json({
-      message: 'Admin deleted',
+      message: 'Deleted successfully',
       data: admins,
       error: false,
     });
   } catch (err) {
-    return res.json({
+    return res.status(404).json({
       message: 'An error ocurred',
       error: err,
     });
@@ -28,12 +28,12 @@ const updateAdmins = async (req, res) => {
     );
 
     return res.status(200).json({
-      message: 'Admin updated',
+      message: `with id ${id} updated successfully`,
       data: admins,
       error: false,
     });
   } catch (err) {
-    return res.json({
+    return res.status(404).json({
       message: 'An error ocurred',
       error: err,
     });
