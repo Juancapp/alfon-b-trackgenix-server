@@ -17,7 +17,7 @@ const getAllTimesheets = async (req, res) => {
   }
 };
 
-const getAllTimesheetByID = async (req, res) => {
+const getTimesheetByID = async (req, res) => {
   try {
     const { id } = req.params;
     const timesheet = await Timesheets.findById(id);
@@ -59,6 +59,6 @@ const createTimesheet = async (req, res) => {
 
 export default {
   getAllTimesheets,
-  getAllTimesheetByID,
+  getTimesheetByID,
   createTimesheet,
 };
