@@ -5,6 +5,6 @@ import projectsValidations from '../validations/projects';
 const router = express.Router();
 
 router.delete('/:id', projectsControllers.deleteProject);
-router.put('/', projectsControllers.updateProject, projectsValidations.validateUpdate);
+router.put('/:id', projectsValidations.validateUpdate, projectsControllers.updateProject);
 
 export default router;

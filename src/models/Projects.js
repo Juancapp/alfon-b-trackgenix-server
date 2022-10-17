@@ -8,11 +8,11 @@ const projectSchema = new Schema({
   startDate: { type: Date },
   endDate: { type: Date },
   clientName: { type: String },
-  employees: {
-    id: { type: String },
+  employees: [{
+    name: { type: String },
     role: { type: String },
     rate: { type: String },
-  },
+  }],
   active: { type: Boolean },
 });
 

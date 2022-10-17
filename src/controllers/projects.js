@@ -1,36 +1,39 @@
 import Projects from '../models/Projects';
 
 const updateProject = async (req, res) => {
-  const reqBody = req.body;
   try {
-    const result = await Projects.findByIdAndUpdate(reqBody);
+    const { id } = req.params;
+    const result = await Projects.findByIdUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true },
+    );
 
     return res.status(200).json({
-      message: 'the project has been deleted',
+      message: 'The project has been updated',
       data: result,
       error: false,
     });
   } catch (error) {
     return res.json({
-      message: 'There has been an error',
+      message: `There has been an error: ${error}`,
       error: true,
     });
   }
 };
 
 const deleteProject = async (req, res) => {
-  const reqId = req.params.id;
   try {
-    const result = await Projects.findByIdAndDelete(reqId);
-
+    const { id } = req.params;
+    const result = await Projects.findByIdAndDelete(id);
     return res.status(200).json({
-      message: 'Se borro el project',
+      message: 'The project has been deleted',
       data: result,
       error: false,
     });
   } catch (error) {
     return res.json({
-      message: 'There has been an error',
+      message: `There has been an error: ${error}`,
       error: true,
     });
   }
