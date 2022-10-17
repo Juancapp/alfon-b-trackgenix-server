@@ -2,8 +2,10 @@ import Joi from 'joi';
 
 const validateCreation = (req, res, next) => {
   const employeesValidation = Joi.object({
-    name: Joi.string().min(3).max(50).pattern(/^[A-Za-z]+$/).required(),
-    last_name: Joi.string().min(3).max(50).pattern(/^[A-Za-z]+$/).required(),
+    name: Joi.string().min(3).max(50).pattern(/^[A-Za-z]+$/)
+      .required(),
+    last_name: Joi.string().min(3).max(50).pattern(/^[A-Za-z]+$/)
+      .required(),
     phone: Joi.string().min(8).max(15).pattern(/[0-9]/)
       .required(),
     email: Joi.string().lowercase().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
@@ -16,9 +18,9 @@ const validateCreation = (req, res, next) => {
 
   if (validation.error) {
     return res.status(400).json({
-        message: `There was an error: ${validation.error.details[0].message}`,
-        data: undefined ,
-        error: true ,
+      message: `There was an error: ${validation.error.details[0].message}`,
+      data: undefined,
+      error: true,
     });
   }
   return next();
