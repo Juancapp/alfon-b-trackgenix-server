@@ -16,4 +16,6 @@ const validateTask = (req, res, next) => {
   return next();
 };
 
-export default validateTask;
+export default {
+  validateTask,
+};

@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
-const taskSchema = new mongoose.Schema({
-  id: Number,
+const { Schema } = mongoose;
+
+const taskSchema = new Schema({
   description: { type: String },
 });
 
