@@ -7,6 +7,6 @@ const router = express.Router();
 router
   .get('/', employeeControllers.getAllEmployees)
   .get('/:id', employeeControllers.getEmployeeById)
-  .post('/', validateEmployees, employeeControllers.createEmployee);
+  .post('/', validateEmployees, employeeControllers.newEmployee);
 
 export default router;

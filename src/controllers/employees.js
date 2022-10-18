@@ -6,7 +6,7 @@ const getAllEmployees = async (req, res) => {
     const employees = await Employees.find();
 
     return res.status(200).json({
-      message: 'Employees founded successfully',
+      message: 'Employees found successfully',
       data: employees,
       error: false,
     });
@@ -34,7 +34,7 @@ const getEmployeeById = async (req, res) => {
 
     if (employee) {
       return res.status(200).json({
-        message: 'Employee founded',
+        message: 'Employee found successfully',
         data: employee,
         error: false,
       });
@@ -53,7 +53,7 @@ const getEmployeeById = async (req, res) => {
   }
 };
 
-const createEmployee = async (req, res) => {
+const newEmployee = async (req, res) => {
   try {
     const employeeCreated = new Employees({
       name: req.body.name,
@@ -83,5 +83,5 @@ const createEmployee = async (req, res) => {
 export default {
   getAllEmployees,
   getEmployeeById,
-  createEmployee,
+  newEmployee,
 };
