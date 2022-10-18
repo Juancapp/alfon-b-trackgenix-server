@@ -5,7 +5,7 @@ const getAllAdmins = async (req, res) => {
   try {
     const admins = await Admins.find();
 
-    if (!admins) {
+    if (admins.length) {
       return res.status(404).json({
         message: 'Admins not found',
         data: undefined,
