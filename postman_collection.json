@@ -1,17 +1,81 @@
 {
-    "info": {
-        "_postman_id": "99971e4c-8e72-4e00-bf0f-64694401b0c3",
-        "name": "postman_collection",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
-        {
-            "name": "localhost:5000/projects",
-            "request": {
-                "method": "GET",
-                "header": []
-            },
-            "response": []
-        }
-    ]
+	"info": {
+		"_postman_id": "d41c95a8-3c4f-4cb0-b24d-5731ec882084",
+		"name": "postman_collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23770743"
+	},
+	"item": [
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/employees/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"employees",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634b0d231f7bd6bb6819f5ba"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n     \"name\": \"Rama\",\r\n     \"last_name\": \"Amadeo\",\r\n     \"phone\": \"546545643\",\r\n     \"email\": \"raamadeo@gmail.com\",\r\n     \"password\": \"LibBQkAa49\",\r\n     \"dni\": \"123456789\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/employees/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"employees",
+								":id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634d710f8c3906aafccddf2b"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
 }
