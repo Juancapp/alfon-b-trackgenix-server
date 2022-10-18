@@ -21,7 +21,7 @@ const deleteAdmins = async (req, res) => {
       });
     }
     return res.status(404).json({
-      message: 'Admin not found',
+      message: `Admin with id ${id} not found`,
       data: undefined,
       error: true,
     });
@@ -51,13 +51,13 @@ const updateAdmins = async (req, res) => {
     );
     if (admins) {
       return res.status(200).json({
-        message: `with id ${id} updated successfully`,
+        message: `Admin with id ${id} updated successfully`,
         data: admins,
         error: false,
       });
     }
     return res.status(404).json({
-      message: 'Admin not found',
+      message: `Admin with id ${id} not found`,
       data: undefined,
       error: true,
     });
