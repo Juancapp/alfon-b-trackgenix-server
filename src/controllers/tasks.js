@@ -1,19 +1,21 @@
+import mongoose from 'mongoose';
 import Tasks from '../models/Tasks';
 
-const createTask = async (req, res) => {
+const newTask = async (req, res) => {
   try {
-    const task = new Tasks({
+    const newtask = new Tasks({
       description: req.body.description,
     });
-    const result = await task.save();
+    const result = await newtask.save();
     return res.status(201).json({
       message: 'Task created successfully',
       data: result,
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `Cannot create Task: ${error}`,
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
       error: true,
     });
   }
@@ -29,25 +31,41 @@ const getAllTasks = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `Cannot get all Tasks:  ${error}`,
+    return res.status(500).json({
+      message: `Server error:  ${error}`,
+      data: undefined,
       error,
     });
   }
 };
 
 const getTasksById = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: `Task with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  }
   try {
     const { id } = req.params;
     const task = await Tasks.findById(id);
-    return res.status(200).json({
-      message: `Task with ${id} found successfully`,
-      data: task,
-      error: false,
+    if (task) {
+      return res.status(200).json({
+        message: `Task with ${id} found successfully`,
+        data: task,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `Task with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `Cannot get Task: ${error}`,
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
       error: true,
     });
   }
@@ -56,5 +74,5 @@ const getTasksById = async (req, res) => {
 export default {
   getAllTasks,
   getTasksById,
-  createTask,
+  newTask,
 };
