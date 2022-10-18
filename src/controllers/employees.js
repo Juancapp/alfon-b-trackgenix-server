@@ -12,7 +12,7 @@ const getAllEmployees = async (req, res) => {
     });
   } catch (error) {
     return res.status(404).json({
-      message: `Employees not founded ${error}`,
+      message: `Employees not found ${error}`,
       data: undefined,
       error: true,
     });
@@ -40,7 +40,7 @@ const getEmployeeById = async (req, res) => {
       });
     }
     return res.status(404).json({
-      message: `Employee with id ${employeeId} not founded`,
+      message: `Employee with id ${employeeId} not found`,
       data: undefined,
       error: true,
     });
