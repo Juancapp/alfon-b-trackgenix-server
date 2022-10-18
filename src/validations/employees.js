@@ -9,7 +9,7 @@ const validateEmployees = (req, res, next) => {
     phone: Joi.string().min(8).max(15).pattern(/[0-9]/)
       .required(),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-    password: Joi.string().pattern(/^[a-zA-Z0-9]{3,30}$/).required(),
+    password: Joi.string().pattern(/^[a-zA-Z0-9]{8,50}$/).required(),
     dni: Joi.string().min(6).max(12).pattern(/[0-9]/)
       .required(),
   });
