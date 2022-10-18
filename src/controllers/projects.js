@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 import Projects from '../models/Projects';
 
-const getAllProjects = async (req, res) => {
+const projects = async (req, res) => {
   try {
     const project = await Projects.find();
     return res.status(200).json({
-      message: 'Project found successfully',
+      message: 'Projects found successfully',
       data: project,
       error: false,
     });
@@ -31,7 +31,7 @@ const getProjectsById = async (req, res) => {
     const project = await Projects.findById(projectId);
     if (project) {
       return res.status(200).json({
-        message: 'Project found',
+        message: `Project whit id ${projectId} found successfully`,
         data: project,
         error: false,
       });
@@ -44,12 +44,13 @@ const getProjectsById = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: `Server error: ${error}`,
+      data: undefined,
       error: true,
     });
   }
 };
 
-const createProject = async (req, res) => {
+const newProject = async (req, res) => {
   try {
     const project = new Projects({
       employees: req.body.employees,
@@ -75,7 +76,7 @@ const createProject = async (req, res) => {
 };
 
 export default {
-  getAllProjects,
+  projects,
   getProjectsById,
-  createProject,
+  newProject,
 };
