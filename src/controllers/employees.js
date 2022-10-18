@@ -1,6 +1,6 @@
 import employees from '../models/Employees';
 
-const editEmployees = async (req, res) => {
+const updatedEmployee = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await employees.findByIdAndUpdate(
@@ -23,12 +23,13 @@ const editEmployees = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: `Server error: ${error}`,
-      error,
+      data: undefined,
+      error: true,
     });
   }
 };
 
-const deleteEmployees = async (req, res) => {
+const deletedEmployee = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await employees.findByIdAndDelete(id);
@@ -55,6 +56,6 @@ const deleteEmployees = async (req, res) => {
 };
 
 export default {
-  editEmployees,
-  deleteEmployees,
+  updatedEmployee,
+  deletedEmployee,
 };
