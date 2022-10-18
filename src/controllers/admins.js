@@ -1,24 +1,47 @@
+import mongoose from 'mongoose';
 import Admins from '../models/Admins';
 
 const deleteAdmins = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: 'id invalid',
+      data: undefined,
+      error: true,
+    });
+  }
   try {
     const { id } = req.params;
     const admins = await Admins.findByIdAndDelete(id);
 
-    return res.status(200).json({
-      message: 'Deleted successfully',
-      data: admins,
-      error: false,
+    if (admins) {
+      return res.status(200).json({
+        message: 'Deleted successfully',
+        data: admins,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: 'Admin not found',
+      data: undefined,
+      error: true,
     });
   } catch (err) {
-    return res.status(404).json({
+    return res.status(500).json({
       message: 'An error ocurred',
+      data: undefined,
       error: err,
     });
   }
 };
 
 const updateAdmins = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: 'id invalid',
+      data: undefined,
+      error: true,
+    });
+  }
   try {
     const { id } = req.params;
     const admins = await Admins.findByIdAndUpdate(
@@ -26,15 +49,22 @@ const updateAdmins = async (req, res) => {
       { ...req.body },
       { new: true },
     );
-
-    return res.status(200).json({
-      message: `with id ${id} updated successfully`,
-      data: admins,
-      error: false,
+    if (admins) {
+      return res.status(200).json({
+        message: `with id ${id} updated successfully`,
+        data: admins,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: 'Admin not found',
+      data: undefined,
+      error: true,
     });
   } catch (err) {
-    return res.status(404).json({
+    return res.status(500).json({
       message: 'An error ocurred',
+      data: undefined,
       error: err,
     });
   }
