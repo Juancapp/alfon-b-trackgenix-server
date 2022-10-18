@@ -4,15 +4,15 @@ const deleteTimesheets = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await Timesheets.findByIdAndDelete(id);
-    return res.status(204).json({
+    return res.status(200).json({
       message: `Timesheet with id ${id} deleted`,
       data: result,
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'An error occurred',
-      error,
+    return res.status(400).json({
+      message: `Cannot delete Timesheet ${error}`,
+      error: true,
     });
   }
 };
@@ -32,9 +32,9 @@ const editTimesheets = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'An error ocurred',
-      error,
+    return res.status(400).json({
+      message: `Error editing the timesheet ${error}`,
+      error: true,
     });
   }
 };
