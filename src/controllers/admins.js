@@ -15,7 +15,7 @@ const deleteAdmins = async (req, res) => {
 
     if (admins) {
       return res.status(200).json({
-        message: 'Deleted successfully',
+        message: 'Admin deleted successfully',
         data: admins,
         error: false,
       });
@@ -27,9 +27,9 @@ const deleteAdmins = async (req, res) => {
     });
   } catch (err) {
     return res.status(500).json({
-      message: 'An error ocurred',
+      message: `Server Error ${err}`,
       data: undefined,
-      error: err,
+      error: true,
     });
   }
 };
@@ -63,9 +63,9 @@ const updateAdmins = async (req, res) => {
     });
   } catch (err) {
     return res.status(500).json({
-      message: 'An error ocurred',
+      message: `Server Error ${err}`,
       data: undefined,
-      error: err,
+      error: true,
     });
   }
 };
