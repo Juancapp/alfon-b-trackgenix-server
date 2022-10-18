@@ -13,7 +13,7 @@ const createTask = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: `Cannot add new task: ${error}`,
+      message: `Cannot create Task: ${error}`,
       error: true,
     });
   }
@@ -24,13 +24,13 @@ const getAllTasks = async (req, res) => {
     const tasks = await Tasks.find();
 
     return res.status(200).json({
-      message: 'Tasks found',
+      message: 'Tasks found successfully',
       data: tasks,
       error: false,
     });
   } catch (error) {
     return res.status(400).json({
-      message: `An error ocurred:  ${error}`,
+      message: `Cannot get all Tasks:  ${error}`,
       error,
     });
   }
@@ -41,13 +41,13 @@ const getTasksById = async (req, res) => {
     const { id } = req.params;
     const task = await Tasks.findById(id);
     return res.status(200).json({
-      message: 'Task found',
+      message: `Task with ${id} found successfully`,
       data: task,
       error: false,
     });
   } catch (error) {
     return res.status(400).json({
-      message: `There was an error: ${error}`,
+      message: `Cannot get Task: ${error}`,
       error: true,
     });
   }
