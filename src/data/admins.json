@@ -1,42 +1,57 @@
 {
-  "client": "Thunder Client",
-  "collectionName": "Admins",
-  "dateExported": "2022-10-17T21:13:36.700Z",
-  "version": "1.1",
-  "folders": [],
-  "requests": [
-    {
-      "_id": "87261bd6-0aa4-4ca7-a1fe-8e4766af581e",
-      "colId": "88b2ebfd-7d99-43d6-9ef4-3cfbb8e72673",
-      "containerId": "",
-      "name": "DeleteAdmin",
-      "url": "localhost:5000/admins/634daeea02cbb806da2874fe",
-      "method": "DELETE",
-      "sortNum": 10000,
-      "created": "2022-10-17T20:40:17.607Z",
-      "modified": "2022-10-17T20:43:59.400Z",
-      "headers": [],
-      "params": [],
-      "tests": []
-    },
-    {
-      "_id": "265df7f8-f2a3-4ca2-a45a-1b6828e0223d",
-      "colId": "88b2ebfd-7d99-43d6-9ef4-3cfbb8e72673",
-      "containerId": "",
-      "name": "UpdateAdmin",
-      "url": "localhost:5000/admins/634dbea8121070cfe5008375",
-      "method": "PUT",
-      "sortNum": 20000,
-      "created": "2022-10-17T20:45:03.775Z",
-      "modified": "2022-10-17T21:13:27.442Z",
-      "headers": [],
-      "params": [],
-      "body": {
-        "type": "json",
-        "raw": "{\n    \"name\": \"Maxi\",\n    \"lastName\": \"Delfino\",\n    \"email\": \"maxi@gmail.com\",\n    \"password\": \"asd123asd\"\n  }",
-        "form": []
-      },
-      "tests": []
-    }
-  ]
+	"info": {
+		"_postman_id": "33b68ed0-c679-4667-8a2c-332f58b0abb4",
+		"name": "Admins",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23934902"
+	},
+	"item": [
+		{
+			"name": "DeleteAdmin",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/admins/634df7f1121070cfe5008379",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"634df7f1121070cfe5008379"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAdmin",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"abcd1234\",\r\n    \"email\": \"maxi@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/admins/634e8eb22df3de25a92c4cf7",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"634e8eb22df3de25a92c4cf7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
 }
