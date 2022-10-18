@@ -4,8 +4,9 @@ import adminValidation from '../validations/admins';
 
 const router = express.Router();
 
-router.get('/', adminsControllers.getAllAdmins);
-router.get('/:id', adminsControllers.getAdminById);
-router.post('/', adminValidation.validateAdmin, adminsControllers.createAdmin);
+router
+  .get('/', adminsControllers.getAllAdmins)
+  .get('/:id', adminsControllers.getAdminById)
+  .post('/', adminValidation.validateAdmin, adminsControllers.createAdmin);
 
 export default router;
