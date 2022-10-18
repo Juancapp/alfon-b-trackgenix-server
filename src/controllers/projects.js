@@ -10,7 +10,7 @@ const projects = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(404).json({
+    return res.status(500).json({
       message: `Projects not found ${error}`,
       data: undefined,
       error: true,
