@@ -62,11 +62,11 @@ const createSuperAdmin = async (req, res) => {
       phone: req.body.phone,
     });
 
-    const result = await newSuperAdmin.save();
+    const createdSuperAdmin = await newSuperAdmin.save();
 
     return res.status(201).json({
       message: 'SuperAdmin created successfully',
-      data: result,
+      data: createdSuperAdmin,
       error: false,
     });
   } catch (error) {
