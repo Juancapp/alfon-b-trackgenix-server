@@ -5,15 +5,23 @@ const getAllTimesheets = async (req, res) => {
   try {
     const timesheets = await Timesheets.find();
 
+    if (!timesheets) {
+      return res.status(404).json({
+        message: 'Timesheets not found',
+        data: undefined,
+        error: true,
+      });
+    }
     return res.status(200).json({
       message: 'Timesheets found successfully',
       data: timesheets,
       error: false,
     });
   } catch (error) {
-    return res.status(404).json({
-      message: `Timesheets not found ${error}`,
-      error,
+    return res.status(500).json({
+      message: `Server error ${error}`,
+      data: undefined,
+      error: true,
     });
   }
 };
