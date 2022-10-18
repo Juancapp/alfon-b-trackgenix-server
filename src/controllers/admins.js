@@ -5,41 +5,54 @@ const getAllAdmins = async (req, res) => {
   try {
     const admins = await Admins.find();
 
+    if (!admins) {
+      return res.status(404).json({
+        message: 'Admins not found',
+        data: undefined,
+        error: true,
+      });
+    }
+
     return res.status(200).json({
-      message: 'Admins found',
+      message: 'Admins found successfully',
       data: admins,
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'An error ocurred',
-      error,
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
+      error: true,
     });
   }
 };
 const getAdminById = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(404).json({
-      message: 'Not found',
+    return res.status(400).json({
+      message: `Cannot get Admin by ${req.params.id}`,
+      data: undefined,
+      error: true,
     });
   }
   try {
     const admin = await Admins.findById(req.params.id);
     if (admin) {
       return res.status(200).json({
-        msg: 'ID existe',
+        message: `Admin with id ${req.params.id} found successfully`,
         data: admin,
         error: false,
       });
     }
     return res.status(404).json({
-      message: 'Admin no found',
+      message: `Admin with id ${req.params.id} not found`,
+      data: undefined,
       error: true,
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'ERROR',
-      error,
+      message: `Server error: ${error}`,
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -55,15 +68,17 @@ const createAdmin = async (req, res) => {
     });
 
     const result = await admin.save();
+
     return res.status(200).json({
-      message: 'Admin created',
+      message: 'Admin created successfully',
       data: result,
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'An error ocurred',
-      error,
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
+      error: true,
     });
   }
 };
