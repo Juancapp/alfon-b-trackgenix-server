@@ -53,9 +53,9 @@ const getEmployeeById = async (req, res) => {
   }
 };
 
-const newEmployee = async (req, res) => {
+const createEmployee = async (req, res) => {
   try {
-    const employeeCreated = new Employees({
+    const newEmployee = new Employees({
       name: req.body.name,
       last_name: req.body.last_name,
       phone: req.body.phone,
@@ -64,7 +64,7 @@ const newEmployee = async (req, res) => {
       dni: req.body.dni,
     });
 
-    const result = await employeeCreated.save();
+    const result = await newEmployee.save();
 
     return res.status(201).json({
       message: 'Employee created successfully',
@@ -83,5 +83,5 @@ const newEmployee = async (req, res) => {
 export default {
   getAllEmployees,
   getEmployeeById,
-  newEmployee,
+  createEmployee,
 };
