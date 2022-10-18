@@ -5,7 +5,7 @@ const getAllTimesheets = async (req, res) => {
   try {
     const timesheets = await Timesheets.find();
 
-    if (!timesheets) {
+    if (!timesheets.length) {
       return res.status(404).json({
         message: 'Timesheets not found',
         data: undefined,
