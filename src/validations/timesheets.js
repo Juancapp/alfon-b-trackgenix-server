@@ -11,7 +11,7 @@ const validateTimeSheets = (req, res, next) => {
 
   if (validation.error) {
     return res.status(400).json({
-      message: `The was an error: ${validation.details[0].message}`,
+      message: `There was an error: ${validation.details[0].message}`,
       data: undefined,
       error: true,
     });

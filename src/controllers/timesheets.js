@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Timesheets from '../models/Timesheets';
 
 const getAllTimesheets = async (req, res) => {
@@ -5,53 +6,69 @@ const getAllTimesheets = async (req, res) => {
     const timesheets = await Timesheets.find();
 
     return res.status(200).json({
-      message: 'Timesheet found',
+      message: 'Timesheets found successfully',
       data: timesheets,
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'An error occurred',
+    return res.status(404).json({
+      message: `Timesheets not found ${error}`,
       error,
     });
   }
 };
 
 const getTimesheetByID = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const timesheet = await Timesheets.findById(id);
+  const timesheetId = req.params.id;
 
-    return res.status(200).json({
-      message: 'Timesheet found',
-      data: timesheet,
-      error: false,
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(timesheetId)) {
+    return res.status(404).json({
+      message: `Cannot get timesheet by ${timesheetId}`,
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const timesheet = await Timesheets.findById(timesheetId);
+    if (timesheet) {
+      return res.status(200).json({
+        message: `Timesheet with id ${timesheetId} found successfully`,
+        data: timesheet,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `Timesheet with id ${timesheetId} not found`,
+      data: undefined,
+      error: true,
     });
   } catch (error) {
-    return res.json({
-      message: 'An error occurred',
-      error,
+    return res.status(500).json({
+      message: `Server error ${error}`,
+      data: undefined,
+      error: true,
     });
   }
 };
 
 const createTimesheet = async (req, res) => {
   try {
-    const timesheet = new Timesheets({
+    const newTimesheet = new Timesheets({
       description: req.body.description,
       date: req.body.date,
       task: req.body.task,
     });
 
-    const result = await timesheet.save();
+    const result = await newTimesheet.save();
     return res.status(201).json({
       message: 'Timesheet created successfully.',
       data: result,
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: 'An error occurred',
+    return res.status(500).json({
+      message: `Server Error ${error}`,
+      data: undefined,
       error,
     });
   }
