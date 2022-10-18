@@ -11,12 +11,12 @@ const deleteAdmins = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const admins = await Admins.findByIdAndDelete(id);
+    const deleteAdmin = await Admins.findByIdAndDelete(id);
 
-    if (admins) {
+    if (deleteAdmin) {
       return res.status(200).json({
         message: 'Admin deleted successfully',
-        data: admins,
+        data: deleteAdmin,
         error: false,
       });
     }
@@ -44,15 +44,15 @@ const updateAdmins = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const admins = await Admins.findByIdAndUpdate(
+    const updateAdmin = await Admins.findByIdAndUpdate(
       { _id: id },
       { ...req.body },
       { new: true },
     );
-    if (admins) {
+    if (updateAdmin) {
       return res.status(200).json({
         message: `Admin with id ${id} updated successfully`,
-        data: admins,
+        data: updateAdmin,
         error: false,
       });
     }
