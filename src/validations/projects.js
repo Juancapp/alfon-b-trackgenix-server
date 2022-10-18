@@ -19,7 +19,7 @@ const validateCreation = (req, res, next) => {
   const validation = projectValidation.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      message: `There was an error: ${validation.error.details[0].message}`,
+      message: `Cannot create project: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });

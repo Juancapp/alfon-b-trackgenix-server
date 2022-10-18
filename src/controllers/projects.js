@@ -1,33 +1,49 @@
+import mongoose from 'mongoose';
 import Projects from '../models/Projects';
 
 const getAllProjects = async (req, res) => {
   try {
     const project = await Projects.find();
     return res.status(200).json({
-      message: 'Project found',
+      message: 'Project found successfully',
       data: project,
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: `Cannot find all projects ${error}`,
+    return res.status(404).json({
+      message: `Projects not found ${error}`,
+      data: undefined,
       error: true,
     });
   }
 };
 
 const getProjectsById = async (req, res) => {
+  const projectId = req.params.id;
+  if (projectId && !mongoose.Types.ObjectId.isValid(projectId)) {
+    return res.status(400).json({
+      message: `Cannot get project by ${projectId}`,
+      data: undefined,
+      error: true,
+    });
+  }
   try {
-    const { id } = req.params;
-    const project = await Projects.findById(id);
-    return res.status(200).json({
-      message: 'Project found',
-      data: project,
+    const project = await Projects.findById(projectId);
+    if (project) {
+      return res.status(200).json({
+        message: 'Project found',
+        data: project,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `Project whit Id ${projectId} not found`,
+      data: undefined,
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: `Cannot find project by id ${error}`,
+    return res.status(500).json({
+      message: `Server error: ${error}`,
       error: true,
     });
   }
@@ -50,9 +66,10 @@ const createProject = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: `Cannot add new project ${error}`,
+    return res.status(500).json({
+      message: `Server error: ${error}`,
       error: true,
+      data: undefined,
     });
   }
 };
