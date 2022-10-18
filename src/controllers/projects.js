@@ -11,15 +11,15 @@ const updateProject = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const result = await Projects.findByIdAndUpdate(
+    const project = await Projects.findByIdAndUpdate(
       { _id: id },
       { ...req.body },
       { new: true },
     );
-    if (result) {
+    if (project) {
       return res.status(200).json({
         message: `Project with id ${req.params.id} updated successfully`,
-        data: result,
+        data: project,
         error: false,
       });
     }
@@ -31,6 +31,7 @@ const updateProject = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: `Server error: ${error}`,
+      data: undefined,
       error: true,
     });
   }
@@ -46,11 +47,11 @@ const deleteProject = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const result = await Projects.findByIdAndDelete(id);
-    if (result) {
+    const project = await Projects.findByIdAndDelete(id);
+    if (project) {
       return res.status(200).json({
         message: 'Project deleted successfully',
-        data: result,
+        data: project,
         error: false,
       });
     }
@@ -62,6 +63,7 @@ const deleteProject = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: `Server error: ${error}`,
+      data: undefined,
       error: true,
     });
   }
