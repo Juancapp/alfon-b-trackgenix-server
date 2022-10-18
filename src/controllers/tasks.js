@@ -1,26 +1,6 @@
 import mongoose from 'mongoose';
 import Tasks from '../models/Tasks';
 
-const newTask = async (req, res) => {
-  try {
-    const newtask = new Tasks({
-      description: req.body.description,
-    });
-    const result = await newtask.save();
-    return res.status(201).json({
-      message: 'Task created successfully',
-      data: result,
-      error: false,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: `Server error: ${error}`,
-      data: undefined,
-      error: true,
-    });
-  }
-};
-
 const getAllTasks = async (req, res) => {
   try {
     const tasks = await Tasks.find();
@@ -61,6 +41,26 @@ const getTasksById = async (req, res) => {
       message: `Task with id ${req.params.id} not found`,
       data: undefined,
       error: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+const newTask = async (req, res) => {
+  try {
+    const newtask = new Tasks({
+      description: req.body.description,
+    });
+    const result = await newtask.save();
+    return res.status(201).json({
+      message: 'Task created successfully',
+      data: result,
+      error: false,
     });
   } catch (error) {
     return res.status(500).json({
