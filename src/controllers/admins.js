@@ -5,7 +5,7 @@ const getAllAdmins = async (req, res) => {
   try {
     const admins = await Admins.find();
 
-    if (admins.length) {
+    if (!admins.length) {
       return res.status(404).json({
         message: 'Admins not found',
         data: undefined,
@@ -58,7 +58,7 @@ const getAdminById = async (req, res) => {
 };
 const createAdmin = async (req, res) => {
   try {
-    const admin = new Admins({
+    const newAdmin = new Admins({
       name: req.body.name,
       lastName: req.body.lastName,
       email: req.body.email,
@@ -67,9 +67,9 @@ const createAdmin = async (req, res) => {
       phone: req.body.phone,
     });
 
-    const result = await admin.save();
+    const result = await newAdmin.save();
 
-    return res.status(200).json({
+    return res.status(201).json({
       message: 'Admin created successfully',
       data: result,
       error: false,
