@@ -21,7 +21,7 @@ const validateUpdate = (req, res, next) => {
 
   if (validation.error) {
     return res.status(400).json({
-      message: `There has been an error: ${validation.error.details[0].message}`,
+      message: `Cannot update project: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });

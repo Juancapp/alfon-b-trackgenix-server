@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "53021b2e-5131-498b-aeb5-7888b9220a78",
+		"_postman_id": "5fec5c46-d907-468e-8fa9-a04719c780ac",
 		"name": "postman_collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"name": "Delete Project",
 					"request": {
-						"method": "PUT",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -35,7 +35,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "634c79c4ee4092295c79aa63"
+									"value": "634dec8172c35598f59d93c1"
 								}
 							]
 						}
@@ -49,7 +49,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"employees\": [{\r\n         \"name\": \"jose\",\r\n        \"role\": \"DEV\",\r\n        \"rate\": 45\r\n    }],\r\n    \"name\": \"project-i\",\r\n    \"startDate\": \"2022-09-11T17:26:04.000Z\",\r\n    \"endDate\": \"2022-10-11T17:26:04.000Z\",\r\n    \"description\": \"dasdasdasdasdasdasdasddasdasdasd\",\r\n    \"clientName\": \"pogba\"\r\n}",
+							"raw": "{\r\n    \"employees\": [{\r\n         \"name\": \"jose\",\r\n        \"role\": \"DEV\",\r\n        \"rate\": 45\r\n    }],\r\n    \"name\": \"project-i\",\r\n    \"startDate\": \"2022-09-11T17:26:04.000Z\",\r\n    \"endDate\": \"2022-10-11T17:26:04.000Z\",\r\n    \"description\": \"dasdasdasdasdasdasdasddasdasdasd\",\r\n    \"clientName\": \"pogba\",\r\n    \"active\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -69,7 +69,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "634c79c4ee4092295c79aa63"
+									"value": "634dec8172c35598f59d93c1"
 								}
 							]
 						}
