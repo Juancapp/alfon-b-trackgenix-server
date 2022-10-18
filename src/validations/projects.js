@@ -2,19 +2,19 @@ import Joi from 'joi';
 
 const validateUpdate = (req, res, next) => {
   const employeeValidation = Joi.object({
-    name: Joi.string().min(3).max(50),
-    role: Joi.string().valid('DEV', 'QA', 'TL', 'PM'),
-    rate: Joi.number().min(0),
+    name: Joi.string().min(3).max(50).required(),
+    role: Joi.string().valid('DEV', 'QA', 'TL', 'PM').required(),
+    rate: Joi.number().min(0).required(),
   });
 
   const projectValidation = Joi.object({
-    name: Joi.string().min(3).max(50),
-    description: Joi.string().min(10).max(100),
-    startDate: Joi.date(),
+    name: Joi.string().min(3).max(50).required(),
+    description: Joi.string().min(10).max(100).required(),
+    startDate: Joi.date().required(),
     endDate: Joi.date().greater(Joi.ref('startDate')),
-    clientName: Joi.string().min(3).max(50),
+    clientName: Joi.string().min(3).max(50).required(),
     employees: Joi.array().items(employeeValidation),
-    active: Joi.boolean(),
+    active: Joi.boolean().required(),
   });
 
   const validation = projectValidation.validate(req.body);

@@ -11,15 +11,15 @@ const updateProject = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const project = await Projects.findByIdAndUpdate(
+    const updatedProject = await Projects.findByIdAndUpdate(
       { _id: id },
       { ...req.body },
       { new: true },
     );
-    if (project) {
+    if (updatedProject) {
       return res.status(200).json({
         message: `Project with id ${req.params.id} updated successfully`,
-        data: project,
+        data: updatedProject,
         error: false,
       });
     }
@@ -47,11 +47,11 @@ const deleteProject = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const project = await Projects.findByIdAndDelete(id);
-    if (project) {
+    const deletedProject = await Projects.findByIdAndDelete(id);
+    if (deletedProject) {
       return res.status(200).json({
         message: 'Project deleted successfully',
-        data: project,
+        data: deletedProject,
         error: false,
       });
     }
