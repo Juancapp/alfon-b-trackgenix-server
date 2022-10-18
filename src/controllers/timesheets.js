@@ -13,28 +13,28 @@ const deleteTimesheets = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const result = await Timesheets.findByIdAndDelete(id);
-    if (result) {
+    const deleteTimesheet = await Timesheets.findByIdAndDelete(id);
+    if (deleteTimesheet) {
       return res.status(200).json({
         message: `Timesheet with id ${id} successfully deleted`,
-        data: result,
+        data: deleteTimesheet,
         error: false,
       });
     }
     return res.status(404).json({
       message: `Timesheet wuth id ${id} not found`,
-      date: result,
+      date: undefined,
       error: true,
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       message: `Cannot delete Timesheet ${error}`,
       error: true,
     });
   }
 };
 
-const editTimesheets = async (req, res) => {
+const updateTimesheets = async (req, res) => {
   const timesheetId = req.params.id;
 
   if (req.params.id && !mongoose.Types.ObjectId.isValid(timesheetId)) {
@@ -46,15 +46,15 @@ const editTimesheets = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const result = await Timesheets.findByIdAndUpdate(
+    const updatedTimesheet = await Timesheets.findByIdAndUpdate(
       { _id: id },
       { ...req.body },
       { new: true },
     );
-    if (result) {
+    if (updatedTimesheet) {
       return res.status(200).json({
         message: `Timesheet with id ${id} updated successfully`,
-        data: result,
+        data: updatedTimesheet,
         error: true,
       });
     }
@@ -66,12 +66,13 @@ const editTimesheets = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: `Error editing the timesheet ${error}`,
+      data: undefined,
       error: true,
     });
   }
 };
 
 export default {
-  editTimesheets,
+  updateTimesheets,
   deleteTimesheets,
 };

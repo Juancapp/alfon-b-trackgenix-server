@@ -6,6 +6,6 @@ const router = express.Router();
 
 router
   .delete('/:id', timesheetsControllers.deleteTimesheets)
-  .put('/:id', timesheetsValidation.validateTimesheets, timesheetsControllers.editTimesheets);
+  .put('/:id', timesheetsValidation.validateTimesheets, timesheetsControllers.updateTimesheets);
 
 export default router;
