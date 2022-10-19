@@ -26,6 +26,7 @@ const getAllAdmins = async (req, res) => {
     });
   }
 };
+
 const getAdminById = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(400).json({
@@ -56,6 +57,7 @@ const getAdminById = async (req, res) => {
     });
   }
 };
+
 const createAdmin = async (req, res) => {
   try {
     const newAdmin = new Admins({
