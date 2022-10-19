@@ -5,7 +5,7 @@ import employeesValidations from '../validations/employees';
 const router = express.Router();
 
 router
-  .put('/:id', employeesValidations.validateCreation, employeesControllers.updatedEmployee)
-  .delete('/:id', employeesControllers.deletedEmployee);
+  .put('/:id', employeesValidations.validateCreation, employeesControllers.updateEmployee)
+  .delete('/:id', employeesControllers.deleteEmployee);
 
 export default router;
