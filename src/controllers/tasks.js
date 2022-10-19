@@ -31,6 +31,13 @@ const updateTask = async (req, res) => {
 };
 
 const deleteTask = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: `Task with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  }
   try {
     const { id } = req.params;
     const deletedTask = await Tasks.findByIdAndDelete(id);
