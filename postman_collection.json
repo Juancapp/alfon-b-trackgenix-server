@@ -149,17 +149,6 @@
 				}
 			]
 		},
-		{
-			"name": "localhost:5000/projects",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": ""
-				}
-			},
-			"response": []
-		},
     {
         "name": "Projects",
         "item": [
