@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 import Projects from '../models/Projects';
 
-const projects = async (req, res) => {
+const getAllProjects = async (req, res) => {
   try {
-    const project = await Projects.find();
+    const projects = await Projects.find();
     return res.status(200).json({
       message: 'Projects found successfully',
-      data: project,
+      data: projects,
       error: false,
     });
   } catch (error) {
@@ -50,9 +50,9 @@ const getProjectsById = async (req, res) => {
   }
 };
 
-const newProject = async (req, res) => {
+const createProject = async (req, res) => {
   try {
-    const project = new Projects({
+    const newProject = new Projects({
       employees: req.body.employees,
       name: req.body.name,
       startDate: req.body.startDate,
@@ -60,7 +60,7 @@ const newProject = async (req, res) => {
       clientName: req.body.clientName,
       active: req.body.active,
     });
-    const result = await project.save();
+    const result = await newProject.save();
     return res.status(201).json({
       message: 'Project created successfully',
       data: result,
@@ -76,7 +76,7 @@ const newProject = async (req, res) => {
 };
 
 export default {
-  projects,
+  getAllProjects,
   getProjectsById,
-  newProject,
+  createProject,
 };

@@ -5,8 +5,8 @@ import projectValidations from '../validations/projects';
 const router = express.Router();
 
 router
-  .get('/', projectControllers.projects)
+  .get('/', projectControllers.getAllProjects)
   .get('/:id', projectControllers.getProjectsById)
-  .post('/', projectValidations.validateCreation, projectControllers.newProject);
+  .post('/', projectValidations.validateCreation, projectControllers.createProject);
 
 export default router;
