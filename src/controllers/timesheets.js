@@ -13,17 +13,17 @@ const deleteTimesheets = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const deleteTimesheet = await Timesheets.findByIdAndDelete(id);
-    if (deleteTimesheet) {
+    const deletedTimesheet = await Timesheets.findByIdAndDelete(id);
+    if (deletedTimesheet) {
       return res.status(200).json({
         message: `Timesheet with id ${id} successfully deleted`,
-        data: deleteTimesheet,
+        data: deletedTimesheet,
         error: false,
       });
     }
     return res.status(404).json({
       message: `Timesheet wuth id ${id} not found`,
-      date: undefined,
+      data: undefined,
       error: true,
     });
   } catch (error) {
