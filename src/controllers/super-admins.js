@@ -1,5 +1,82 @@
 import mongoose from 'mongoose';
-import superAdmins from '../models/Super-admins';
+import SuperAdmins from '../models/Super-admins';
+
+const getAllSuperAdmins = async (req, res) => {
+  try {
+    const result = await SuperAdmins.find();
+
+    return res.status(200).json({
+      message: 'SuperAdmins found successfully',
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(404).json({
+      message: `SuperAdmins not found ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+const getSuperAdminById = async (req, res) => {
+  const { id } = req.params;
+  if (id && !mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({
+      message: `Cannot get SuperAdmins by ${id}`,
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const result = await SuperAdmins.findById(id);
+    if (result) {
+      return res.status(200).json({
+        message: 'SuperAdmins found successfully',
+        data: result,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `SuperAdmin with id ${id} not found`,
+      data: undefined,
+      error: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+const createSuperAdmin = async (req, res) => {
+  try {
+    const newSuperAdmins = new SuperAdmins({
+      name: req.body.name,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      dni: req.body.dni,
+      phone: req.body.phone,
+    });
+
+    const createdSuperAdmins = await newSuperAdmins.save();
+
+    return res.status(201).json({
+      message: 'SuperAdmin created successfully',
+      data: createdSuperAdmins,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server Error ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
 
 const updateSuperAdmin = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -11,15 +88,15 @@ const updateSuperAdmin = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const updatedSuperAdmin = await superAdmins.findByIdAndUpdate(
+    const updatedSuperAdmins = await SuperAdmins.findByIdAndUpdate(
       { _id: id },
       { ...req.body },
       { new: true },
     );
-    if (updatedSuperAdmin) {
+    if (updatedSuperAdmins) {
       return res.status(200).json({
         message: `Super Admin with id ${req.params.id} updated successfully`,
-        data: updatedSuperAdmin,
+        data: updatedSuperAdmins,
         error: false,
       });
     }
@@ -40,23 +117,23 @@ const updateSuperAdmin = async (req, res) => {
 const deleteSuperAdmin = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(404).json({
-      message: `SuperAdmin with id ${req.params.id} not found`,
+      message: `SuperAdmins with id ${req.params.id} not found`,
       data: undefined,
       error: true,
     });
   }
   try {
     const { id } = req.params;
-    const deletedSuperAdmin = await superAdmins.findByIdAndDelete(id);
-    if (deletedSuperAdmin) {
+    const deletedSuperAdmins = await SuperAdmins.findByIdAndDelete(id);
+    if (deletedSuperAdmins) {
       return res.status(200).json({
-        message: 'SuperAdmin deleted successfully',
-        data: deletedSuperAdmin,
+        message: 'SuperAdmins deleted successfully',
+        data: deletedSuperAdmins,
         error: false,
       });
     }
     return res.status(404).json({
-      message: `SuperAdmin with id ${req.params.id} not found`,
+      message: `SuperAdmins with id ${req.params.id} not found`,
       data: undefined,
       error: true,
     });
@@ -72,4 +149,7 @@ const deleteSuperAdmin = async (req, res) => {
 export default {
   deleteSuperAdmin,
   updateSuperAdmin,
+  getAllSuperAdmins,
+  getSuperAdminById,
+  createSuperAdmin,
 };
