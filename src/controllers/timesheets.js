@@ -31,7 +31,7 @@ const getTimesheetByID = async (req, res) => {
 
   if (req.params.id && !mongoose.Types.ObjectId.isValid(timesheetId)) {
     return res.status(400).json({
-      message: `Cannot get timesheet by ${timesheetId}`,
+      message: `Cannot get timesheet by id of ${timesheetId}`,
       data: undefined,
       error: true,
     });
