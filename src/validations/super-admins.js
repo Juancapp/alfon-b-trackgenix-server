@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const validateCreate = (req, res, next) => {
+const validateSuperAdmin = (req, res, next) => {
   const superAdminsValidations = Joi.object({
     name: Joi.string().min(3).max(50).required(),
     lastName: Joi.string().min(3).max(50).required(),
@@ -24,4 +24,6 @@ const validateCreate = (req, res, next) => {
   return next();
 };
 
-export default { validateCreate };
+export default {
+  validateSuperAdmin,
+};

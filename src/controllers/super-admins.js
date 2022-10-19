@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import SuperAdmin from '../models/Super-admins';
+import SuperAdmins from '../models/Super-admins';
 
 const getAllSuperAdmins = async (req, res) => {
   try {
-    const result = await SuperAdmin.find();
+    const result = await SuperAdmins.find();
 
     return res.status(200).json({
       message: 'SuperAdmins found successfully',
@@ -23,16 +23,16 @@ const getSuperAdminById = async (req, res) => {
   const { id } = req.params;
   if (id && !mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({
-      message: `Cannot get superAdmin by ${id}`,
+      message: `Cannot get SuperAdmins by ${id}`,
       data: undefined,
       error: true,
     });
   }
   try {
-    const result = await SuperAdmin.findById(id);
+    const result = await SuperAdmins.findById(id);
     if (result) {
       return res.status(200).json({
-        message: 'SuperAdmin found successfully',
+        message: 'SuperAdmins found successfully',
         data: result,
         error: false,
       });
@@ -53,7 +53,7 @@ const getSuperAdminById = async (req, res) => {
 
 const createSuperAdmin = async (req, res) => {
   try {
-    const newSuperAdmin = new SuperAdmin({
+    const newSuperAdmins = new SuperAdmins({
       name: req.body.name,
       lastName: req.body.lastName,
       email: req.body.email,
@@ -62,11 +62,11 @@ const createSuperAdmin = async (req, res) => {
       phone: req.body.phone,
     });
 
-    const createdSuperAdmin = await newSuperAdmin.save();
+    const createdSuperAdmins = await newSuperAdmins.save();
 
     return res.status(201).json({
       message: 'SuperAdmin created successfully',
-      data: createdSuperAdmin,
+      data: createdSuperAdmins,
       error: false,
     });
   } catch (error) {
@@ -78,7 +78,77 @@ const createSuperAdmin = async (req, res) => {
   }
 };
 
+const updateSuperAdmin = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: `Super Admin with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const { id } = req.params;
+    const updatedSuperAdmins = await SuperAdmins.findByIdAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true },
+    );
+    if (updatedSuperAdmins) {
+      return res.status(200).json({
+        message: `Super Admin with id ${req.params.id} updated successfully`,
+        data: updatedSuperAdmins,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `Super Admin with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+const deleteSuperAdmin = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: `SuperAdmins with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const { id } = req.params;
+    const deletedSuperAdmins = await SuperAdmins.findByIdAndDelete(id);
+    if (deletedSuperAdmins) {
+      return res.status(200).json({
+        message: 'SuperAdmins deleted successfully',
+        data: deletedSuperAdmins,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `SuperAdmins with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 export default {
+  deleteSuperAdmin,
+  updateSuperAdmin,
   getAllSuperAdmins,
   getSuperAdminById,
   createSuperAdmin,
