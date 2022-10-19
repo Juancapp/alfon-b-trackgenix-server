@@ -51,7 +51,7 @@ const getTasksById = async (req, res) => {
   }
 };
 
-const newTask = async (req, res) => {
+const createTask = async (req, res) => {
   try {
     const newtask = new Tasks({
       description: req.body.description,
@@ -74,5 +74,5 @@ const newTask = async (req, res) => {
 export default {
   getAllTasks,
   getTasksById,
-  newTask,
+  createTask,
 };
