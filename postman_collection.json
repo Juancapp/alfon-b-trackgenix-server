@@ -152,6 +152,79 @@
           "response": []
         }
       ]
+    },
+    {
+        "name": "Timesheets",
+        "item": [
+            {
+                "name": "Get all timesheets",
+                "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                        "raw": "http://localhost:5000/timesheets",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "5000",
+                        "path": [
+                            "timesheets"
+                        ]
+                    }
+                },
+                "response": []
+            },
+            {
+                "name": "Get timesheet by Id",
+                "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                        "raw": "http://localhost:5000/timesheets/634b214ebe2a71cc99e599ba",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "5000",
+                        "path": [
+                            "timesheets",
+                            "634b214ebe2a71cc99e599ba"
+                        ]
+                    }
+                },
+                "response": []
+            },
+            {
+                "name": "Create a new timesheet",
+                "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                        "mode": "raw",
+                        "raw": "{\r\n    \"description\":\"This is the third try\",\r\n    \"date\":\"3-4-2015\",\r\n    \"task\":\"This is the third try\"\r\n}",
+                        "options": {
+                            "raw": {
+                                "language": "json"
+                            }
+                        }
+                    },
+                    "url": {
+                        "raw": "http://localhost:5000/timesheets/",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "5000",
+                        "path": [
+                            "timesheets",
+                            ""
+                        ]
+                    }
+                },
+                "response": []
+            }
+        ]
     }
   ]
 }
