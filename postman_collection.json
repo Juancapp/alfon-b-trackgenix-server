@@ -1,92 +1,157 @@
 {
-	"info": {
-		"_postman_id": "9e3580e3-2117-4448-9884-dcff8bb5f973",
-		"name": "postman_collection",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23735222"
-	},
-	"item": [
-		{
-			"name": "employee",
-			"item": [
-				{
-					"name": "Get all",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:5000/employees/",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"employees",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:5000/employees/634b0649590517d1e56006e8",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"employees",
-								"634b0649590517d1e56006e8"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"cristian\",\r\n    \"last_name\": \"Schiavi\",\r\n    \"phone\": \"123456789\",\r\n    \"email\": \"user@radium.com\",\r\n    \"password\": \"abcd123456\",\r\n    \"dni\": \"123456789\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:5000/employees/",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"employees",
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "localhost:5000/projects",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": ""
-				}
-			},
-			"response": []
-		}
-	]
+  "info": {
+    "_postman_id": "9e3580e3-2117-4448-9884-dcff8bb5f973",
+    "name": "postman_collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "23735222"
+  },
+  "item": [
+    {
+      "name": "employee",
+      "item": [
+        {
+          "name": "Get all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:5000/employees/",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "employees",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:5000/employees/634b0649590517d1e56006e8",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "employees",
+                "634b0649590517d1e56006e8"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"cristian\",\r\n    \"last_name\": \"Schiavi\",\r\n    \"phone\": \"123456789\",\r\n    \"email\": \"user@radium.com\",\r\n    \"password\": \"abcd123456\",\r\n    \"dni\": \"123456789\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:5000/employees/",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "employees",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admins",
+      "item": [
+        {
+          "name": "All admins",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:5000/admins/634c5db41bdc666f08523b78",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "admins",
+                "634c5db41bdc666f08523b78"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:5000/admins/:id",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "admins",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "634eb5c98b2f9d87c625ef01"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Julian\",\r\n    \"lastName\": \"Viso\",\r\n    \"email\": \"julian@gmail.com\",\r\n    \"password\": \"AAAAaaaa\",\r\n    \"dni\": \"123456456\",\r\n    \"phone\": \"123456123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:5000/admins",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "admins"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }
