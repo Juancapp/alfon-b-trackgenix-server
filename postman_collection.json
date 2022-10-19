@@ -225,6 +225,82 @@
                 "response": []
             }
         ]
+    },
+    {
+        "name": "Super Admins",
+        "item":[
+            {
+                "name": "All superAdmins",
+                "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                        "raw": "localhost:5000/admins/634c5db41bdc666f08523b78",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "5000",
+                        "path": [
+                            "admins",
+                            "634c5db41bdc666f08523b78"
+                        ]
+                    }
+                },
+                "response": []
+            },
+            {
+                "name": "superAdmin By ID",
+                "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                        "raw": "localhost:5000/super-admins/:id",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "5000",
+                        "path": [
+                            "super-admins",
+                            ":id"
+                        ],
+                        "variable": [
+                            {
+                                "key": "id",
+                                "value": "634eb5c98b2f9d87c625ef01"
+                            }
+                        ]
+                    }
+                },
+                "response": []
+            },
+            {
+                "name": "superAdmin",
+                "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                        "mode": "raw",
+                        "raw": "{\r\n    \"name\": \"Julian\",\r\n    \"lastName\": \"Viso\",\r\n    \"email\": \"julian@gmail.com\",\r\n    \"password\": \"AAAAaaaa\",\r\n    \"dni\": \"123456456\",\r\n    \"phone\": \"123456123456\"\r\n}",
+                        "options": {
+                            "raw": {
+                                "language": "json"
+                            }
+                        }
+                    },
+                    "url": {
+                        "raw": "localhost:5000/admins",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "5000",
+                        "path": [
+                            "admins"
+                        ]
+                    }
+                },
+                "response": []
+            }
+        ]
     }
   ]
 }
