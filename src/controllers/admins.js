@@ -1,22 +1,25 @@
 import mongoose from 'mongoose';
 import Admins from '../models/Admins';
 
-const deleteAdmins = async (req, res) => {
+const updateAdmins = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(404).json({
-      message: 'id invalid',
+      message: `Admin with id ${req.params.id} not found`,
       data: undefined,
       error: true,
     });
   }
   try {
     const { id } = req.params;
-    const deleteAdmin = await Admins.findByIdAndDelete(id);
-
-    if (deleteAdmin) {
+    const updatedAdmin = await Admins.findByIdAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true },
+    );
+    if (updatedAdmin) {
       return res.status(200).json({
-        message: 'Admin deleted successfully',
-        data: deleteAdmin,
+        message: `Admin with id ${id} updated successfully`,
+        data: updatedAdmin,
         error: false,
       });
     }
@@ -34,25 +37,22 @@ const deleteAdmins = async (req, res) => {
   }
 };
 
-const updateAdmins = async (req, res) => {
+const deleteAdmins = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(404).json({
-      message: 'id invalid',
+      message: `Admin with id ${req.params.id} not found`,
       data: undefined,
       error: true,
     });
   }
   try {
     const { id } = req.params;
-    const updateAdmin = await Admins.findByIdAndUpdate(
-      { _id: id },
-      { ...req.body },
-      { new: true },
-    );
-    if (updateAdmin) {
+    const deletedAdmin = await Admins.findByIdAndDelete(id);
+
+    if (deletedAdmin) {
       return res.status(200).json({
-        message: `Admin with id ${id} updated successfully`,
-        data: updateAdmin,
+        message: 'Admin deleted successfully',
+        data: deletedAdmin,
         error: false,
       });
     }

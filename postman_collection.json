@@ -4,15 +4,8 @@
         "name": "postman_collection",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
+	"name": "Admins",
     "item": [
-        {
-            "name": "localhost:5000/projects",
-            "request": {
-                "method": "GET",
-                "header": []
-            },
-            "response": []
-        },
         {
 			"name": "DeleteAdmin",
 			"request": {
