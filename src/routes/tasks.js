@@ -6,6 +6,9 @@ const router = express.Router();
 
 router
   .put('/:id', tasksValidations.validateTask, tasksControllers.updateTask)
-  .delete('/:id', tasksControllers.deleteTask);
+  .delete('/:id', tasksControllers.deleteTask)
+  .post('/', tasksValidations.validateTask, tasksControllers.createTask)
+  .get('/', tasksControllers.getAllTasks)
+  .get('/:id', tasksControllers.getTasksById);
 
 export default router;
