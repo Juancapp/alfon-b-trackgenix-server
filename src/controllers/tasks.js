@@ -64,6 +64,34 @@ const createTask = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
+      message: `Server Error: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+const updateTask = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: `Task with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const { id } = req.params;
+    const updatedTask = await Tasks.findByIdAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true },
+    );
+    return res.status(200).json({
+      message: `Task with id ${id} updated succesfully`,
+      data: updatedTask,
+    });
+  } catch (error) {
+    return res.status(500).json({
       message: `Server error: ${error}`,
       data: undefined,
       error: true,
@@ -71,7 +99,35 @@ const createTask = async (req, res) => {
   }
 };
 
+const deleteTask = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: `Task with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const { id } = req.params;
+    const deletedTask = await Tasks.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      message: `Task with id ${id} deleted succesfully`,
+      data: deletedTask,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server Error: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 export default {
+  updateTask,
+  deleteTask,
   getAllTasks,
   getTasksById,
   createTask,
