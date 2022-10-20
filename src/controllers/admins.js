@@ -153,5 +153,9 @@ const deleteAdmins = async (req, res) => {
 };
 
 export default {
-  getAllAdmins, getAdminById, createAdmin, deleteAdmins, updateAdmins,
+  getAllAdmins,
+  getAdminById,
+  createAdmin,
+  updateAdmins,
+  deleteAdmins,
 };
