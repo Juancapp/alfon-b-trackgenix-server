@@ -18,7 +18,7 @@ const validateEmployees = (req, res, next) => {
 
   if (validation.error) {
     return res.status(400).json({
-      message: `Cannot create employee: ${validation.error.details[0].message}`,
+      message: `There was an error: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
@@ -26,4 +26,6 @@ const validateEmployees = (req, res, next) => {
   return next();
 };
 
-export default validateEmployees;
+export default {
+  validateEmployees,
+};

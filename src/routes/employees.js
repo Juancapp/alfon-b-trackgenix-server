@@ -7,6 +7,8 @@ const router = express.Router();
 router
   .get('/', employeeControllers.getAllEmployees)
   .get('/:id', employeeControllers.getEmployeeById)
-  .post('/', validateEmployees, employeeControllers.createEmployee);
+  .post('/', validateEmployees.validateEmployees, employeeControllers.createEmployee)
+  .put('/:id', validateEmployees.validateEmployees, employeeControllers.updateEmployee)
+  .delete('/:id', employeeControllers.deleteEmployee);
 
 export default router;

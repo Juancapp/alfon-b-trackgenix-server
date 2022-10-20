@@ -289,6 +289,72 @@
 						}
 					},
 					"response": []
+				},
+                {
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/employees/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"employees",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634b0d231f7bd6bb6819f5ba"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n     \"name\": \"Rama\",\r\n     \"last_name\": \"Amadeo\",\r\n     \"phone\": \"546545643\",\r\n     \"email\": \"raamadeo@gmail.com\",\r\n     \"password\": \"LibBQkAa49\",\r\n     \"dni\": \"123456789\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/employees/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"employees",
+								":id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634d710f8c3906aafccddf2b"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
