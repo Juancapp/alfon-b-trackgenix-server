@@ -11,4 +11,4 @@ const adminSchema = new Schema({
   phone: { type: Number, required: true },
 });
 
-export default mongoose.model('Admins', adminSchema);
+export default mongoose.model('Admin', adminSchema);

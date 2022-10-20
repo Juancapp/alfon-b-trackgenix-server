@@ -1,11 +1,14 @@
 import express from 'express';
 import adminsControllers from '../controllers/admins';
-import adminsValidations from '../validations/admins';
+import adminValidation from '../validations/admins';
 
 const router = express.Router();
 
 router
-  .delete('/:id', adminsControllers.deleteAdmins)
-  .put('/:id', adminsValidations.validateUpdate, adminsControllers.updateAdmins);
+  .get('/', adminsControllers.getAllAdmins)
+  .get('/:id', adminsControllers.getAdminById)
+  .post('/', adminValidation.validateAdmin, adminsControllers.createAdmin)
+  .put('/:id', adminValidation.validateUpdate, adminsControllers.updateAdmins)
+  .delete('/:id', adminsControllers.deleteAdmins);
 
 export default router;

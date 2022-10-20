@@ -1,112 +1,134 @@
-import express from 'express';
-import fs from 'fs';
+import mongoose from 'mongoose';
+import Tasks from '../models/Tasks';
 
-const tasks = require('../data/tasks.json');
+const getAllTasks = async (req, res) => {
+  try {
+    const tasks = await Tasks.find();
 
-const router = express.Router();
-
-router.get('/', (req, res) => {
-  res.status(200).json({
-    data: tasks,
-  });
-});
-
-router.get('/:id', (req, res) => {
-  const findTask = tasks.find((task) => task.id === parseInt(req.params.id, 10));
-  if (findTask) {
-    res.status(200).json({
-      data: findTask,
+    return res.status(200).json({
+      message: 'Tasks found successfully',
+      data: tasks,
+      error: false,
     });
-  } else {
-    res.status(404).json({
-      message: 'task not found',
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error:  ${error}`,
+      data: undefined,
+      error,
     });
   }
-});
+};
 
-router.post('/', (req, res) => {
-  let newId = parseInt(tasks.length + 1, 10);
-  const newTask = req.body;
-  let findTask = tasks.find((task) => task.id === newId);
-  const findTaskName = tasks.find((task) => task.taskName === newTask.taskName);
-  while (findTask) {
-    newId += 1;
-    const newIdStr = newId;
-    findTask = tasks.find((task) => task.id === newIdStr);
-  }
-  if (findTaskName) {
-    res.status(404).json({
-      message: 'There is already a task with that name. Try a new one.',
-    });
-  } else {
-    newTask.id = newId;
-    fs.writeFile('src/data/tasks.json', JSON.stringify([...tasks, newTask]), (err) => {
-      if (err) {
-        res.status(404).json({
-          message: 'Cannot save new task',
-        });
-      } else {
-        res.status(200).json({
-          message: 'task created',
-        });
-      }
-    });
-  }
-});
-
-router.put('/:id', (req, res) => {
-  const taskId = parseInt(req.params.id, 10);
-  const taskReq = req.body;
-  const findTaskId = tasks.find((task) => task.id === taskId);
-  const findTaskName = tasks.find((task) => task.taskName === taskReq.taskName);
-  const newArrTask = tasks.filter((task) => task.id !== parseInt(req.params.id, 10));
-  if (taskReq.taskName === undefined || taskReq.taskName === '') {
+const getTasksById = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(404).json({
-      message: 'The task must have a name',
+      message: `Task with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
     });
   }
-  if (taskReq.taskDescription === undefined || taskReq.taskDescription === '') {
-    return res.status(404).json({
-      message: 'The task must have a description',
-    });
-  }
-  if (findTaskId === undefined) {
-    return res.status(404).json({
-      message: 'task not found',
-    });
-  }
-  if (!findTaskName && findTaskId) {
-    taskReq.id = taskId;
-    fs.writeFile('src/data/tasks.json', JSON.stringify([...newArrTask, taskReq]), (err) => {
-      if (err) {
-        res.status(400).json({
-          message: 'An error occurred',
-        });
-      } else {
-        res.status(200).json({
-          message: 'Task updated',
-        });
-      }
-    });
-  }
-  return res.status(404).json({
-    message: 'A task with that name already exists',
-  });
-});
-
-router.delete('/:id', (req, res) => {
-  const filterTask = tasks.filter((task) => task.id !== parseInt(req.params.id, 10));
-  fs.writeFile('src/data/tasks.json', JSON.stringify(filterTask), (err) => {
-    if (err) {
-      res.status(404).json({
-        message: 'Cannot delete task',
-      });
-    } else {
-      res.status(200).json({
-        message: 'task deleted',
+  try {
+    const { id } = req.params;
+    const task = await Tasks.findById(id);
+    if (task) {
+      return res.status(200).json({
+        message: `Task with ${id} found successfully`,
+        data: task,
+        error: false,
       });
     }
-  });
-});
+    return res.status(404).json({
+      message: `Task with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
 
-export default router;
+const createTask = async (req, res) => {
+  try {
+    const newtask = new Tasks({
+      description: req.body.description,
+    });
+    const result = await newtask.save();
+    return res.status(201).json({
+      message: 'Task created successfully',
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server Error: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+const updateTask = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: `Task with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const { id } = req.params;
+    const updatedTask = await Tasks.findByIdAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true },
+    );
+    return res.status(200).json({
+      message: `Task with id ${id} updated succesfully`,
+      data: updatedTask,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+const deleteTask = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: `Task with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const { id } = req.params;
+    const deletedTask = await Tasks.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      message: `Task with id ${id} deleted succesfully`,
+      data: deletedTask,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server Error: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+export default {
+  updateTask,
+  deleteTask,
+  getAllTasks,
+  getTasksById,
+  createTask,
+};
