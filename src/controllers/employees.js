@@ -82,6 +82,7 @@ const createEmployee = async (req, res) => {
     });
   }
 };
+
 const updateEmployee = async (req, res) => {
   const employeeId = req.params.id;
 
