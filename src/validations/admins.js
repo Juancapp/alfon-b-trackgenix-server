@@ -21,10 +21,7 @@ const validateAdmin = (req, res, next) => {
       error: true,
     });
   }
-
   return next();
 };
 
-export default {
-  validateAdmin,
-};
+export default { validateAdmin };
