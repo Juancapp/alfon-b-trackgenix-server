@@ -147,9 +147,9 @@ const deleteSuperAdmin = async (req, res) => {
 };
 
 export default {
-  deleteSuperAdmin,
-  updateSuperAdmin,
   getAllSuperAdmins,
   getSuperAdminById,
   createSuperAdmin,
+  updateSuperAdmin,
+  deleteSuperAdmin,
 };
