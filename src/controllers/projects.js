@@ -18,42 +18,6 @@ const getAllProjects = async (req, res) => {
   }
 };
 
-const updateProject = async (req, res) => {
-  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(404).json({
-      message: `Project with id ${req.params.id} not found`,
-      data: undefined,
-      error: true,
-    });
-  }
-  try {
-    const { id } = req.params;
-    const updatedProject = await Projects.findByIdAndUpdate(
-      { _id: id },
-      { ...req.body },
-      { new: true },
-    );
-    if (updatedProject) {
-      return res.status(200).json({
-        message: `Project with id ${req.params.id} updated successfully`,
-        data: updatedProject,
-        error: false,
-      });
-    }
-    return res.status(404).json({
-      message: `Project with id ${req.params.id} not found`,
-      data: undefined,
-      error: true,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: `Server error: ${error}`,
-      data: undefined,
-      error: true,
-    });
-  }
-};
-
 const getProjectsById = async (req, res) => {
   const projectId = req.params.id;
   if (projectId && !mongoose.Types.ObjectId.isValid(projectId)) {
@@ -107,6 +71,42 @@ const createProject = async (req, res) => {
       message: `Server error: ${error}`,
       error: true,
       data: undefined,
+    });
+  }
+};
+
+const updateProject = async (req, res) => {
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({
+      message: `Project with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const { id } = req.params;
+    const updatedProject = await Projects.findByIdAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true },
+    );
+    if (updatedProject) {
+      return res.status(200).json({
+        message: `Project with id ${req.params.id} updated successfully`,
+        data: updatedProject,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `Project with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
+      error: true,
     });
   }
 };

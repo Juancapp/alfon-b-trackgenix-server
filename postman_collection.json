@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-{
-	"info": {
-		"_postman_id": "7dd5ca96-4405-4c77-bb4a-38e18b05b8cd",
-		"name": "postman_collection",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20872357"
-	},
-	"item": [
-		{
-			"name": "Project TG-4",
-			"item": [
-				{
-					"name": "Post project",
-=======
 {	
 	"info": {
 		"_postman_id": "45ee6188-5c17-4591-9954-b5a4b229258d",
@@ -68,17 +53,12 @@
 				},
 				{
 					"name": "newTask",
->>>>>>> e65263ac79c3369f066c2ac611ba3168b90da932
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-<<<<<<< HEAD
-							"raw": "{\r\n     \"employees\": [{\r\n          \"name\": \"Cristian\",\r\n          \"role\": \"DEV\",\r\n          \"rate\": 45\r\n      }],\r\n      \"name\": \"Bucci\",\r\n      \"startDate\": \"2022-09-11T17:26:04.000Z\",\r\n      \"endDate\": \"2022-10-11T17:26:04.000Z\",\r\n      \"description\": \"dasdasdasdasdasdasdasddasdasdasd\",\r\n      \"clientName\": \"sam\",\r\n      \"active\": true\r\n}",
-=======
 							"raw": "{\r\n    \"description\": \"testing task\"\r\n}",
->>>>>>> e65263ac79c3369f066c2ac611ba3168b90da932
 							"options": {
 								"raw": {
 									"language": "json"
@@ -86,35 +66,19 @@
 							}
 						},
 						"url": {
-<<<<<<< HEAD
-							"raw": "localhost:5000/projects",
-=======
 							"raw": "localhost:5000/tasks",
->>>>>>> e65263ac79c3369f066c2ac611ba3168b90da932
 							"host": [
 								"localhost"
 							],
 							"port": "5000",
 							"path": [
-<<<<<<< HEAD
-								"projects"
-=======
 								"tasks"
->>>>>>> e65263ac79c3369f066c2ac611ba3168b90da932
 							]
 						}
 					},
 					"response": []
 				},
 				{
-<<<<<<< HEAD
-					"name": "Get projects",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:5000/projects",
-=======
 					"name": "update",
 					"request": {
 						"method": "PUT",
@@ -130,15 +94,11 @@
 						},
 						"url": {
 							"raw": "localhost:5000/tasks/:id",
->>>>>>> e65263ac79c3369f066c2ac611ba3168b90da932
 							"host": [
 								"localhost"
 							],
 							"port": "5000",
 							"path": [
-<<<<<<< HEAD
-								"projects"
-=======
 								"tasks",
 								":id"
 							],
@@ -147,19 +107,12 @@
 									"key": "id",
 									"value": "634ca793924726630277a1d5"
 								}
->>>>>>> e65263ac79c3369f066c2ac611ba3168b90da932
 							]
 						}
 					},
 					"response": []
 				},
 				{
-<<<<<<< HEAD
-					"name": "Get projects by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-=======
 					"name": "delete",
 					"request": {
 						"method": "DELETE",
@@ -198,6 +151,76 @@
 		{
 			"name": "Projects",
 			"item": [
+                {
+					"name": "Post project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"employees\": [{\r\n          \"name\": \"Cristian\",\r\n          \"role\": \"DEV\",\r\n          \"rate\": 45\r\n      }],\r\n      \"name\": \"Bucci\",\r\n      \"startDate\": \"2022-09-11T17:26:04.000Z\",\r\n      \"endDate\": \"2022-10-11T17:26:04.000Z\",\r\n      \"description\": \"dasdasdasdasdasdasdasddasdasdasd\",\r\n      \"clientName\": \"sam\",\r\n      \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/projects",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/projects",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get projects by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/projects/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"projects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634c79c4ee4092295c79aa63"
+								}
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Delete Project",
 					"request": {
@@ -212,7 +235,6 @@
 								}
 							}
 						},
->>>>>>> e65263ac79c3369f066c2ac611ba3168b90da932
 						"url": {
 							"raw": "localhost:5000/projects/:id",
 							"host": [
@@ -226,9 +248,6 @@
 							"variable": [
 								{
 									"key": "id",
-<<<<<<< HEAD
-									"value": "634c79c4ee4092295c79aa63"
-=======
 									"value": "634dec8172c35598f59d93c1"
 								}
 							]
@@ -732,7 +751,6 @@
 								{
 									"key": "id",
 									"value": "6350696a7c20e3784cbeb7c3"
->>>>>>> e65263ac79c3369f066c2ac611ba3168b90da932
 								}
 							]
 						}
