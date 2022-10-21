@@ -1,18 +1,13 @@
-import express from 'express';
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import routes from './routes/index';
+import app from './app';
 
-const app = express();
-const port = 5000;
+dotenv.config();
 
-app.use(express.json());
-
-app.use('/', routes);
-
-const MONGO_URL = 'mongodb+srv://grupo-b:U7uZZXO4erJxLY5v@cluster0.xg4xgte.mongodb.net/?retryWrites=true&w=majority';
+const port = process.env.PORT || 5000;
 
 mongoose.connect(
-  MONGO_URL,
+  process.env.DATABASE_URL,
   (error) => {
     if (error) {
       // eslint-disable-next-line no-console
