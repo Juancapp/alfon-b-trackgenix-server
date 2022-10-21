@@ -157,9 +157,9 @@ const deleteEmployee = async (req, res) => {
 };
 
 export default {
-  updateEmployee,
-  deleteEmployee,
   getAllEmployees,
   getEmployeeById,
   createEmployee,
+  updateEmployee,
+  deleteEmployee,
 };

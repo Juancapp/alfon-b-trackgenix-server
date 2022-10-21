@@ -126,9 +126,9 @@ const deleteTask = async (req, res) => {
 };
 
 export default {
-  updateTask,
-  deleteTask,
   getAllTasks,
   getTasksById,
   createTask,
+  updateTask,
+  deleteTask,
 };

@@ -146,8 +146,8 @@ const deleteProject = async (req, res) => {
 
 export default {
   getAllProjects,
-  deleteProject,
-  updateProject,
   getProjectsById,
   createProject,
+  updateProject,
+  deleteProject,
 };
