@@ -292,7 +292,7 @@
 			]
 		},
 		{
-			"name": "employee",
+			"name": "Employee",
 			"item": [
 				{
 					"name": "Get All",
