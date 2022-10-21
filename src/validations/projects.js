@@ -1,27 +1,25 @@
 import Joi from 'joi';
 
-const validateUpdate = (req, res, next) => {
+const validateCreation = (req, res, next) => {
   const employeeValidation = Joi.object({
     name: Joi.string().min(3).max(50).required(),
-    role: Joi.string().valid('DEV', 'QA', 'TL', 'PM').required(),
-    rate: Joi.number().min(0).required(),
+    role: Joi.string().valid('DEV', 'QA', 'TL').required(),
+    rate: Joi.number().required(),
   });
-
   const projectValidation = Joi.object({
     name: Joi.string().min(3).max(50).required(),
-    description: Joi.string().min(10).max(100).required(),
     startDate: Joi.date().required(),
     endDate: Joi.date().greater(Joi.ref('startDate')),
+    description: Joi.string().min(10).max(50).required(),
     clientName: Joi.string().min(3).max(50).required(),
-    employees: Joi.array().items(employeeValidation),
     active: Joi.boolean().required(),
+    employees: Joi.array().items(employeeValidation),
   });
 
   const validation = projectValidation.validate(req.body);
-
   if (validation.error) {
     return res.status(400).json({
-      message: `Cannot update project: ${validation.error.details[0].message}`,
+      message: `Cannot create project: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
@@ -30,5 +28,5 @@ const validateUpdate = (req, res, next) => {
 };
 
 export default {
-  validateUpdate,
+  validateCreation,
 };

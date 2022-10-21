@@ -151,6 +151,76 @@
 		{
 			"name": "Projects",
 			"item": [
+                {
+					"name": "Post project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"employees\": [{\r\n          \"name\": \"Cristian\",\r\n          \"role\": \"DEV\",\r\n          \"rate\": 45\r\n      }],\r\n      \"name\": \"Bucci\",\r\n      \"startDate\": \"2022-09-11T17:26:04.000Z\",\r\n      \"endDate\": \"2022-10-11T17:26:04.000Z\",\r\n      \"description\": \"dasdasdasdasdasdasdasddasdasdasd\",\r\n      \"clientName\": \"sam\",\r\n      \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/projects",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/projects",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get projects by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/projects/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"projects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634c79c4ee4092295c79aa63"
+								}
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Delete Project",
 					"request": {
