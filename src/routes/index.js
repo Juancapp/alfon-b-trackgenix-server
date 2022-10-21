@@ -7,7 +7,7 @@ import employeeRoutes from './employees';
 import timesheetsRouter from './timesheets';
 
 const router = express.Router();
-
+router.use('/timesheets', timesheetsRouter);
 router.use('/tasks', tasksRouter);
 router.use('/projects', projectsRouter);
 router.use('/super-admins', superAdminsRouter);
