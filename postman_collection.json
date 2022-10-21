@@ -1,4 +1,4 @@
-{	
+{
 	"info": {
 		"_postman_id": "45ee6188-5c17-4591-9954-b5a4b229258d",
 		"name": "postman_collection",
@@ -9,7 +9,7 @@
 			"name": "Tasks",
 			"item": [
 				{
-					"name": "getAll",
+					"name": "Get All",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -27,7 +27,7 @@
 					"response": []
 				},
 				{
-					"name": "getById",
+					"name": "Get by id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -52,7 +52,7 @@
 					"response": []
 				},
 				{
-					"name": "newTask",
+					"name": "Post",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -79,7 +79,7 @@
 					"response": []
 				},
 				{
-					"name": "update",
+					"name": "Put",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -113,7 +113,7 @@
 					"response": []
 				},
 				{
-					"name": "delete",
+					"name": "Delete",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -151,8 +151,51 @@
 		{
 			"name": "Projects",
 			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/projects",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/projects/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"projects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634c79c4ee4092295c79aa63"
+								}
+							]
+						}
+					},
+					"response": []
+				},
                 {
-					"name": "Post project",
+					"name": "Post",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -179,56 +222,13 @@
 					"response": []
 				},
 				{
-					"name": "Get projects",
+					"name": "Put",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:5000/projects",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"projects"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get projects by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:5000/projects/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"projects",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "634c79c4ee4092295c79aa63"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Project",
-					"request": {
-						"method": "DELETE",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"employees\": [{\r\n         \"name\": \"jose\",\r\n        \"role\": \"DEV\",\r\n        \"rate\": 45\r\n    }],\r\n    \"name\": \"project-i\",\r\n    \"startDate\": \"2022-09-11T17:26:04.000Z\",\r\n    \"endDate\": \"2022-10-11T17:26:04.000Z\",\r\n    \"description\": \"dasdasdasdasdasdasdasddasdasdasd\",\r\n    \"clientName\": \"pogba\",\r\n    \"active\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -255,14 +255,14 @@
 					},
 					"response": []
 				},
-				{
-					"name": "Update Project",
+                {
+					"name": "Delete",
 					"request": {
-						"method": "PUT",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"employees\": [{\r\n         \"name\": \"jose\",\r\n        \"role\": \"DEV\",\r\n        \"rate\": 45\r\n    }],\r\n    \"name\": \"project-i\",\r\n    \"startDate\": \"2022-09-11T17:26:04.000Z\",\r\n    \"endDate\": \"2022-10-11T17:26:04.000Z\",\r\n    \"description\": \"dasdasdasdasdasdasdasddasdasdasd\",\r\n    \"clientName\": \"pogba\",\r\n    \"active\": false\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -295,7 +295,7 @@
 			"name": "employee",
 			"item": [
 				{
-					"name": "Get all",
+					"name": "Get All",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -360,31 +360,6 @@
 					},
 					"response": []
 				},
-                {
-					"name": "Delete by id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:5000/employees/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"employees",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "634b0d231f7bd6bb6819f5ba"
-								}
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Put",
 					"request": {
@@ -425,6 +400,31 @@
 						}
 					},
 					"response": []
+				},
+                {
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/employees/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"employees",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "634b0d231f7bd6bb6819f5ba"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -432,7 +432,7 @@
 			"name": "Admins",
 			"item": [
 				{
-					"name": "All admins",
+					"name": "Get All",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -451,7 +451,7 @@
 					"response": []
 				},
 				{
-					"name": "Admin By ID",
+					"name": "Get by id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -476,7 +476,7 @@
 					"response": []
 				},
 				{
-					"name": "Admin",
+					"name": "Post",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -503,7 +503,7 @@
 					"response": []
 				},
 				{
-					"name": "UpdateAdmin",
+					"name": "Put",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -531,7 +531,7 @@
 					"response": []
 				},
 				{
-					"name": "DeleteAdmin",
+					"name": "Delete",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -555,7 +555,7 @@
 			"name": "Timesheets",
 			"item": [
 				{
-					"name": "Get all timesheets",
+					"name": "Get All",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -574,7 +574,7 @@
 					"response": []
 				},
 				{
-					"name": "Get timesheet by Id",
+					"name": "Get by id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -594,7 +594,7 @@
 					"response": []
 				},
 				{
-					"name": "Create a new timesheet",
+					"name": "Post",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -623,7 +623,7 @@
 					"response": []
 				},
                 {
-					"name": "Edit timesheet",
+					"name": "Put",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -657,7 +657,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete timesheet",
+					"name": "Delete",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -696,7 +696,7 @@
 			"name": "Super Admins",
 			"item": [
 				{
-					"name": "All superAdmins",
+					"name": "Get All",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -715,7 +715,7 @@
 					"response": []
 				},
 				{
-					"name": "superAdmin By ID",
+					"name": "Get by id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -740,7 +740,7 @@
 					"response": []
 				},
 				{
-					"name": "superAdmin",
+					"name": "Post",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -767,10 +767,19 @@
 					"response": []
 				},
 				{
-					"name": "Delete Super Admin",
+					"name": "Put",
 					"request": {
-						"method": "DELETE",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Julian\",\r\n    \"lastName\": \"Montenegro\",\r\n    \"email\": \"julian@gmail.com\",\r\n    \"password\": \"AAAAaaaa\",\r\n    \"dni\": \"123456456\",\r\n    \"phone\": \"123456123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "localhost:5000/super-admins/:id",
 							"host": [
@@ -791,20 +800,11 @@
 					},
 					"response": []
 				},
-				{
-					"name": "Update Super Admin",
+                {
+					"name": "Delete",
 					"request": {
-						"method": "PUT",
+						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Julian\",\r\n    \"lastName\": \"Montenegro\",\r\n    \"email\": \"julian@gmail.com\",\r\n    \"password\": \"AAAAaaaa\",\r\n    \"dni\": \"123456456\",\r\n    \"phone\": \"123456123456\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "localhost:5000/super-admins/:id",
 							"host": [
