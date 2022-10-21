@@ -56,6 +56,7 @@ const createProject = async (req, res) => {
       employees: req.body.employees,
       name: req.body.name,
       startDate: req.body.startDate,
+      endDate: req.body.endDate,
       description: req.body.description,
       clientName: req.body.clientName,
       active: req.body.active,
