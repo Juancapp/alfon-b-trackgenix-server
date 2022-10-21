@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const validateTimesheets = (req, res, next) => {
+const validateTimeSheets = (req, res, next) => {
   const timesheetsValidation = Joi.object({
     description: Joi.string().min(20).max(100).required(),
     date: Joi.date().required(),
@@ -11,7 +11,7 @@ const validateTimesheets = (req, res, next) => {
 
   if (validation.error) {
     return res.status(400).json({
-      message: `There was an error: ${validation.error.details[0].message}`,
+      message: `Cannot create timesheet: ${validation.details[0].message}`,
       data: undefined,
       error: true,
     });
@@ -20,5 +20,5 @@ const validateTimesheets = (req, res, next) => {
 };
 
 export default {
-  validateTimesheets,
+  validateTimeSheets,
 };
