@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "45ee6188-5c17-4591-9954-b5a4b229258d",
+		"_postman_id": "b5ab8300-9ec3-4f7a-a45e-7e821866a9e9",
 		"name": "postman_collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -194,7 +194,7 @@
 					},
 					"response": []
 				},
-                {
+				{
 					"name": "Post",
 					"request": {
 						"method": "POST",
@@ -255,7 +255,7 @@
 					},
 					"response": []
 				},
-                {
+				{
 					"name": "Delete",
 					"request": {
 						"method": "DELETE",
@@ -401,7 +401,7 @@
 					},
 					"response": []
 				},
-                {
+				{
 					"name": "Delete",
 					"request": {
 						"method": "DELETE",
@@ -600,7 +600,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\":\"This is the third try\",\r\n    \"date\":\"3-4-2015\",\r\n    \"task\":\"This is the third try\"\r\n}",
+							"raw": "{\r\n    \"description\":\"Added employee and project\",\r\n    \"date\":\"3-4-2015\",\r\n    \"task\":\"Backend property\",\r\n    \"hours\": 1,\r\n    \"employee\": \"634ec59942603dd324e5ab69\",\r\n    \"project\": \"634dec8372c35598f59d93ca\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -622,7 +622,7 @@
 					},
 					"response": []
 				},
-                {
+				{
 					"name": "Put",
 					"request": {
 						"method": "PUT",
@@ -800,7 +800,7 @@
 					},
 					"response": []
 				},
-                {
+				{
 					"name": "Delete",
 					"request": {
 						"method": "DELETE",
