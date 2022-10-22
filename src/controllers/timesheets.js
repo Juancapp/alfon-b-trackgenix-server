@@ -3,7 +3,7 @@ import Timesheets from '../models/Timesheets';
 
 const getAllTimesheets = async (req, res) => {
   try {
-    const timesheets = await Timesheets.find();
+    const timesheets = await Timesheets.find().populate('Task', 'Project', 'Employee');
 
     if (!timesheets.length) {
       return res.status(404).json({
@@ -37,7 +37,7 @@ const getTimesheetByID = async (req, res) => {
     });
   }
   try {
-    const timesheet = await Timesheets.findById(timesheetId);
+    const timesheet = await Timesheets.findById(timesheetId).populate('Task', 'Project', 'Employee');
     if (timesheet) {
       return res.status(200).json({
         message: `Timesheet with id ${timesheetId} found successfully`,
