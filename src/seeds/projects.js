@@ -8,7 +8,13 @@ export default [{
   description: 'non mauris morbi non lectus aliquam sit amet',
   clientName: 'Caitrin',
   active: true,
-  employee: mongoose.Types.ObjectId('63540397a5be57cf8ebf17d6'),
+  employees: [
+    {
+      id: mongoose.Types.ObjectId('63540397a5be57cf8ebf17d6'),
+      rol: 'DEV',
+      rate: 120,
+    },
+  ],
 },
 {
   _id: mongoose.Types.ObjectId('635409049a99e64693f9c43a'),
@@ -18,5 +24,16 @@ export default [{
   description: 'curabitur convallis duis consequat dui nec nisi volutpat eleifend',
   clientName: 'Kristien',
   active: true,
-  employee: mongoose.Types.ObjectId('6354039c6d5cab252b86b580'),
+  employees: [
+    {
+      id: mongoose.Types.ObjectId('63540397a5be57cf8ebf17d6'),
+      rol: 'DEV',
+      rate: 120,
+    },
+    {
+      id: mongoose.Types.ObjectId('6354039c6d5cab252b86b580'),
+      rol: 'QA',
+      rate: 110,
+    },
+  ],
 }];
