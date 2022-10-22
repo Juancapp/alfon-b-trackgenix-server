@@ -65,6 +65,9 @@ const createTimesheet = async (req, res) => {
       description: req.body.description,
       date: req.body.date,
       task: req.body.task,
+      hours: req.body.hours,
+      employee: req.body.employee,
+      project: req.body.project,
     });
 
     const result = await newTimesheet.save();
