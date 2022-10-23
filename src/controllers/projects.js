@@ -3,7 +3,7 @@ import Projects from '../models/Projects';
 
 const getAllProjects = async (req, res) => {
   try {
-    const projects = await Projects.find().populate('employees');
+    const projects = await Projects.find().populate('employees.employee');
     return res.status(200).json({
       message: 'Projects found successfully',
       data: projects,
@@ -28,7 +28,7 @@ const getProjectsById = async (req, res) => {
     });
   }
   try {
-    const project = await Projects.findById(projectId).populate('employees');
+    const project = await Projects.findById(projectId).populate('employees.employee');
     if (project) {
       return res.status(200).json({
         message: `Project whit id ${projectId} found successfully`,
