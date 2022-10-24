@@ -37,35 +37,6 @@ const badEmployee = {
   dni: '1234567',
 };
 
-describe('DELETE /employees', () => {
-  test('Should delete an employee', async () => {
-    // eslint-disable-next-line no-underscore-dangle
-    const employeeId = employeesSeeds[0]._id;
-    const response = await request(app).delete(`/employees/${employeeId}`).send();
-
-    expect(response.status).toBe(200);
-    expect(response.body.error).toBeFalsy();
-    expect(response.body.message).toBe('Employee deleted succesfully');
-    expect(response.body.data).toBeDefined();
-  });
-  test('Should return bad request', async () => {
-    const response = await request(app).delete(`/employees/${notFoundId}`).send();
-
-    expect(response.status).toBe(404);
-    expect(response.body.error).toBe(true);
-    expect(response.body.message).toBe(`Employee with id ${notFoundId} not found`);
-    expect(response.body.data).toBeUndefined();
-  });
-  test('Should not be valid', async () => {
-    const response = await request(app).put(`/employees/${invalidId}`).send(mockedEmployee);
-
-    expect(response.status).toBe(400);
-    expect(response.body.error).toBe(true);
-    expect(response.body.message).toBe(`Employee id ${invalidId} not valid`);
-    expect(response.body.data).toBeUndefined();
-  });
-});
-
 describe('PUT /employees', () => {
   test('Should update employee', async () => {
     const response = await request(app).put(`/employees/${validId}`).send(mockedEmployee);
@@ -107,8 +78,29 @@ describe('PUT /employees', () => {
   });
 });
 
-// describe('example', () => {
-//   it('Test', () => {
-//     expect(true).toEqual(true);
-//   });
-// });
+describe('DELETE /employees', () => {
+  test('Should delete an employee', async () => {
+    const response = await request(app).delete(`/employees/${validId}`).send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.message).toBe('Employee deleted succesfully');
+    expect(response.body.data).toBeDefined();
+  });
+  test('Should return bad request', async () => {
+    const response = await request(app).delete(`/employees/${notFoundId}`).send();
+
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe(true);
+    expect(response.body.message).toBe(`Employee with id ${notFoundId} not found`);
+    expect(response.body.data).toBeUndefined();
+  });
+  test('Should not be valid', async () => {
+    const response = await request(app).put(`/employees/${invalidId}`).send(mockedEmployee);
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.message).toBe(`Employee id ${invalidId} not valid`);
+    expect(response.body.data).toBeUndefined();
+  });
+});
