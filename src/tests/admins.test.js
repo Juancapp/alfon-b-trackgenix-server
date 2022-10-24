@@ -12,8 +12,8 @@ const mockedAdmin = {
   lastName: 'Petow',
   email: 'dpetow0@elpais.com',
   password: 'iGZn65fo3',
-  dni: '33102445',
-  phone: '5493416787845',
+  dni: 33102445,
+  phone: 5493416787845,
 };
 
 const incompleteAdmin = {
@@ -21,7 +21,7 @@ const incompleteAdmin = {
   lastName: 'Aksell',
   email: 'maksell0@reddit.com',
   password: 'BlAaH454',
-  dni: '29778940',
+  dni: 29778940,
 };
 
 const wrongAdmin = {
@@ -29,8 +29,8 @@ const wrongAdmin = {
   lastName: 'Shreeve',
   email: 'fshreeve1@sogou.com',
   password: 'MjlXDlO3',
-  dni: '36102045',
-  phone: '549116707345',
+  dni: 36102045,
+  phone: 549116707345,
 };
 
 const validId = '6354025e1890513d8a5fabcb';
