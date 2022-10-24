@@ -34,11 +34,13 @@ describe('GET /employees', () => {
     expect(response.body.error).toBeFalsy();
     expect(response.body.data.length).toBeGreaterThan(0);
   });
+
   describe('GET /employees empty data', () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
       await Employees.deleteMany();
     });
-    test('Should return status code 404 with admins not found', async () => {
+
+    test('Should return status code 404 with employees not found', async () => {
       const response = await request(app).get('/employees').send();
 
       expect(response.status).toBe(404);
@@ -46,7 +48,8 @@ describe('GET /employees', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.error).toBeTruthy();
     });
-    afterEach(async () => {
+
+    afterAll(async () => {
       await Employees.collection.insertMany(employeeSeeds);
     });
   });
@@ -70,6 +73,7 @@ describe('POST /employee', () => {
       dni: Number(mockedEmployee.dni),
     });
   });
+
   test('should return error with wrong data', async () => {
     const response = await request(app).post('/employees').send(wrongMockedEmployee);
 
@@ -78,6 +82,7 @@ describe('POST /employee', () => {
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
+
   test('should return error with empty data', async () => {
     const response = await request(app).post('/employees').send();
 
@@ -89,7 +94,7 @@ describe('POST /employee', () => {
 });
 
 describe('GET byId /employee', () => {
-  test('should return the employee', async () => {
+  test('should return successfully the employee when passed in a valid id', async () => {
     const response = await request(app).get(`/employees/${employeeId}`);
 
     expect(response.status).toBe(200);
@@ -98,7 +103,8 @@ describe('GET byId /employee', () => {
     // eslint-disable-next-line no-underscore-dangle
     expect(response.body.data._id).toEqual(employeeId);
   });
-  test('should return error with invalid id', async () => {
+
+  test('should return invalid id error message when passed in an invalid id', async () => {
     const invalidId = 1234;
     const response = await request(app).get(`/employees/${invalidId}`).send();
 
@@ -107,7 +113,8 @@ describe('GET byId /employee', () => {
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
-  test('should return not found error with wrong id', async () => {
+
+  test('should return not found error message when passed in a wrong id', async () => {
     const wrongId = '6353fd0fbbfd1f6da8015fe7';
     const response = await request(app).get(`/employees/${wrongId}`).send();
 
