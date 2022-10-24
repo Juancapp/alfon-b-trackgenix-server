@@ -94,3 +94,45 @@ describe('PUT /super-admins', () => {
     expect(response.body.data).toBe(undefined);
   });
 });
+
+describe('DELTE /super-admins', () => {
+  // Good request
+  test('should return status 200', async () => {
+    const response = await request(app).delete(`/super-admins/${reqId}`).send();
+    expect(response.status).toBe(200);
+  });
+  test('should return error false', async () => {
+    const response = await request(app).delete(`/super-admins/${reqId}`).send();
+    expect(response.body.error).toBe(true);
+  });
+  test('should return data undefined', async () => {
+    const response = await request(app).delete(`/super-admins/${reqId}`).send();
+    expect(response.body.data).toBe(undefined);
+  });
+  // Inexistent Id
+  test('should return status 404', async () => {
+    const response = await request(app).delete(`/super-admins/${notFoundId}`).send();
+    expect(response.status).toBe(404);
+  });
+  test('should return error true', async () => {
+    const response = await request(app).delete(`/super-admins/${notFoundId}`).send();
+    expect(response.body.error).toBe(true);
+  });
+  test('should return data undefined', async () => {
+    const response = await request(app).delete(`/super-admins/${notFoundId}`).send();
+    expect(response.body.data).toBe(undefined);
+  });
+  // Bad Id format
+  test('should return status 404', async () => {
+    const response = await request(app).delete(`/super-admins/${badReqId}`).send();
+    expect(response.status).toBe(404);
+  });
+  test('should return error true', async () => {
+    const response = await request(app).delete(`/super-admins/${badReqId}`).send();
+    expect(response.body.error).toBe(true);
+  });
+  test('should return data undefined', async () => {
+    const response = await request(app).delete(`/super-admins/${badReqId}`).send();
+    expect(response.body.data).toBe(undefined);
+  });
+});
