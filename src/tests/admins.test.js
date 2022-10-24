@@ -41,6 +41,8 @@ describe('PUT /admins', () => {
     const response = await request(app).put(`/admins/${validId}`).send(mockedAdmin);
 
     expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.message).toEqual(`Admin with id ${validId} updated successfully`);
   });
 
   test('Should not modify an admin because of missing required fields', async () => {
@@ -55,11 +57,12 @@ describe('PUT /admins', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Should fail to delete admin: id not found', async () => {
+  test('Should fail to modify admin: id not found', async () => {
     const response = await request(app).delete(`/admins/${idNotFound}`).send();
 
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
+    expect(response.body.data).toBe(undefined);
   });
 });
 
@@ -68,6 +71,8 @@ describe('DELETE /admins', () => {
     const response = await request(app).delete(`/admins/${validId}`).send();
 
     expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.message).toEqual('Admin deleted successfully');
   });
 
   test('Should fail to delete admin: id not found', async () => {
@@ -75,5 +80,6 @@ describe('DELETE /admins', () => {
 
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
+    expect(response.body.data).toBe(undefined);
   });
 });
