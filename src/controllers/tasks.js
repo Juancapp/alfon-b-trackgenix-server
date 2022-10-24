@@ -73,7 +73,7 @@ const createTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Task with id ${req.params.id} not found`,
       data: undefined,
       error: true,
@@ -101,7 +101,7 @@ const updateTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Task with id ${req.params.id} not found`,
       data: undefined,
       error: true,
