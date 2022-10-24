@@ -10,20 +10,47 @@ beforeAll(async () => {
 let employeeId;
 const mockedEmployee = {
   name: 'Delainey',
-  last_name: 'Stirrip',
+  lastName: 'Stirrip',
   phone: '5493425770149',
   email: 'dstirrip0@over-blog.com',
   password: 'TegK86asd',
   dni: '14703006',
 };
 const wrongMockedEmployee = {
-  name: '213',
-  last_name: ' ',
+  name: 'Julian',
+  lastName: '',
   phone: '549',
   email: 'dstirrip.com',
   password: '2aas',
   dni: 'asdf',
 };
+
+describe('GET /employees', () => {
+  test('should return all the employees', async () => {
+    const response = await request(app).get('/employees').send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Employees found successfully');
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.data.length).toBeGreaterThan(0);
+  });
+  describe('GET /employees empty data', () => {
+    beforeEach(async () => {
+      await Employees.deleteMany();
+    });
+    test('Should return status code 404 with admins not found', async () => {
+      const response = await request(app).get('/employees').send();
+
+      expect(response.status).toBe(404);
+      expect(response.body.message).toEqual('Employees not found');
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.error).toBeTruthy();
+    });
+    afterEach(async () => {
+      await Employees.collection.insertMany(employeeSeeds);
+    });
+  });
+});
 
 describe('POST /employee', () => {
   test('should create employees without error', async () => {
@@ -36,7 +63,7 @@ describe('POST /employee', () => {
     expect(response.body.error).toBeFalsy();
     expect(response.body.data).toMatchObject({
       name: mockedEmployee.name,
-      last_name: mockedEmployee.last_name,
+      lastName: mockedEmployee.lastName,
       phone: Number(mockedEmployee.phone),
       email: mockedEmployee.email,
       password: mockedEmployee.password,
@@ -47,7 +74,7 @@ describe('POST /employee', () => {
     const response = await request(app).post('/employees').send(wrongMockedEmployee);
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBeDefined();
+    expect(response.body.message).toBe('There was an error: "lastName" is not allowed to be empty');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
@@ -86,27 +113,6 @@ describe('GET byId /employee', () => {
 
     expect(response.status).toBe(404);
     expect(response.body.message).toBe(`Employee with id ${wrongId} not found`);
-    expect(response.body.error).toBeTruthy();
-    expect(response.body.data).toBeUndefined();
-  });
-});
-
-describe('GET /employees', () => {
-  test('should return all the employees', async () => {
-    const response = await request(app).get('/employees').send();
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Employees found successfully');
-    expect(response.body.error).toBeFalsy();
-    expect(response.body.data.length).toBeGreaterThan(0);
-  });
-
-  test('should resturn error with empty response', async () => {
-    Employees.collection.deleteMany();
-    const response = await request(app).get('/employees').send();
-
-    expect(response.status).toBe(404);
-    expect(response.body.message).toBe('Employees not found');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
