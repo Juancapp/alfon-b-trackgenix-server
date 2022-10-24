@@ -25,22 +25,6 @@ const wrongMockedEmployee = {
   dni: 'asdf',
 };
 
-describe('GET /employees', () => {
-  test('should return all the employees', async () => {
-    const response = await request(app).get('/employees').send();
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Employees found successfully');
-    expect(response.body.error).toBeFalsy();
-    expect(response.body.data.length).toBeGreaterThan(0);
-  });
-  test('should return status code 404 in bad request', async () => {
-    const response = await request(app).get('/employes').send();
-
-    expect(response.status).toBe(404);
-  });
-});
-
 describe('POST /employee', () => {
   test('should create employees without error', async () => {
     const response = await request(app).post('/employees').send(mockedEmployee);
@@ -102,6 +86,27 @@ describe('GET byId /employee', () => {
 
     expect(response.status).toBe(404);
     expect(response.body.message).toBe(`Employee with id ${wrongId} not found`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+});
+
+describe('GET /employees', () => {
+  test('should return all the employees', async () => {
+    const response = await request(app).get('/employees').send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Employees found successfully');
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.data.length).toBeGreaterThan(0);
+  });
+
+  test('should resturn error with empty response', async () => {
+    Employees.collection.deleteMany();
+    const response = await request(app).get('/employees').send();
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Employees not found');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
