@@ -57,13 +57,28 @@ describe('GETbyID /tasks', () => {
     expect(response.status).toBe(404);
   });
 
-  test('Should return errror true', async () => {
+  test('Should return error true', async () => {
     const response = await request(app).get(`/tasks/${badReqId}`).send();
     expect(response.status).toBeTruthy();
   });
 
   test('Should return data undefined', async () => {
     const response = await request(app).get(`/tasks/${badReqId}`).send();
+    expect(response.body.data).toBe(undefined);
+  });
+
+  test('Should return status code 404', async () => {
+    const response = await request(app).get('/tasks/456456').send();
+    expect(response.status).toBe(404);
+  });
+
+  test('Should return error true', async () => {
+    const response = await request(app).get('/tasks/456456').send();
+    expect(response.status).toBeTruthy();
+  });
+
+  test('Should return status code 404', async () => {
+    const response = await request(app).get('/tasks/456456').send();
     expect(response.body.data).toBe(undefined);
   });
 });
