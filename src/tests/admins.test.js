@@ -62,3 +62,18 @@ describe('PUT /admins', () => {
     expect(response.body.error).toBe(true);
   });
 });
+
+describe('DELETE /admins', () => {
+  test('Should delete an admin', async () => {
+    const response = await request(app).delete(`/admins/${validId}`).send();
+
+    expect(response.status).toBe(200);
+  });
+
+  test('Should fail to delete admin: id not found', async () => {
+    const response = await request(app).delete(`/admins/${idNotFound}`).send();
+
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe(true);
+  });
+});
