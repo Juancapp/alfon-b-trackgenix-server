@@ -34,6 +34,7 @@ const wrongAdmin = {
 };
 
 const validId = '6354025e1890513d8a5fabcb';
+const invalidId = '6354025e1890513d8a5fabcbsdf';
 const idNotFound = '6355d9a4f45b78874ffa7e76';
 
 describe('PUT /admins', () => {
@@ -49,12 +50,25 @@ describe('PUT /admins', () => {
     const response = await request(app).put(`/admins/${validId}`).send(incompleteAdmin);
 
     expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.data).toBe(undefined);
   });
 
   test('Should not modify an admin because of invalid body', async () => {
     const response = await request(app).put(`/admins/${validId}`).send(wrongAdmin);
 
     expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.data).toBe(undefined);
+  });
+
+  test('Should not modify an admin because of invalid id', async () => {
+    const response = await request(app).put(`/admins/${invalidId}`).send(mockedAdmin);
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toEqual(`Admin with id ${invalidId} not found`);
   });
 
   test('Should fail to modify admin: id not found', async () => {
@@ -63,6 +77,7 @@ describe('PUT /admins', () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toEqual(`Admin with id ${idNotFound} not found`);
   });
 });
 
@@ -75,11 +90,20 @@ describe('DELETE /admins', () => {
     expect(response.body.message).toEqual('Admin deleted successfully');
   });
 
+  test('Should not delete an admin because of invalid id', async () => {
+    const response = await request(app).put(`/admins/${invalidId}`).send();
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.data).toBe(undefined);
+  });
+
   test('Should fail to delete admin: id not found', async () => {
     const response = await request(app).delete(`/admins/${idNotFound}`).send();
 
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toEqual(`Admin with id ${idNotFound} not found`);
   });
 });
