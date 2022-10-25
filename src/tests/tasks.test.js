@@ -32,11 +32,17 @@ describe('PUT /task', () => {
     const response = await request(app).put(`/tasks/${reqValidId}`).send(emptyMockedTask);
 
     expect(response.status).toBe(400);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toBeDefined();
   });
   test('should not modify a task because a missing required field', async () => {
     const response = await request(app).put(`/tasks/${reqValidId}`).send(invalidMockedTask);
 
     expect(response.status).toBe(400);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toBeDefined();
   });
   test('should return status code 404 because id not found', async () => {
     const response = await request(app).put(`/tasks/${reqIdNotFound}`).send(mockedTask);
@@ -44,6 +50,7 @@ describe('PUT /task', () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toEqual(`Task with id ${reqIdNotFound} not found`);
   });
 });
 
@@ -61,5 +68,6 @@ describe('DELETE /task', () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toEqual(`Task with id ${reqIdNotFound} not found`);
   });
 });
