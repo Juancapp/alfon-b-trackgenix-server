@@ -106,7 +106,7 @@ const updateTimesheets = async (req, res) => {
       return res.status(200).json({
         message: `Timesheet with id ${id} updated successfully`,
         data: updatedTimesheet,
-        error: true,
+        error: false,
       });
     }
     return res.status(404).json({
@@ -144,7 +144,7 @@ const deleteTimesheets = async (req, res) => {
       });
     }
     return res.status(404).json({
-      message: `Timesheet wuth id ${id} not found`,
+      message: `Timesheet with id ${id} not found`,
       data: undefined,
       error: true,
     });
