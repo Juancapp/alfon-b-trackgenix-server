@@ -11,7 +11,7 @@ export default [{
   employees: [
     {
       id: mongoose.Types.ObjectId('63540397a5be57cf8ebf17d6'),
-      rol: 'DEV',
+      role: 'DEV',
       rate: 120,
     },
   ],
@@ -27,12 +27,12 @@ export default [{
   employees: [
     {
       id: mongoose.Types.ObjectId('63540397a5be57cf8ebf17d6'),
-      rol: 'DEV',
+      role: 'DEV',
       rate: 120,
     },
     {
       id: mongoose.Types.ObjectId('6354039c6d5cab252b86b580'),
-      rol: 'QA',
+      role: 'QA',
       rate: 110,
     },
   ],
