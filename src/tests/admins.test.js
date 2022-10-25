@@ -74,7 +74,7 @@ describe('PUT /admins', () => {
   });
 
   test('Should fail to modify admin: id not found', async () => {
-    const response = await request(app).delete(`/admins/${idNotFound}`).send();
+    const response = await request(app).put(`/admins/${idNotFound}`).send(mockedAdmin);
 
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
