@@ -52,6 +52,7 @@ describe('PUT /admins', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toBeDefined();
   });
 
   test('Should not modify an admin because of invalid body', async () => {
@@ -60,6 +61,7 @@ describe('PUT /admins', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toBeDefined();
   });
 
   test('Should not modify an admin because of invalid id', async () => {
@@ -96,6 +98,7 @@ describe('DELETE /admins', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toBeDefined();
   });
 
   test('Should fail to delete admin: id not found', async () => {
