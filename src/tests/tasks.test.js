@@ -11,7 +11,7 @@ const mockedTask = {
   description: 'ultrices mattis odio donec vitae nisi nam ultrices libero',
 };
 const emptyMockedTask = {
-  description: ''
+  description: '',
 };
 const invalidMockedTask = {
 
@@ -26,7 +26,7 @@ describe('PUT /task', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.error).toBeFalsy();
-    expect(response.body.message).toEqual(`Task with id ${reqValidId} updated succesfully`)
+    expect(response.body.message).toEqual(`Task with id ${reqValidId} updated succesfully`);
   });
   test('should not modify a task because an empty field', async () => {
     const response = await request(app).put(`/tasks/${reqValidId}`).send(emptyMockedTask);
@@ -41,7 +41,7 @@ describe('PUT /task', () => {
   test('should return status code 404 because id not found', async () => {
     const response = await request(app).put(`/tasks/${reqIdNotFound}`).send();
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(400);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
   });
@@ -53,12 +53,12 @@ describe('DELETE /task', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.error).toBeFalsy();
-    expect(response.body.message).toEqual(`Task with id ${reqValidId} deleted succesfully`)
+    expect(response.body.message).toEqual(`Task with id ${reqValidId} deleted succesfully`);
   });
   test('should return status code 404 because id not found', async () => {
     const response = await request(app).put(`/tasks/${reqIdNotFound}`).send();
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(400);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
   });
