@@ -61,7 +61,7 @@ const createEmployee = async (req, res) => {
   try {
     const newEmployee = new Employees({
       name: req.body.name,
-      last_name: req.body.last_name,
+      lastName: req.body.last_name,
       phone: req.body.phone,
       email: req.body.email,
       password: req.body.password,
@@ -137,7 +137,7 @@ const deleteEmployee = async (req, res) => {
 
     if (deletedEmployee) {
       return res.status(200).json({
-        message: 'Employee deleted succesfully',
+        message: 'Employee deleted successfully',
         data: deletedEmployee,
         error: false,
       });

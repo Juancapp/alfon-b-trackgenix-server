@@ -4,7 +4,7 @@ const validateEmployees = (req, res, next) => {
   const employeeValidation = Joi.object({
     name: Joi.string().min(3).max(50).pattern(/^[A-Za-z]+$/)
       .required(),
-    last_name: Joi.string().min(3).max(50).pattern(/^[A-Za-z]+$/)
+    lastName: Joi.string().min(3).max(50).pattern(/^[A-Za-z]+$/)
       .required(),
     phone: Joi.string().min(8).max(15).pattern(/[0-9]/)
       .required(),
