@@ -44,7 +44,7 @@ describe('GET /timesheets', () => {
     expect(response.body.message).toEqual('Timesheets not found');
     expect(response.body.data).toBeUndefined();
     expect(response.body.error).toBeTruthy();
-    
+
     await Timesheets.collection.insertMany(timesheetsSeeds);
   });
 });
