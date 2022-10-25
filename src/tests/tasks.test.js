@@ -18,7 +18,7 @@ const invalidMockedTask = {
 };
 
 const reqValidId = '635405a0ab8783392fe27376';
-const reqIdNotFound = '6355d9a4f45b78874ffa7e76';
+const reqIdNotFound = '635405a0ab8783392ro27376';
 
 describe('PUT /task', () => {
   test('should modify a task', async () => {
@@ -39,9 +39,9 @@ describe('PUT /task', () => {
     expect(response.status).toBe(400);
   });
   test('should return status code 404 because id not found', async () => {
-    const response = await request(app).put(`/tasks/${reqIdNotFound}`).send();
+    const response = await request(app).put(`/tasks/${reqIdNotFound}`).send(mockedTask);
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
   });
@@ -56,9 +56,9 @@ describe('DELETE /task', () => {
     expect(response.body.message).toEqual(`Task with id ${reqValidId} deleted succesfully`);
   });
   test('should return status code 404 because id not found', async () => {
-    const response = await request(app).put(`/tasks/${reqIdNotFound}`).send();
+    const response = await request(app).delete(`/tasks/${reqIdNotFound}`).send();
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
   });
