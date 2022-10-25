@@ -87,7 +87,7 @@ describe('DELETE /employees', () => {
     expect(response.body.message).toBe('Employee deleted succesfully');
     expect(response.body.data).toBeDefined();
   });
-  test('Should return bad request', async () => {
+  test('Should fail because of non-existent id', async () => {
     const response = await request(app).delete(`/employees/${notFoundId}`).send();
 
     expect(response.status).toBe(404);
@@ -96,7 +96,7 @@ describe('DELETE /employees', () => {
     expect(response.body.data).toBeUndefined();
   });
   test('Should not be valid', async () => {
-    const response = await request(app).put(`/employees/${invalidId}`).send(mockedEmployee);
+    const response = await request(app).delete(`/employees/${invalidId}`).send(mockedEmployee);
 
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
