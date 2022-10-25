@@ -52,6 +52,7 @@ describe('PUT /employees', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toBeDefined();
   });
   test('Should not update an admin because the body data is not valid', async () => {
     const response = await request(app).put(`/employees/${validId}`).send(badEmployee);
@@ -59,6 +60,7 @@ describe('PUT /employees', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toBeDefined();
   });
   test('Should return bad request', async () => {
     const response = await request(app).put(`/employees/${notFoundId}`).send(mockedEmployee);
