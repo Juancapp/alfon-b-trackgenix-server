@@ -39,22 +39,16 @@ describe('GET /admins', () => {
     expect(response.body.error).toBeFalsy();
   });
 });
+test('Should return status code 404 with admins not found', async () => {
+  await Admins.deleteMany();
+  const response = await request(app).get('/admins').send();
 
-describe('GET /admins empty data', () => {
-  beforeAll(async () => {
-    await Admins.deleteMany();
-  });
-  test('Should return status code 404 with admins not found', async () => {
-    const response = await request(app).get('/admins').send();
+  expect(response.status).toBe(404);
+  expect(response.body.message).toEqual('Admins not found');
+  expect(response.body.data).toBeUndefined();
+  expect(response.body.error).toBeTruthy();
 
-    expect(response.status).toBe(404);
-    expect(response.body.message).toEqual('Admins not found');
-    expect(response.body.data).toBeUndefined();
-    expect(response.body.error).toBeTruthy();
-  });
-  afterAll(async () => {
-    await Admins.collection.insertMany(adminsSeed);
-  });
+  await Admins.collection.insertMany(adminsSeed);
 });
 
 describe('GET BY ID /:id', () => {
