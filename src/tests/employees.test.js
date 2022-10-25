@@ -35,23 +35,18 @@ describe('GET /employees', () => {
     expect(response.body.data.length).toBeGreaterThan(0);
   });
 
-  describe('GET /employees empty data', () => {
-    beforeAll(async () => {
-      await Employees.deleteMany();
-    });
+  test('should return status code 404 with employees not found', async () => {
+    await Employees.deleteMany();
+    const response = await request(app).get('/employees').send();
 
-    test('Should return status code 404 with employees not found', async () => {
-      const response = await request(app).get('/employees').send();
+    expect(response.status).toBe(404);
+    expect(response.body.message).toEqual('Employees not found');
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+  });
 
-      expect(response.status).toBe(404);
-      expect(response.body.message).toEqual('Employees not found');
-      expect(response.body.data).toBeUndefined();
-      expect(response.body.error).toBeTruthy();
-    });
-
-    afterAll(async () => {
-      await Employees.collection.insertMany(employeeSeeds);
-    });
+  afterAll(async () => {
+    await Employees.collection.insertMany(employeeSeeds);
   });
 });
 
