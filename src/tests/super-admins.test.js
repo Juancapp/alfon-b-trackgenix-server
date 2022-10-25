@@ -4,6 +4,26 @@ import app from '../app';
 import superAdmins from '../models/Super-admins';
 import superAdminsSeeds from '../seeds/super-admins';
 
+const mockedSuperAdmin = {
+  name: 'Kelbee',
+  lastName: 'Redholls',
+  email: 'kredholls0@mediafire.com',
+  password: 'GJk0kylyhY',
+  dni: 30112908,
+  phone: 5493415558701,
+};
+
+const mockedSuperAdminWrong = {
+  name: 'Ale',
+  lastName: '',
+  email: 'telegraph.com',
+  password: 'nXGTc1i6VEH',
+  dni: 39109775,
+  phone: 549116002873,
+};
+
+const badRequest = '63540469873594f152b2ad3b';
+
 beforeAll(async () => {
   await superAdmins.collection.insertMany(superAdminsSeeds);
 });
@@ -43,24 +63,6 @@ describe('GET /superadmins empty data', () => {
   });
 });
 
-const mockedSuperAdmin = {
-  name: 'Kelbee',
-  lastName: 'Redholls',
-  email: 'kredholls0@mediafire.com',
-  password: 'GJk0kylyhY',
-  dni: '30112908',
-  phone: '5493415558701',
-};
-
-const mockedSuperAdminWrong = {
-  name: 'Ale',
-  lastName: '',
-  email: 'telegraph.com',
-  password: 'nXGTc1i6VEH',
-  dni: '39109775',
-  phone: '549116002873',
-};
-
 describe('POST /superadmins', () => {
   test('Should create a superadmin', async () => {
     const response = await request(app).post('/super-admins').send(mockedSuperAdmin);
@@ -94,8 +96,6 @@ describe('POST /superadmins', () => {
     expect(response.body.data).toBeUndefined();
   });
 });
-
-const badRequest = '63540469873594f152b2ad3b';
 
 describe('GETbyID /superadmins', () => {
   test('Should return status code 200', async () => {
