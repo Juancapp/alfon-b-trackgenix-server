@@ -87,7 +87,7 @@ const createAdmin = async (req, res) => {
 
 const updateAdmins = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Admin with id ${req.params.id} not found`,
       data: undefined,
       error: true,
@@ -122,7 +122,7 @@ const updateAdmins = async (req, res) => {
 
 const deleteAdmins = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Admin with id ${req.params.id} not found`,
       data: undefined,
       error: true,

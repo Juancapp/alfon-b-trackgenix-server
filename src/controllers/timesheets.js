@@ -89,7 +89,7 @@ const updateTimesheets = async (req, res) => {
   const timesheetId = req.params.id;
 
   if (req.params.id && !mongoose.Types.ObjectId.isValid(timesheetId)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Cannot edit timesheet by ${timesheetId}`,
       data: undefined,
       error: true,
@@ -127,7 +127,7 @@ const deleteTimesheets = async (req, res) => {
   const timesheetId = req.params.id;
 
   if (req.params.id && !mongoose.Types.ObjectId.isValid(timesheetId)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Timesheet with id ${timesheetId} not found`,
       data: undefined,
       error: true,

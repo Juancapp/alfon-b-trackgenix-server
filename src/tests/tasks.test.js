@@ -84,9 +84,9 @@ describe('GETbyID /tasks', () => {
     expect(response.body.message).toBe(`Task with id ${badReqId} not found`);
   });
 
-  test('Should return status code 404', async () => {
+  test('Should return status code 400', async () => {
     const response = await request(app).get(`/tasks/${badFormatReqId}`).send();
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(400);
   });
 
   test('Should return error true', async () => {
