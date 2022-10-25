@@ -66,54 +66,61 @@ const mockedIdProject = {
 };
 
 describe('PUT /projects', () => {
-  // Good request
   test('should return status 200', async () => {
     const response = await request(app).put(`/projects/${reqId}`).send(mockedProjects);
     expect(response.status).toBe(200);
   });
+
   test('should return error false', async () => {
     const response = await request(app).put(`/projects/${reqId}`).send(mockedProjects);
     expect(response.body.error).toBeFalsy();
   });
+
   test('bodys should be the same', async () => {
     const response = await request(app).put(`/projects/${reqId}`).send(mockedProjects);
     expect(response.body.data).toMatchObject(mockedIdProject);
   });
-  // Bad Id format
+
   test('should return status 400', async () => {
     const response = await request(app).put(`/projects/${badReqId}`).send(mockedProjects);
     expect(response.status).toBe(400);
   });
+
   test('should return error true', async () => {
     const response = await request(app).put(`/projects/${badReqId}`).send(mockedProjects);
     expect(response.body.error).toBeTruthy();
   });
+
   test('should return data undefined', async () => {
     const response = await request(app).put(`/projects/${badReqId}`).send(mockedProjects);
     expect(response.body.data).toBe(undefined);
   });
-  // Inexistent Id
+
   test('should return status 404', async () => {
     const response = await request(app).put(`/projects/${notFoundId}`).send(mockedProjects);
     expect(response.status).toBe(404);
   });
+
   test('should return error true', async () => {
     const response = await request(app).put(`/projects/${notFoundId}`).send(mockedProjects);
     expect(response.body.error).toBeTruthy();
   });
+
   test('should return data undefined', async () => {
     const response = await request(app).put(`/projects/${notFoundId}`).send(mockedProjects);
     expect(response.body.data).toBe(undefined);
   });
-  // Bad body request
+
   test('should return status 400', async () => {
     const response = await request(app).put(`/projects/${reqId}`).send(mockedBadProject);
     expect(response.status).toBe(400);
   });
+
   test('should return error true', async () => {
     const response = await request(app).put(`/projects/${reqId}`).send(mockedBadProject);
     expect(response.body.error).toBeTruthy();
   });
+
   test('should return data undefined', async () => {
     const response = await request(app).put(`/projects/${reqId}`).send(mockedBadProject);
     expect(response.body.data).toBe(undefined);
@@ -121,7 +128,6 @@ describe('PUT /projects', () => {
 });
 
 describe('DELETE /projects', () => {
-  // Good request
   test('should return status 200', async () => {
     const response = await request(app).delete(`/projects/${reqId}`).send();
     expect(response.status).toBe(200);
@@ -129,34 +135,40 @@ describe('DELETE /projects', () => {
     // eslint-disable-next-line no-underscore-dangle
     deleteReqId = response.body.data._id;
   });
+
   test('should return error false', () => {
     expect(deleteReqError).toBeFalsy();
   });
+
   test('should return the same id as the request id', () => {
     expect(deleteReqId).toBe(reqId);
   });
-  // Inexistent Id
+
   test('should return status 404', async () => {
     const response = await request(app).delete(`/projects/${notFoundId}`).send();
     expect(response.status).toBe(404);
   });
+
   test('should return error true', async () => {
     const response = await request(app).delete(`/projects/${notFoundId}`).send();
     expect(response.body.error).toBeTruthy();
   });
+
   test('should return data undefined', async () => {
     const response = await request(app).delete(`/projects/${notFoundId}`).send();
     expect(response.body.data).toBe(undefined);
   });
-  // Bad Id format
+
   test('should return status 400', async () => {
     const response = await request(app).delete(`/projects/${badReqId}`).send();
     expect(response.status).toBe(400);
   });
+
   test('should return error true', async () => {
     const response = await request(app).delete(`/projects/${badReqId}`).send();
     expect(response.body.error).toBeTruthy();
   });
+
   test('should return data undefined', async () => {
     const response = await request(app).delete(`/projects/${badReqId}`).send();
     expect(response.body.data).toBe(undefined);
