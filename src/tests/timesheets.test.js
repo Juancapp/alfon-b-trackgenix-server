@@ -35,21 +35,17 @@ describe('GET /timesheets', () => {
     expect(response.body.error).toBeFalsy();
     expect(response.body.data.length).toBeGreaterThan(0);
   });
-  describe('GET /timesheets empty data', () => {
-    beforeEach(async () => {
-      await Timesheets.deleteMany();
-    });
-    test('Should return status code 404 with admins not found', async () => {
-      const response = await request(app).get('/timesheets').send();
 
-      expect(response.status).toBe(404);
-      expect(response.body.message).toEqual('Timesheets not found');
-      expect(response.body.data).toBeUndefined();
-      expect(response.body.error).toBeTruthy();
-    });
-    afterEach(async () => {
-      await Timesheets.collection.insertMany(timesheetsSeeds);
-    });
+  test('Should return status code 404 with admins not found', async () => {
+    await Timesheets.deleteMany();
+    const response = await request(app).get('/timesheets').send();
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toEqual('Timesheets not found');
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+    
+    await Timesheets.collection.insertMany(timesheetsSeeds);
   });
 });
 
@@ -74,11 +70,11 @@ describe('GET byId /timesheets/:id', () => {
     expect(response.body.data).toBeUndefined();
   });
   test('should return not found error with wrong id', async () => {
-    const wrongId = '6353fd0fp1td1g6dr1015fe6';
+    const wrongId = '6355cf418ff38506cc6afc19';
     const response = await request(app).get(`/timesheets/${wrongId}`).send();
 
-    expect(response.status).toBe(400);
-    expect(response.body.message).toBe(`Cannot get timesheet by id of ${wrongId}`);
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe(`Timesheet with id ${wrongId} not found`);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
