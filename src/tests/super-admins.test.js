@@ -14,11 +14,13 @@ describe('GET /superadmins', () => {
     superadminId = response.body.data[0]._id;
     expect(response.status).toBe(200);
   });
+
   test('Should return error false', async () => {
     const response = await request(app).get('/super-admins').send();
 
     expect(response.body.error).toBeFalsy();
   });
+
   test('Should return more than one superAdmin', async () => {
     const response = await request(app).get('/super-admins').send();
 
@@ -35,6 +37,7 @@ describe('GET /superadmins empty data', () => {
     expect(response.data).toBeUndefined();
     expect(response.error).toBeTruthy();
   });
+
   afterAll(async () => {
     await superAdmins.collection.insertMany(superAdminsSeeds);
   });
@@ -65,6 +68,7 @@ describe('POST /superadmins', () => {
     expect(response.status).toBe(201);
     expect(response.body.error).toBeFalsy();
   });
+
   test('Should not create a superadmin', async () => {
     const response = await request(app).post('/super-admins').send();
 
@@ -72,6 +76,7 @@ describe('POST /superadmins', () => {
     expect(response.body.message).toBe('There was an error: "name" is required');
     expect(response.body.error).toBeTruthy();
   });
+
   test('Should return error using wrong data', async () => {
     const response = await request(app).post('/super-admins').send(mockedSuperAdminWrong);
 
@@ -79,6 +84,7 @@ describe('POST /superadmins', () => {
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
+
   test('should return error with empty data', async () => {
     const response = await request(app).post('/super-admins').send();
 
@@ -97,26 +103,31 @@ describe('GETbyID /superadmins', () => {
 
     expect(response.status).toBe(200);
   });
+
   test('Should return error false', async () => {
     const response = await request(app).get(`/super-admins/${superadminId}`).send();
 
     expect(response.body.error).toBeFalsy();
   });
+
   test('Should return one superadmin', async () => {
     const response = await request(app).get(`/super-admins/${superadminId}`).send();
 
     expect(response.body.data._id).toContain(superadminId);
   });
+
   test('Should return status code 404', async () => {
     const response = await request(app).get(`/super-admins/${badRequest}`).send();
 
     expect(response.status).toBe(404);
   });
+
   test('Should return error true', async () => {
     const response = await request(app).get(`/super-admins/${badRequest}`).send();
 
     expect(response.status).toBeTruthy();
   });
+
   test('Should return data undefined', async () => {
     const response = await request(app).get(`/super-admins/${badRequest}`).send();
 

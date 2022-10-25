@@ -3,7 +3,7 @@ import Timesheets from '../models/Timesheets';
 
 const getAllTimesheets = async (req, res) => {
   try {
-    const timesheets = await Timesheets.find();
+    const timesheets = await Timesheets.find().populate('task').populate('employee').populate('project');
 
     if (!timesheets.length) {
       return res.status(404).json({
@@ -37,7 +37,7 @@ const getTimesheetByID = async (req, res) => {
     });
   }
   try {
-    const timesheet = await Timesheets.findById(timesheetId);
+    const timesheet = await Timesheets.findById(timesheetId).populate('task').populate('employee').populate('project');
     if (timesheet) {
       return res.status(200).json({
         message: `Timesheet with id ${timesheetId} found successfully`,
@@ -89,7 +89,7 @@ const updateTimesheets = async (req, res) => {
   const timesheetId = req.params.id;
 
   if (req.params.id && !mongoose.Types.ObjectId.isValid(timesheetId)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Cannot edit timesheet by ${timesheetId}`,
       data: undefined,
       error: true,
@@ -127,7 +127,7 @@ const deleteTimesheets = async (req, res) => {
   const timesheetId = req.params.id;
 
   if (req.params.id && !mongoose.Types.ObjectId.isValid(timesheetId)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Timesheet with id ${timesheetId} not found`,
       data: undefined,
       error: true,

@@ -86,7 +86,7 @@ const createSuperAdmin = async (req, res) => {
 
 const updateSuperAdmin = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Super Admin with id ${req.params.id} not found`,
       data: undefined,
       error: true,
@@ -122,7 +122,7 @@ const updateSuperAdmin = async (req, res) => {
 
 const deleteSuperAdmin = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `SuperAdmins with id ${req.params.id} not found`,
       data: undefined,
       error: true,
