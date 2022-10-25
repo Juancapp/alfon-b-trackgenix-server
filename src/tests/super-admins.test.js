@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { response } from 'express';
 import request from 'supertest';
 import app from '../app';
 import superAdmins from '../models/Super-admins';
@@ -24,6 +23,20 @@ describe('GET /superadmins', () => {
     const response = await request(app).get('/super-admins').send();
 
     expect(response.body.data.length).toBeGreaterThan(0);
+  });
+});
+
+describe('GET /superadmins empty data', () => {
+  test('Should return status code 404 if superadmin is not found', async () => {
+    await superAdmins.deleteMany();
+    const response = await request(app).get('/super-admins').send();
+
+    expect(response.status).toBe(404);
+    expect(response.data).toBeUndefined();
+    expect(response.error).toBeTruthy();
+  });
+  afterAll(async () => {
+    await superAdmins.collection.insertMany(superAdminsSeeds);
   });
 });
 
@@ -56,6 +69,8 @@ describe('POST /superadmins', () => {
     const response = await request(app).post('/super-admins').send();
 
     expect(response.status).toBe(400);
+    expect(response.body.message).toBe('There was an error: "name" is required');
+    expect(response.body.error).toBeTruthy();
   });
   test('Should return error using wrong data', async () => {
     const response = await request(app).post('/super-admins').send(mockedSuperAdminWrong);
