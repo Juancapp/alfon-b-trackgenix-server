@@ -6,8 +6,8 @@ export default [{
   lastName: 'Redholls',
   email: 'kredholls0@mediafire.com',
   password: 'GJk0kylyhY',
-  dni: '30112908',
-  phone: '5493415558701',
+  dni: 30112908,
+  phone: 5493415558701,
 },
 {
   _id: mongoose.Types.ObjectId('6354046d14c89cec9157c1e0'),
@@ -15,6 +15,6 @@ export default [{
   lastName: 'Kimbly',
   email: 'bkimbly1@telegraph.com',
   password: 'nXGTc1i6VEH',
-  dni: '39109775',
-  phone: '549116002873',
+  dni: 39109775,
+  phone: 549116002873,
 }];
