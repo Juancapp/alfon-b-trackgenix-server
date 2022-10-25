@@ -12,16 +12,16 @@ const mockedAdmin = {
   lastName: 'user',
   email: 'user@user.com',
   password: 'pass1234',
-  dni: '1234567890',
-  phone: '341341341',
+  dni: 1234567890,
+  phone: 341341341,
 };
 const AdminBadRequest = {
   name: '',
   lastName: 'user',
   email: 'user@user.com',
   password: 'pass1234',
-  dni: '1234567',
-  phone: '341341341',
+  dni: 1234567,
+  phone: 341341341,
 };
 
 beforeAll(async () => {
@@ -99,8 +99,8 @@ describe('POST', () => {
       lastName: mockedAdmin.lastName,
       email: mockedAdmin.email,
       password: mockedAdmin.password,
-      dni: Number(mockedAdmin.dni),
-      phone: Number(mockedAdmin.phone),
+      dni: mockedAdmin.dni,
+      phone: mockedAdmin.phone,
     });
     expect(response.body.error).toBeFalsy();
   });
