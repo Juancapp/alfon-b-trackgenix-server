@@ -93,12 +93,12 @@ describe('DELETE /admins', () => {
   });
 
   test('Should not delete an admin because of invalid id', async () => {
-    const response = await request(app).put(`/admins/${invalidId}`).send();
+    const response = await request(app).delete(`/admins/${invalidId}`).send();
 
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBe(undefined);
-    expect(response.body.message).toBeDefined();
+    expect(response.body.message).toEqual(`Admin with id ${invalidId} not found`);
   });
 
   test('Should fail to delete admin: id not found', async () => {
