@@ -1,11 +1,13 @@
-import mongoose from 'mongoose';
 import request from 'supertest';
 import app from '../app';
+import Employees from '../models/Employees';
 import Projects from '../models/Projects';
 import projectSeeds from '../seeds/projects';
+import employeeSeeds from '../seeds/employees';
 
 beforeAll(async () => {
   await Projects.collection.insertMany(projectSeeds);
+  await Employees.collection.insertMany(employeeSeeds);
 });
 
 let projectId;
@@ -18,7 +20,7 @@ const mockedProject = {
   active: true,
   employees: [
     {
-      employee: mongoose.Types.ObjectId('63540397a5be57cf8ebf17d6'),
+      employee: '6354039c6d5cab252b86b580',
       role: 'DEV',
       rate: 120,
     },
@@ -33,7 +35,7 @@ const wrongMockedProject = {
   active: true,
   employees: [
     {
-      employee: mongoose.Types.ObjectId('63540397a5be57cf8ebf17d6'),
+      employee: '6354039c6d5cab252b86b580',
       role: 'DEV',
       rate: 120,
     },
@@ -48,6 +50,17 @@ describe('GET /projects', () => {
     expect(response.body.message).toBe('Projects found successfully');
     expect(response.body.error).toBeFalsy();
     expect(response.body.data.length).toBeGreaterThan(0);
+  });
+
+  test('should return project employees', async () => {
+    const response = await request(app).get('/projects').send();
+
+    expect(response.body.data[0].employees.length).toBeGreaterThan(0);
+  });
+  test('should return project employee data', async () => {
+    const response = await request(app).get('/projects').send();
+
+    expect(response.body.data[0].employees[0]).not.toBe(null);
   });
 
   test('should return status code 404 with projects not found', async () => {
@@ -112,6 +125,16 @@ describe('GET byId /projects', () => {
     expect(response.body.error).toBeFalsy();
     // eslint-disable-next-line no-underscore-dangle
     expect(response.body.data._id).toEqual(projectId);
+  });
+  test('should return project employees', async () => {
+    const response = await request(app).get(`/projects/${projectId}`);
+
+    expect(response.body.data.employees.length).toBeGreaterThan(0);
+  });
+  test('should return project employee data', async () => {
+    const response = await request(app).get(`/projects/${projectId}`);
+
+    expect(response.body.data.employees[0]).not.toBe(null);
   });
 
   test('should return invalid id error message when passed in an invalid id', async () => {
