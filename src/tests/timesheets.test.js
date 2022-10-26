@@ -53,7 +53,7 @@ describe('PUT /timesheets', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
-    expect(response.body.message).toBeDefined();
+    expect(response.body.message).toEqual('Cannot create timesheet: "description" is not allowed to be empty');
   });
 
   test('should not modify a timesheet because an invalid field', async () => {
@@ -62,7 +62,7 @@ describe('PUT /timesheets', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
-    expect(response.body.message).toBeDefined();
+    expect(response.body.message).toEqual('Cannot create timesheet: "date" must be a valid date');
   });
 
   test('should return status code 404 because id not found', async () => {
