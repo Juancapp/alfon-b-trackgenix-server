@@ -12,6 +12,7 @@ const badReqId = '63540469873594f152b2ad3csda';
 const notFoundId = '63540469873594f152b2ad3c';
 let deleteReqError;
 let deleteReqId;
+let deleteReqMessage;
 
 const mockedSuperAdmin = {
   name: 'Juan',
@@ -57,6 +58,11 @@ describe('PUT /super-admins', () => {
     expect(response.body.data).toEqual(mockedIdSuperAdmin);
   });
 
+  test('check for success message', async () => {
+    const response = await request(app).put(`/super-admins/${reqId}`).send(mockedSuperAdmin);
+    expect(response.body.message).toEqual(`Super Admin with id ${reqId} updated successfully`);
+  });
+
   test('should return status 400', async () => {
     const response = await request(app).put(`/super-admins/${badReqId}`).send(mockedSuperAdmin);
     expect(response.status).toBe(400);
@@ -70,6 +76,11 @@ describe('PUT /super-admins', () => {
   test('should return data undefined', async () => {
     const response = await request(app).put(`/super-admins/${badReqId}`).send(mockedSuperAdmin);
     expect(response.body.data).toBe(undefined);
+  });
+
+  test('check for bad id not found message', async () => {
+    const response = await request(app).put(`/super-admins/${badReqId}`).send(mockedSuperAdmin);
+    expect(response.body.message).toEqual(`Super Admin with id ${badReqId} not found`);
   });
 
   test('should return status 404', async () => {
@@ -87,6 +98,11 @@ describe('PUT /super-admins', () => {
     expect(response.body.data).toBe(undefined);
   });
 
+  test('check for not found message', async () => {
+    const response = await request(app).put(`/super-admins/${notFoundId}`).send(mockedSuperAdmin);
+    expect(response.body.message).toEqual(`Super Admin with id ${notFoundId} not found`);
+  });
+
   test('should return status 400', async () => {
     const response = await request(app).put(`/super-admins/${reqId}`).send(mockedBadSuperAdmin);
     expect(response.status).toBe(400);
@@ -100,6 +116,11 @@ describe('PUT /super-admins', () => {
   test('should return data undefined', async () => {
     const response = await request(app).put(`/super-admins/${reqId}`).send(mockedBadSuperAdmin);
     expect(response.body.data).toBe(undefined);
+  });
+
+  test('check for error message', async () => {
+    const response = await request(app).put(`/super-admins/${reqId}`).send(mockedBadSuperAdmin);
+    expect(response.body.message).toBeDefined();
   });
 });
 
@@ -110,6 +131,7 @@ describe('DELETE /super-admins', () => {
     deleteReqError = response.body.error;
     // eslint-disable-next-line no-underscore-dangle
     deleteReqId = response.body.data._id;
+    deleteReqMessage = response.body.message;
   });
 
   test('should return error false', () => {
@@ -118,6 +140,10 @@ describe('DELETE /super-admins', () => {
 
   test('should return the same id as the request id', () => {
     expect(deleteReqId).toBe(reqId);
+  });
+
+  test('check for success message', () => {
+    expect(deleteReqMessage).toEqual('SuperAdmins deleted successfully');
   });
 
   test('should return status 404', async () => {
@@ -135,6 +161,11 @@ describe('DELETE /super-admins', () => {
     expect(response.body.data).toBe(undefined);
   });
 
+  test('check for not found message', async () => {
+    const response = await request(app).delete(`/super-admins/${notFoundId}`).send();
+    expect(response.body.message).toEqual(`SuperAdmins with id ${notFoundId} not found`);
+  });
+
   test('should return status 400', async () => {
     const response = await request(app).delete(`/super-admins/${badReqId}`).send();
     expect(response.status).toBe(400);
@@ -148,5 +179,10 @@ describe('DELETE /super-admins', () => {
   test('should return data undefined', async () => {
     const response = await request(app).delete(`/super-admins/${badReqId}`).send();
     expect(response.body.data).toBe(undefined);
+  });
+
+  test('check for error message', async () => {
+    const response = await request(app).delete(`/super-admins/${badReqId}`).send();
+    expect(response.body.message).toBeDefined();
   });
 });
