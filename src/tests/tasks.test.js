@@ -34,7 +34,7 @@ describe('PUT /task', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
-    expect(response.body.message).toBeDefined();
+    expect(response.body.message).toEqual('Validation error: "description" is not allowed to be empty');
   });
   test('should not modify a task because a missing required field', async () => {
     const response = await request(app).put(`/tasks/${reqValidId}`).send(invalidMockedTask);
@@ -42,7 +42,7 @@ describe('PUT /task', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
-    expect(response.body.message).toBeDefined();
+    expect(response.body.message).toEqual('Validation error: "description" is required');
   });
   test('should return status code 404 because id not found', async () => {
     const response = await request(app).put(`/tasks/${reqIdNotFound}`).send(mockedTask);
