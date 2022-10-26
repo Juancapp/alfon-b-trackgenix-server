@@ -10,7 +10,7 @@ export default [{
   active: true,
   employees: [
     {
-      id: mongoose.Types.ObjectId('63540397a5be57cf8ebf17d6'),
+      employee: mongoose.Types.ObjectId('6354039c6d5cab252b86b580'),
       role: 'DEV',
       rate: 120,
     },
@@ -26,12 +26,12 @@ export default [{
   active: true,
   employees: [
     {
-      id: mongoose.Types.ObjectId('63540397a5be57cf8ebf17d6'),
+      employee: mongoose.Types.ObjectId('6354039c6d5cab252b86b580'),
       role: 'DEV',
       rate: 120,
     },
     {
-      id: mongoose.Types.ObjectId('6354039c6d5cab252b86b580'),
+      employee: mongoose.Types.ObjectId('6354039c6d5cab252b86b580'),
       role: 'QA',
       rate: 110,
     },
