@@ -4,15 +4,21 @@ import SuperAdmins from '../models/Super-admins';
 const getAllSuperAdmins = async (req, res) => {
   try {
     const result = await SuperAdmins.find();
-
-    return res.status(200).json({
-      message: 'SuperAdmins found successfully',
-      data: result,
-      error: false,
+    if (result.length) {
+      return res.status(200).json({
+        message: 'SuperAdmins found successfully',
+        data: result,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: 'SuperAdmins not found',
+      data: undefined,
+      error: true,
     });
   } catch (error) {
-    return res.status(404).json({
-      message: `SuperAdmins not found ${error}`,
+    return res.status(500).json({
+      message: `Server error ${error}`,
       data: undefined,
       error: true,
     });
