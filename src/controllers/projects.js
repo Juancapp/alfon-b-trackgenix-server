@@ -4,6 +4,13 @@ import Projects from '../models/Projects';
 const getAllProjects = async (req, res) => {
   try {
     const projects = await Projects.find().populate('employees.employee');
+    if (!projects.length) {
+      return res.status(404).json({
+        message: 'Projects not found',
+        data: undefined,
+        error: true,
+      });
+    }
     return res.status(200).json({
       message: 'Projects found successfully',
       data: projects,
@@ -31,15 +38,15 @@ const getProjectsById = async (req, res) => {
     const project = await Projects.findById(projectId).populate('employees.employee');
     if (project) {
       return res.status(200).json({
-        message: `Project whit id ${projectId} found successfully`,
+        message: `Project with id ${projectId} found successfully`,
         data: project,
         error: false,
       });
     }
     return res.status(404).json({
-      message: `Project whit Id ${projectId} not found`,
+      message: `Project with Id ${projectId} not found`,
       data: undefined,
-      error: false,
+      error: true,
     });
   } catch (error) {
     return res.status(500).json({
