@@ -15,6 +15,7 @@ const badReqId = '635408ff26249caf8f9a98b3asdasd';
 const notFoundId = '63540469873594f152b2ad3c';
 let deleteReqError;
 let deleteReqId;
+let deleteReqMessage;
 
 const mockedProjects = {
   name: 'Calley',
@@ -81,6 +82,11 @@ describe('PUT /projects', () => {
     expect(response.body.data).toMatchObject(mockedIdProject);
   });
 
+  test('check for success message', async () => {
+    const response = await request(app).put(`/projects/${reqId}`).send(mockedProjects);
+    expect(response.body.message).toEqual(`Project with id ${reqId} updated successfully`);
+  });
+
   test('should return status 400', async () => {
     const response = await request(app).put(`/projects/${badReqId}`).send(mockedProjects);
     expect(response.status).toBe(400);
@@ -94,6 +100,11 @@ describe('PUT /projects', () => {
   test('should return data undefined', async () => {
     const response = await request(app).put(`/projects/${badReqId}`).send(mockedProjects);
     expect(response.body.data).toBe(undefined);
+  });
+
+  test('check for not found message', async () => {
+    const response = await request(app).put(`/projects/${badReqId}`).send(mockedProjects);
+    expect(response.body.message).toEqual(`Project with id ${badReqId} not found`);
   });
 
   test('should return status 404', async () => {
@@ -111,6 +122,11 @@ describe('PUT /projects', () => {
     expect(response.body.data).toBe(undefined);
   });
 
+  test('check for not found message', async () => {
+    const response = await request(app).put(`/projects/${notFoundId}`).send(mockedProjects);
+    expect(response.body.message).toEqual(`Project with id ${notFoundId} not found`);
+  });
+
   test('should return status 400', async () => {
     const response = await request(app).put(`/projects/${reqId}`).send(mockedBadProject);
     expect(response.status).toBe(400);
@@ -124,6 +140,11 @@ describe('PUT /projects', () => {
   test('should return data undefined', async () => {
     const response = await request(app).put(`/projects/${reqId}`).send(mockedBadProject);
     expect(response.body.data).toBe(undefined);
+  });
+
+  test('check for not found message', async () => {
+    const response = await request(app).put(`/projects/${reqId}`).send(mockedBadProject);
+    expect(response.body.message).toBeDefined();
   });
 });
 
@@ -134,6 +155,7 @@ describe('DELETE /projects', () => {
     deleteReqError = response.body.error;
     // eslint-disable-next-line no-underscore-dangle
     deleteReqId = response.body.data._id;
+    deleteReqMessage = response.body.message;
   });
 
   test('should return error false', () => {
@@ -142,6 +164,10 @@ describe('DELETE /projects', () => {
 
   test('should return the same id as the request id', () => {
     expect(deleteReqId).toBe(reqId);
+  });
+
+  test('check for success message', async () => {
+    expect(deleteReqMessage).toEqual('Project deleted successfully');
   });
 
   test('should return status 404', async () => {
@@ -159,6 +185,11 @@ describe('DELETE /projects', () => {
     expect(response.body.data).toBe(undefined);
   });
 
+  test('check for not found message', async () => {
+    const response = await request(app).delete(`/projects/${notFoundId}`).send();
+    expect(response.body.message).toEqual(`Project with id ${notFoundId} not found`);
+  });
+
   test('should return status 400', async () => {
     const response = await request(app).delete(`/projects/${badReqId}`).send();
     expect(response.status).toBe(400);
@@ -172,5 +203,10 @@ describe('DELETE /projects', () => {
   test('should return data undefined', async () => {
     const response = await request(app).delete(`/projects/${badReqId}`).send();
     expect(response.body.data).toBe(undefined);
+  });
+
+  test('check for not found message', async () => {
+    const response = await request(app).delete(`/projects/${badReqId}`).send(mockedBadProject);
+    expect(response.body.message).toBeDefined();
   });
 });
