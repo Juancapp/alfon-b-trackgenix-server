@@ -39,6 +39,7 @@ describe('GET /admins', () => {
     expect(response.body.error).toBeFalsy();
   });
 });
+
 test('Should return status code 404 with admins not found', async () => {
   await Admins.deleteMany();
   const response = await request(app).get('/admins').send();
