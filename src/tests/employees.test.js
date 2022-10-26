@@ -1,21 +1,44 @@
 import request from 'supertest';
 import app from '../app';
 import Employees from '../models/Employees';
-import employeeSeeds from '../seeds/employees';
+import employeesSeeds from '../seeds/employees';
 
 beforeAll(async () => {
-  await Employees.collection.insertMany(employeeSeeds);
+  await Employees.collection.insertMany(employeesSeeds);
 });
 
-let employeeId;
+const invalidId = '6354039c6d5cab252b86b588Nvalid';
+const validId = '6354039c6d5cab252b86b580';
+const notFoundId = '6354039c6d5cab252b86b588';
+
 const mockedEmployee = {
-  name: 'Delainey',
-  lastName: 'Stirrip',
-  phone: '5493425770149',
-  email: 'dstirrip0@over-blog.com',
-  password: 'TegK86asd',
-  dni: '14703006',
+  name: 'test',
+  lastName: 'test',
+  phone: '123456789',
+  email: 'test@test.com',
+  password: 'abcd1234',
+  dni: '1234567',
 };
+
+const incompleteEmployee = {
+  name: 'test',
+  lastName: 'test',
+  phone: '123456789',
+  email: 'test@test.com',
+  password: 'abcd1234',
+};
+
+const badEmployee = {
+  name: 'te',
+  lastName: 'test',
+  phone: '123456789',
+  email: 'test@test.com',
+  password: 'abcd1234',
+  dni: '1234567',
+};
+
+let employeeId;
+
 const wrongMockedEmployee = {
   name: 'Julian',
   lastName: '',
@@ -46,7 +69,7 @@ describe('GET /employees', () => {
   });
 
   afterAll(async () => {
-    await Employees.collection.insertMany(employeeSeeds);
+    await Employees.collection.insertMany(employeesSeeds);
   });
 });
 
@@ -98,10 +121,9 @@ describe('GET byId /employee', () => {
     // eslint-disable-next-line no-underscore-dangle
     expect(response.body.data._id).toEqual(employeeId);
   });
-
   test('should return invalid id error message when passed in an invalid id', async () => {
-    const invalidId = 1234;
-    const response = await request(app).get(`/employees/${invalidId}`).send();
+    const invalidGetId = 1234;
+    const response = await request(app).get(`/employees/${invalidGetId}`).send();
 
     expect(response.status).toBe(400);
 
@@ -116,6 +138,76 @@ describe('GET byId /employee', () => {
     expect(response.status).toBe(404);
     expect(response.body.message).toBe(`Employee with id ${wrongId} not found`);
     expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+});
+
+describe('PUT /employees', () => {
+  test('Should update employee', async () => {
+    const response = await request(app).put(`/employees/${validId}`).send(mockedEmployee);
+
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.message).toBe(`Employee with id ${validId} updated successfully`);
+    expect(response.body.data).toBeDefined();
+  });
+  test('Should not update an admin because all fields are required', async () => {
+    const response = await request(app).put(`/employees/${validId}`).send(incompleteEmployee);
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toBeDefined();
+  });
+  test('Should not update an admin because the body data is not valid', async () => {
+    const response = await request(app).put(`/employees/${validId}`).send(badEmployee);
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toBeDefined();
+  });
+  test('Should return bad request', async () => {
+    const response = await request(app).put(`/employees/${notFoundId}`).send(mockedEmployee);
+
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe(true);
+    expect(response.body.message).toBe(`Employee with id ${notFoundId} not found`);
+    expect(response.body.data).toBeUndefined();
+  });
+  test('Should not be valid', async () => {
+    const response = await request(app).put(`/employees/${invalidId}`).send(mockedEmployee);
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.message).toBe(`Employee id ${invalidId} not valid`);
+    expect(response.body.data).toBeUndefined();
+  });
+});
+
+describe('DELETE /employees', () => {
+  test('Should delete an employee', async () => {
+    const response = await request(app).delete(`/employees/${validId}`).send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.message).toBe('Employee deleted succesfully');
+    expect(response.body.data).toBeDefined();
+  });
+  test('Should fail because of non-existent id', async () => {
+    const response = await request(app).delete(`/employees/${notFoundId}`).send();
+
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe(true);
+    expect(response.body.message).toBe(`Employee with id ${notFoundId} not found`);
+    expect(response.body.data).toBeUndefined();
+  });
+  test('Should not be valid', async () => {
+    const response = await request(app).delete(`/employees/${invalidId}`).send(mockedEmployee);
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe(true);
+    expect(response.body.message).toBe(`Employee id ${invalidId} not valid`);
     expect(response.body.data).toBeUndefined();
   });
 });
