@@ -15,7 +15,7 @@ const mockedSuperAdmin = {
 
 const mockedSuperAdminWrong = {
   name: 'Ale',
-  lastName: '',
+  lastName: 'algo',
   email: 'telegraph.com',
   password: 'nXGTc1i6VEH',
   dni: 39109775,
@@ -83,17 +83,18 @@ describe('POST /superadmins', () => {
     const response = await request(app).post('/super-admins').send(mockedSuperAdminWrong);
 
     expect(response.status).toBe(400);
-    expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toBe('There was an error: "email" must be a valid email');
+    expect(response.body.error).toBeTruthy();
   });
 
   test('should return error with empty data', async () => {
     const response = await request(app).post('/super-admins').send();
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBeDefined();
-    expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toBe('There was an error: "name" is required');
+    expect(response.body.error).toBeTruthy();
   });
 });
 
@@ -132,5 +133,11 @@ describe('GETbyID /superadmins', () => {
     const response = await request(app).get(`/super-admins/${badRequest}`).send();
 
     expect(response.body.data).toBe(undefined);
+  });
+
+  test('Should return data undefined', async () => {
+    const response = await request(app).get(`/super-admins/${badRequest}`).send();
+
+    expect(response.body.message).toBe('SuperAdmin with id 63540469873594f152b2ad3b not found');
   });
 });
