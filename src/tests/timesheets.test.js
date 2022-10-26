@@ -79,6 +79,7 @@ describe('GET byId /timesheets/:id', () => {
     expect(response.body.data.employee).not.toBeNull();
     expect(response.body.data.project).not.toBeNull();
   });
+
   test('should return error with invalid id', async () => {
     const invalidId = 'homero';
     const response = await request(app).get(`/timesheets/${invalidId}`).send();
@@ -88,6 +89,7 @@ describe('GET byId /timesheets/:id', () => {
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
+
   test('should return not found error with wrong id', async () => {
     const wrongId = '6355cf418ff38506cc6afc19';
     const response = await request(app).get(`/timesheets/${wrongId}`).send();
@@ -110,6 +112,7 @@ describe('POST /timesheet', () => {
     expect(response.body.data.employee).not.toBeNull();
     expect(response.body.data.project).not.toBeNull();
   });
+
   test('Wrong data should not be sent', async () => {
     const response = await request(app).post('/timesheets').send(wrongMockedTimesheet);
 
@@ -118,11 +121,12 @@ describe('POST /timesheet', () => {
     expect(response.body.data).toBeUndefined();
     expect(response.body.message).toBe('Cannot create timesheet: "description" length must be at least 20 characters long');
   });
+
   test('Empty data should not be sent', async () => {
     const response = await request(app).post('/timesheets').send();
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBeDefined();
+    expect(response.body.message).toBe('Cannot create timesheet: "description" is required');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });

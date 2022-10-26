@@ -61,7 +61,7 @@ const createEmployee = async (req, res) => {
   try {
     const newEmployee = new Employees({
       name: req.body.name,
-      lastName: req.body.last_name,
+      lastName: req.body.lastName,
       phone: req.body.phone,
       email: req.body.email,
       password: req.body.password,
@@ -87,7 +87,7 @@ const updateEmployee = async (req, res) => {
   const employeeId = req.params.id;
 
   if (req.params.id && !mongoose.Types.ObjectId.isValid(employeeId)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Employee id ${employeeId} not valid`,
       data: undefined,
       error: true,
@@ -125,7 +125,7 @@ const deleteEmployee = async (req, res) => {
   const employeeId = req.params.id;
 
   if (req.params.id && !mongoose.Types.ObjectId.isValid(employeeId)) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: `Employee id ${employeeId} not valid`,
       data: undefined,
       error: true,
@@ -137,7 +137,7 @@ const deleteEmployee = async (req, res) => {
 
     if (deletedEmployee) {
       return res.status(200).json({
-        message: 'Employee deleted successfully',
+        message: 'Employee deleted succesfully',
         data: deletedEmployee,
         error: false,
       });
