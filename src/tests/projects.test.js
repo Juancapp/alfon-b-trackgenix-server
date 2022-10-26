@@ -66,6 +66,7 @@ describe('GET /projects', () => {
   test('should return status code 404 with projects not found', async () => {
     await Projects.deleteMany();
     const response = await request(app).get('/projects').send();
+
     expect(response.status).toBe(404);
     expect(response.body.message).toEqual('Projects not found');
     expect(response.body.data).toBeUndefined();
@@ -110,7 +111,7 @@ describe('POST /employee', () => {
     const response = await request(app).post('/projects').send();
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBeDefined();
+    expect(response.body.message).toBe('Cannot create project: "name" is required');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
@@ -142,6 +143,7 @@ describe('GET byId /projects', () => {
     const response = await request(app).get(`/projects/${invalidId}`).send();
 
     expect(response.status).toBe(400);
+    expect(response.body.message).toBe(`Cannot get project by ${invalidId}`);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
