@@ -86,9 +86,16 @@ const updateTask = async (req, res) => {
       { ...req.body },
       { new: true },
     );
-    return res.status(200).json({
-      message: `Task with id ${id} updated succesfully`,
-      data: updatedTask,
+    if (updatedTask) {
+      return res.status(200).json({
+        message: `Task with id ${id} updated succesfully`,
+        data: updatedTask,
+      });
+    }
+    return res.status(404).json({
+      message: `Task with id ${id} not found`,
+      data: undefined,
+      error: true,
     });
   } catch (error) {
     return res.status(500).json({
@@ -111,10 +118,17 @@ const deleteTask = async (req, res) => {
     const { id } = req.params;
     const deletedTask = await Tasks.findByIdAndDelete(id);
 
-    return res.status(200).json({
-      message: `Task with id ${id} deleted succesfully`,
-      data: deletedTask,
-      error: false,
+    if (deletedTask) {
+      return res.status(200).json({
+        message: `Task with id ${id} deleted succesfully`,
+        data: deletedTask,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `Task with id ${id} not found`,
+      data: undefined,
+      error: true,
     });
   } catch (error) {
     return res.status(500).json({
