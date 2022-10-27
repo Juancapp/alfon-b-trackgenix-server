@@ -4,13 +4,11 @@ const validateSuperAdmin = (req, res, next) => {
   const superAdminsValidations = Joi.object({
     name: Joi.string().min(3).max(50).required(),
     lastName: Joi.string().min(3).max(50).required(),
+    phone: Joi.number().min(10000000).max(999999999999999).required(),
     email: Joi.string().email({ tlds: { allow: false } }).required(),
     password: Joi.string().alphanum().min(8).max(50)
       .required(),
-    dni: Joi.string().min(6).max(12).pattern(/[0-9]/)
-      .required(),
-    phone: Joi.string().min(8).max(15).pattern(/[0-9]/)
-      .required(),
+    dni: Joi.number().min(100000).max(999999999999).required(),
   });
   const validation = superAdminsValidations.validate(req.body);
 
