@@ -23,7 +23,7 @@ const reqValidId = '635405a0ab8783392fe27376';
 const reqIdNotFound = '635405a0ab8752392fe27376';
 let reqId;
 const badReqId = '635405a0ab8783392fe27379';
-const badFormatReqId = '456456';
+const badFormatReqId = '456456asd';
 
 describe('GET /tasks', () => {
   test('Should return status code 200', async () => {
@@ -197,6 +197,14 @@ describe('DELETE /task', () => {
     expect(response.status).toBe(200);
     expect(response.body.error).toBeFalsy();
     expect(response.body.message).toEqual(`Task with id ${reqValidId} deleted succesfully`);
+  });
+  test('Should not delete a task', async () => {
+    const response = await request(app).delete(`/tasks/${badFormatReqId}`).send();
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toEqual(`Task with id ${badFormatReqId} not found`);
   });
   test('should return status code 404', async () => {
     const response = await request(app).delete(`/tasks/${reqIdNotFound}`).send();
