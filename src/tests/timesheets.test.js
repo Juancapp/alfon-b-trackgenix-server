@@ -205,6 +205,7 @@ describe('DELETE /timesheets', () => {
     expect(response.body.error).toBeFalsy();
     expect(response.body.message).toEqual(`Timesheet with id ${timesheetId} successfully deleted`);
   });
+
   test('should not delete a timesheet', async () => {
     const response = await request(app).delete(`/timesheets/${invalidId}`).send();
 
