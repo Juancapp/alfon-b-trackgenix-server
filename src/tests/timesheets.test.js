@@ -70,7 +70,7 @@ const mockedTimesheet = {
 };
 
 describe('GET /timesheets', () => {
-  test('Should return all the timesheets', async () => {
+  test('should return all the timesheets', async () => {
     const response = await request(app).get('/timesheets').send();
 
     expect(response.status).toBe(200);
@@ -82,7 +82,7 @@ describe('GET /timesheets', () => {
     expect(response.body.data[0].project).not.toBeNull();
   });
 
-  test('Should return status code 404 with admins not found', async () => {
+  test('should return status code 404 with admins not found', async () => {
     await Timesheets.deleteMany();
     const response = await request(app).get('/timesheets').send();
 
@@ -96,7 +96,7 @@ describe('GET /timesheets', () => {
 });
 
 describe('GET byId /timesheets/:id', () => {
-  test('Should return the timesheet', async () => {
+  test('should return the timesheet', async () => {
     const response = await request(app).get(`/timesheets/${timesheetId}`);
 
     expect(response.status).toBe(200);
@@ -110,7 +110,7 @@ describe('GET byId /timesheets/:id', () => {
     expect(response.body.data.project).not.toBeNull();
   });
 
-  test('Should return error with invalid id', async () => {
+  test('should return error with invalid id', async () => {
     const response = await request(app).get(`/timesheets/${invalidId}`).send();
 
     expect(response.status).toBe(400);
@@ -119,7 +119,7 @@ describe('GET byId /timesheets/:id', () => {
     expect(response.body.data).toBeUndefined();
   });
 
-  test('Should return not found error with wrong id', async () => {
+  test('should return not found error with wrong id', async () => {
     const response = await request(app).get(`/timesheets/${notFoundId}`).send();
 
     expect(response.status).toBe(404);
@@ -130,7 +130,7 @@ describe('GET byId /timesheets/:id', () => {
 });
 
 describe('POST /timesheet', () => {
-  test('Should create timesheets without error', async () => {
+  test('should create timesheets without error', async () => {
     const response = await request(app).post('/timesheets').send(mockedTimesheet);
 
     expect(response.status).toBe(201);
@@ -161,7 +161,7 @@ describe('POST /timesheet', () => {
 });
 
 describe('PUT /timesheets', () => {
-  test('Should modify a timesheet', async () => {
+  test('should modify a timesheet', async () => {
     const response = await request(app).put(`/timesheets/${timesheetId}`).send(mockedTimesheets);
 
     expect(response.status).toBe(200);
@@ -169,7 +169,7 @@ describe('PUT /timesheets', () => {
     expect(response.body.message).toEqual(`Timesheet with id ${timesheetId} updated successfully`);
   });
 
-  test('Should not modify a timesheet because an empty field', async () => {
+  test('should not modify a timesheet because an empty field', async () => {
     const response = await request(app).put(`/timesheets/${timesheetId}`).send(mockedEmptyTimesheets);
 
     expect(response.status).toBe(400);
@@ -178,7 +178,7 @@ describe('PUT /timesheets', () => {
     expect(response.body.message).toEqual('Cannot create timesheet: "description" is not allowed to be empty');
   });
 
-  test('Should not modify a timesheet because an invalid field', async () => {
+  test('should not modify a timesheet because an invalid field', async () => {
     const response = await request(app).put(`/timesheets/${timesheetId}`).send(wrongMockedTimesheets);
 
     expect(response.status).toBe(400);
@@ -187,7 +187,7 @@ describe('PUT /timesheets', () => {
     expect(response.body.message).toEqual('Cannot create timesheet: "date" must be a valid date');
   });
 
-  test('Should return status code 404 because id not found', async () => {
+  test('should return status code 404 because id not found', async () => {
     const response = await request(app).put(`/timesheets/${notFoundId}`).send(mockedTimesheets);
 
     expect(response.status).toBe(404);
@@ -198,14 +198,14 @@ describe('PUT /timesheets', () => {
 });
 
 describe('DELETE /timesheets', () => {
-  test('Should delete timesheet', async () => {
+  test('should delete timesheet', async () => {
     const response = await request(app).delete(`/timesheets/${timesheetId}`).send();
 
     expect(response.status).toBe(200);
     expect(response.body.error).toBeFalsy();
     expect(response.body.message).toEqual(`Timesheet with id ${timesheetId} successfully deleted`);
   });
-  test('Should not delete a timesheet', async () => {
+  test('should not delete a timesheet', async () => {
     const response = await request(app).delete(`/timesheets/${invalidId}`).send();
 
     expect(response.status).toBe(400);
@@ -214,7 +214,7 @@ describe('DELETE /timesheets', () => {
     expect(response.body.message).toEqual(`Timesheet with id ${invalidId} not found`);
   });
 
-  test('Should return status code 404 because id not found', async () => {
+  test('should return status code 404 because id not found', async () => {
     const response = await request(app).delete(`/timesheets/${notFoundId}`).send();
 
     expect(response.status).toBe(404);
