@@ -162,7 +162,7 @@ describe('PUT /task', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.error).toBeFalsy();
-    expect(response.body.message).toEqual(`Task with id ${reqValidId} updated succesfully`);
+    expect(response.body.message).toEqual(`Task with id ${reqValidId} updated successfully`);
   });
   test('should not modify a task because an empty field', async () => {
     const response = await request(app).put(`/tasks/${reqValidId}`).send(emptyMockedTask);
@@ -194,9 +194,8 @@ describe('DELETE /task', () => {
   test('should deleted a task', async () => {
     const response = await request(app).delete(`/tasks/${reqValidId}`).send();
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(204);
     expect(response.body.error).toBeFalsy();
-    expect(response.body.message).toEqual(`Task with id ${reqValidId} deleted succesfully`);
   });
   test('Should not delete a task', async () => {
     const response = await request(app).delete(`/tasks/${badFormatReqId}`).send();
