@@ -132,11 +132,7 @@ const deleteSuperAdmin = async (req, res) => {
     const { id } = req.params;
     const deletedSuperAdmins = await SuperAdmins.findByIdAndDelete(id);
     if (deletedSuperAdmins) {
-      return res.status(200).json({
-        message: 'SuperAdmins deleted successfully',
-        data: deletedSuperAdmins,
-        error: false,
-      });
+      return res.status(204).json();
     }
     return res.status(404).json({
       message: `SuperAdmins with id ${req.params.id} not found`,
