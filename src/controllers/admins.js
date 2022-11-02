@@ -132,11 +132,7 @@ const deleteAdmins = async (req, res) => {
     const deletedAdmin = await Admins.findByIdAndDelete(req.params.id);
 
     if (deletedAdmin) {
-      return res.status(200).json({
-        message: 'Admin deleted successfully',
-        data: deletedAdmin,
-        error: false,
-      });
+      return res.status(204).json();
     }
     return res.status(404).json({
       message: `Admin with id ${req.params.id} not found`,
