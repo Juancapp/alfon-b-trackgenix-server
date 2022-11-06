@@ -14,7 +14,7 @@ const validateAdmin = (req, res, next) => {
 
   if (validation.error) {
     return res.status(400).json({
-      message: `Cannot create admin: ${validation.error.details[0].message}`,
+      message: `There was an error: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
