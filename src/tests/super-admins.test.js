@@ -11,9 +11,6 @@ beforeAll(async () => {
 const badReqId = '63540469873594f152b2ad3csda';
 const notFoundId = '63540469873594f152b2ad3b';
 let reqId = '';
-let deleteReqError;
-let deleteReqId;
-let deleteReqMessage;
 
 const mockedSuperAdmin = {
   name: 'Kelbee',
@@ -240,24 +237,9 @@ describe('PUT /super-admins', () => {
 });
 
 describe('DELETE /super-admins', () => {
-  test('should return status 200', async () => {
+  test('should return status 204', async () => {
     const response = await request(app).delete(`/super-admins/${reqId}`).send();
-    expect(response.status).toBe(200);
-    deleteReqError = response.body.error;
-    deleteReqId = response.body.data._id;
-    deleteReqMessage = response.body.message;
-  });
-
-  test('should return error false', () => {
-    expect(deleteReqError).toBeFalsy();
-  });
-
-  test('should return the same id as the request id', () => {
-    expect(deleteReqId).toBe(reqId);
-  });
-
-  test('check for success message', () => {
-    expect(deleteReqMessage).toEqual('SuperAdmins deleted successfully');
+    expect(response.status).toBe(204);
   });
 
   test('should return status 404', async () => {

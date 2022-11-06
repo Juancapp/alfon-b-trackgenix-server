@@ -5,6 +5,13 @@ const getAllTasks = async (req, res) => {
   try {
     const tasks = await Tasks.find();
 
+    if (!tasks.length) {
+      return res.status(404).json({
+        message: 'Tasks not found',
+        data: undefined,
+        error: true,
+      });
+    }
     return res.status(200).json({
       message: 'Tasks found successfully',
       data: tasks,
@@ -88,7 +95,7 @@ const updateTask = async (req, res) => {
     );
     if (updatedTask) {
       return res.status(200).json({
-        message: `Task with id ${id} updated succesfully`,
+        message: `Task with id ${id} updated successfully`,
         data: updatedTask,
       });
     }
@@ -119,9 +126,7 @@ const deleteTask = async (req, res) => {
     const deletedTask = await Tasks.findByIdAndDelete(id);
 
     if (deletedTask) {
-      return res.status(200).json({
-        message: `Task with id ${id} deleted succesfully`,
-        data: deletedTask,
+      return res.status(204).json({
         error: false,
       });
     }

@@ -175,10 +175,7 @@ describe('PUT /admins', () => {
 describe('DELETE /admins', () => {
   test('Should delete an admin', async () => {
     const response = await request(app).delete(`/admins/${validId}`).send();
-
-    expect(response.status).toBe(200);
-    expect(response.body.error).toBeFalsy();
-    expect(response.body.message).toEqual('Admin deleted successfully');
+    expect(response.status).toBe(204);
   });
 
   test('Should not delete an admin because of invalid id', async () => {
