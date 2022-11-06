@@ -31,6 +31,24 @@ const incompleteAdmin = {
   dni: 29778940,
 };
 
+const newMockedEmailExistingAdmin = {
+  name: 'Dixi',
+  lastName: 'Petow',
+  email: 'dpetow0@elpais.com',
+  password: 'iGZn65fo3',
+  dni: 332102445,
+  phone: 5493416787845,
+};
+
+const newMockedDniExistingAdmin = {
+  name: 'Dixi',
+  lastName: 'Petow',
+  email: 'dpetoww0@elpais.com',
+  password: 'iGZn65fo3',
+  dni: 33102445,
+  phone: 5493416787845,
+};
+
 beforeAll(async () => {
   await Admins.collection.insertMany(adminsSeed);
 });
@@ -121,6 +139,24 @@ describe('POST', () => {
 
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Cannot create admin: "name" length must be at least 3 characters long');
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+  });
+
+  test('Should return status 400 when send an Admin with existing email', async () => {
+    const response = await request(app).post('/admins').send(newMockedEmailExistingAdmin);
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('There is already an admin with that email');
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+  });
+
+  test('Should return status 400 when send an Admin with existing DNI', async () => {
+    const response = await request(app).post('/admins').send(newMockedDniExistingAdmin);
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('There is already an admin with that DNI');
     expect(response.body.data).toBeUndefined();
     expect(response.body.error).toBeTruthy();
   });

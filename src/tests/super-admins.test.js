@@ -13,22 +13,30 @@ const notFoundId = '63540469873594f152b2ad3b';
 let reqId = '';
 
 const mockedSuperAdmin = {
-  name: 'Kelbee',
-  lastName: 'Redholls',
-  email: 'kredholls0@mediafire.com',
-  password: 'GJk0kylyhY',
-  dni: 30112908,
+  name: 'Pedro',
+  lastName: 'Blueman',
+  email: 'kredholls001@mediafire.com',
+  password: 'DSFDSF4sd',
+  dni: 301129082,
   phone: 5493415558701,
 };
 
-const mockedIdSuperAdmin = {
-  _id: '63540469873594f152b2ad3d',
+const mockedSuperAdminWidExistingEmail = {
   name: 'Kelbee',
   lastName: 'Redholls',
-  email: 'kredholls0@mediafire.com',
+  email: 'kredholls001@mediafire.com',
   password: 'GJk0kylyhY',
-  dni: 30112908,
+  dni: 301239185,
   phone: 5493415558701,
+};
+
+const mockedSuperAdminWidExistingDni = {
+  name: 'Kelbee',
+  lastName: 'Redholls',
+  email: 'kredhollass50@mediafir.com',
+  password: 'GJk0kylyhY',
+  dni: 301129082,
+  phone: 549341533701,
 };
 
 const mockedSuperAdminWrong = {
@@ -108,6 +116,24 @@ describe('POST /superadmins', () => {
     expect(response.body.message).toBe('There was an error: "name" is required');
     expect(response.body.error).toBeTruthy();
   });
+
+  test('Should return status 400 when send an Super Admin with existing email', async () => {
+    const response = await request(app).post('/super-admins').send(mockedSuperAdminWidExistingEmail);
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('There is already a super admin with that email');
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+  });
+
+  test('Should return status 400 when send an Super Admin with existing DNI', async () => {
+    const response = await request(app).post('/super-admins').send(mockedSuperAdminWidExistingDni);
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('There is already a super admin with that DNI');
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+  });
 });
 
 describe('GETbyID /superadmins', () => {
@@ -163,11 +189,6 @@ describe('PUT /super-admins', () => {
   test('should return error fasle', async () => {
     const response = await request(app).put(`/super-admins/${reqId}`).send(mockedSuperAdmin);
     expect(response.body.error).toBeFalsy();
-  });
-
-  test('bodys should be the same', async () => {
-    const response = await request(app).put(`/super-admins/${reqId}`).send(mockedSuperAdmin);
-    expect(response.body.data).toEqual(mockedIdSuperAdmin);
   });
 
   test('check for success message', async () => {

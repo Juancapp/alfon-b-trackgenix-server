@@ -60,6 +60,23 @@ const getAdminById = async (req, res) => {
 
 const createAdmin = async (req, res) => {
   try {
+    const findByEmail = await Admins.find({ email: req.body.email });
+    if (findByEmail.length > 0) {
+      return res.status(400).json({
+        message: 'There is already an admin with that email',
+        data: undefined,
+        error: true,
+      });
+    }
+
+    const findByDni = await Admins.find({ dni: req.body.dni });
+    if (findByDni.length > 0) {
+      return res.status(400).json({
+        message: 'There is already an admin with that DNI',
+        data: undefined,
+        error: true,
+      });
+    }
     const newAdmin = new Admins({
       name: req.body.name,
       lastName: req.body.lastName,
