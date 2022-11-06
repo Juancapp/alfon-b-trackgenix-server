@@ -59,6 +59,26 @@ const getSuperAdminById = async (req, res) => {
 
 const createSuperAdmin = async (req, res) => {
   try {
+    const findByEmail = await SuperAdmins.find({ email: req.body.email });
+    if (findByEmail > 0) {
+      return res.status(400).json({
+        message: 'There is already a super admin with that email',
+        data: undefined,
+        error: false,
+      });
+    }
+
+    console.log(findByEmail);
+
+    const findByDni = await SuperAdmins.find({ dni: req.body.dni });
+    if (findByDni > 0) {
+      return res.status(400).json({
+        message: 'There is already a super admin with that DNI',
+        data: undefined,
+        error: false,
+      });
+    }
+
     const newSuperAdmins = new SuperAdmins({
       name: req.body.name,
       lastName: req.body.lastName,

@@ -4,10 +4,10 @@ import app from './app';
 
 dotenv.config();
 
-const port = process.env.PORT || 3000;
+const port = process.env.REACT_APP_PORT || 3000;
 
 mongoose.connect(
-  process.env.DATABASE_URL,
+  process.env.REACT_APP_DATABASE_URL,
   (error) => {
     if (error) {
       // eslint-disable-next-line no-console
