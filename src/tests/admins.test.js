@@ -111,7 +111,7 @@ describe('POST', () => {
     const response = await request(app).post('/admins').send();
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Cannot create admin: "name" is required');
+    expect(response.body.message).toBe('Cannot create user: "name" is required');
     expect(response.body.data).toBeUndefined();
     expect(response.body.error).toBeTruthy();
   });
@@ -120,7 +120,7 @@ describe('POST', () => {
     const response = await request(app).post('/admins').send(wrongAdmin);
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Cannot create admin: "name" length must be at least 3 characters long');
+    expect(response.body.message).toBe('Cannot create user: "name" length must be at least 3 characters long');
     expect(response.body.data).toBeUndefined();
     expect(response.body.error).toBeTruthy();
   });
