@@ -59,6 +59,24 @@ const getEmployeeById = async (req, res) => {
 
 const createEmployee = async (req, res) => {
   try {
+    const findByEmail = await Employees.find({ email: req.body.email });
+    if (findByEmail.length > 0) {
+      return res.status(400).json({
+        message: 'There is already an employee with that email',
+        data: undefined,
+        error: true,
+      });
+    }
+
+    const findByDni = await Employees.find({ dni: req.body.dni });
+    if (findByDni.length > 0) {
+      return res.status(400).json({
+        message: 'There is already an employee with that DNI',
+        data: undefined,
+        error: true,
+      });
+    }
+
     const newEmployee = new Employees({
       name: req.body.name,
       lastName: req.body.lastName,

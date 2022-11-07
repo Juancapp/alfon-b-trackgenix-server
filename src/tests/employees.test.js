@@ -28,6 +28,24 @@ const incompleteEmployee = {
   password: 'abcd1234',
 };
 
+const mockedEmployeeWithAndExistingEmail = {
+  name: 'test',
+  lastName: 'test',
+  phone: '123456789',
+  email: 'test@test.com',
+  password: 'abcd1234',
+  dni: '1234557',
+};
+
+const mockedEmployeeWithAndExistingDni = {
+  name: 'test',
+  lastName: 'test',
+  phone: '123456789',
+  email: 'test1232@test.com',
+  password: 'abcd1234',
+  dni: '1234567',
+};
+
 const badEmployee = {
   name: 'te',
   lastName: 'test',
@@ -108,6 +126,24 @@ describe('POST /employee', () => {
     expect(response.body.message).toBeDefined();
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
+  });
+
+  test('Should return status 400 when send an Employee with existing email', async () => {
+    const response = await request(app).post('/employees').send(mockedEmployeeWithAndExistingEmail);
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('There is already an employee with that email');
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+  });
+
+  test('Should return status 400 when send an Employee with existing DNI', async () => {
+    const response = await request(app).post('/employees').send(mockedEmployeeWithAndExistingDni);
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('There is already an employee with that DNI');
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
   });
 });
 
