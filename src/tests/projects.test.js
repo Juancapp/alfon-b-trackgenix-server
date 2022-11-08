@@ -191,7 +191,28 @@ describe('PUT /projects', () => {
 
   test('bodys should be the same', async () => {
     const response = await request(app).put(`/projects/${reqId}`).send(mockedProject);
-    expect(response.body.data).toMatchObject(mockedIdProject);
+    expect(response.body.data).toMatchObject({
+      name: 'Calley',
+      startDate: '2021-03-30T03:00:00.000Z',
+      endDate: '2022-09-28T03:00:00.000Z',
+      description: 'non mauris morbi non lectus aliquam sit amet',
+      clientName: 'Caitrin',
+      active: true,
+      employees: [
+        {
+          employee: {
+            _id: '63540397a5be57cf8ebf17d6',
+            dni: 14703006,
+            email: 'dstirrip0@over-blog.com',
+            lastName: 'Stirrip',
+            name: 'Delainey',
+            password: 'TegK86',
+            phone: 5493425770149,
+          },
+          rate: 120,
+          role: 'DEV',
+        }],
+    });
   });
 
   test('check for success message', async () => {
