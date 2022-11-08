@@ -97,7 +97,7 @@ const updateProject = async (req, res) => {
       { _id: id },
       { ...req.body },
       { new: true },
-    );
+    ).populate('employees.employee');
     if (updatedProject) {
       return res.status(200).json({
         message: `Project with id ${req.params.id} updated successfully`,
