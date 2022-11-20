@@ -129,7 +129,7 @@ describe('POST /employee', () => {
     const response = await request(app).post('/projects').send(mockedBadProject);
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Cannot create project: "name" is not allowed to be empty');
+    expect(response.body.message).toBe('There was an error: "name" is not allowed to be empty');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
@@ -138,7 +138,7 @@ describe('POST /employee', () => {
     const response = await request(app).post('/projects').send();
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Cannot create project: "name" is required');
+    expect(response.body.message).toBe('There was an error: "name" is required');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });

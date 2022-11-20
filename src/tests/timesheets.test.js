@@ -147,14 +147,14 @@ describe('POST /timesheet', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
-    expect(response.body.message).toBe('Cannot create timesheet: "description" length must be at least 20 characters long');
+    expect(response.body.message).toBe('There was an error: "description" length must be at least 20 characters long');
   });
 
   test('Empty data should not be sent', async () => {
     const response = await request(app).post('/timesheets').send();
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Cannot create timesheet: "description" is required');
+    expect(response.body.message).toBe('There was an error: "description" is required');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
@@ -175,7 +175,7 @@ describe('PUT /timesheets', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
-    expect(response.body.message).toEqual('Cannot create timesheet: "description" is not allowed to be empty');
+    expect(response.body.message).toEqual('There was an error: "description" is not allowed to be empty');
   });
 
   test('should not modify a timesheet because an invalid field', async () => {
@@ -184,7 +184,7 @@ describe('PUT /timesheets', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBe(undefined);
-    expect(response.body.message).toEqual('Cannot create timesheet: "date" must be a valid date');
+    expect(response.body.message).toEqual('There was an error: "date" must be a valid date');
   });
 
   test('should return status code 404 because id not found', async () => {
