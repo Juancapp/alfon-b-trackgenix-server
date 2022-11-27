@@ -1,14 +1,25 @@
 import express from 'express';
 import projectsControllers from '../controllers/projects';
 import projectsValidations from '../validations/projects';
+import checkAuth from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
 router
-  .get('/', projectsControllers.getAllProjects)
-  .get('/:id', projectsControllers.getProjectsById)
-  .post('/', projectsValidations.validateCreation, projectsControllers.createProject)
-  .put('/:id', projectsValidations.validateCreation, projectsControllers.updateProject)
-  .delete('/:id', projectsControllers.deleteProject);
+  .get('/', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), projectsControllers.getAllProjects)
+  .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), projectsControllers.getProjectsById)
+  .post(
+    '/',
+    checkAuth(['SUPER_ADMIN', 'ADMIN']),
+    projectsValidations.validateCreation,
+    projectsControllers.createProject,
+  )
+  .put(
+    '/:id',
+    checkAuth(['SUPER_ADMIN', 'ADMIN']),
+    projectsValidations.validateCreation,
+    projectsControllers.updateProject,
+  )
+  .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN']), projectsControllers.deleteProject);
 
 export default router;
