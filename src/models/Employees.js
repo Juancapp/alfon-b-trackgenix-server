@@ -7,8 +7,8 @@ const employeeSchema = new Schema({
   lastName: { type: String, required: true },
   phone: { type: Number, required: true },
   email: { type: String, require: true },
-  password: { type: String, required: true },
   dni: { type: Number, required: true },
+  firebaseUid: { type: String, required: true },
 });
 
 export default mongoose.model('Employee', employeeSchema);
