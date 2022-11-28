@@ -128,7 +128,7 @@ const updateAdmins = async (req, res) => {
     );
 
     if (updatedAdmin) {
-      await firebase.auth().updateUser(req.body.firebaseUid, {
+      await firebase.auth().updateUser(updatedAdmin.firebaseUid, {
         email: req.body.email,
         password: req.body.password,
       });
