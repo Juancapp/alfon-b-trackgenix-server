@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const validateNewUser = (req, res, next) => {
+export const validateNewUser = (req, res, next) => {
   const adminValidation = Joi.object({
     name: Joi.string().pattern(/^([^0-9]*)$/).min(3).max(50)
       .required(),
@@ -24,7 +24,7 @@ const validateNewUser = (req, res, next) => {
   return next();
 };
 
-const validateUpdateUser = (req, res, next) => {
+export const validateUpdateUser = (req, res, next) => {
   const adminValidation = Joi.object({
     name: Joi.string().pattern(/^([^0-9]*)$/).min(3).max(50)
       .required(),
@@ -32,7 +32,6 @@ const validateUpdateUser = (req, res, next) => {
       .required(),
     phone: Joi.number().min(10000000).max(999999999999999).required(),
     email: Joi.string().email({ tlds: { allow: false } }).required(),
-    password: Joi.string().pattern(/^[a-zA-Z0-9]{8,50}$/).required(),
     dni: Joi.number().min(100000).max(999999999999).required(),
   });
 
@@ -46,9 +45,4 @@ const validateUpdateUser = (req, res, next) => {
     });
   }
   return next();
-};
-
-export default {
-  validateNewUser,
-  validateUpdateUser,
 };

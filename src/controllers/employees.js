@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Employees from '../models/Employees';
+import firebase from '../helpers/firebase';
 
 const getAllEmployees = async (req, res) => {
   try {
@@ -77,14 +78,23 @@ const createEmployee = async (req, res) => {
       });
     }
 
+    const newFirebaseUser = await firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     const newEmployee = new Employees({
       name: req.body.name,
       lastName: req.body.lastName,
       phone: req.body.phone,
       email: req.body.email,
-      password: req.body.password,
       dni: req.body.dni,
+      firebaseUid: newFirebaseUser.uid,
     });
+
+    await firebase
+      .auth()
+      .setCustomUserClaims(newFirebaseUser.uid, { role: 'EMPLOYEE' });
 
     const result = await newEmployee.save();
     return res.status(201).json({
@@ -118,7 +128,13 @@ const updateEmployee = async (req, res) => {
       { ...req.body },
       { new: true },
     );
+
     if (updatedEmployee) {
+      await firebase.auth().updateUser(updatedEmployee.firebaseUid, {
+        email: req.body.email,
+        password: req.body.password,
+      });
+
       return res.status(200).json({
         message: `Employee with id ${id} updated successfully`,
         data: updatedEmployee,
@@ -151,15 +167,21 @@ const deleteEmployee = async (req, res) => {
   }
   try {
     const { id } = req.params;
-    const deletedEmployee = await Employees.findByIdAndDelete(id);
+    const findEmployeesById = await Employees.findById(req.params.id);
 
-    if (deletedEmployee) {
-      return res.status(200).json({
-        message: 'Employee deleted succesfully',
-        data: deletedEmployee,
-        error: false,
-      });
+    if (findEmployeesById) {
+      firebase.auth().deleteUser(findEmployeesById.firebaseUid);
+      const deletedEmployee = await Employees.findByIdAndDelete(id);
+
+      if (deletedEmployee) {
+        return res.status(200).json({
+          message: 'Employee deleted succesfully',
+          data: deletedEmployee,
+          error: false,
+        });
+      }
     }
+
     return res.status(404).json({
       message: `Employee with id ${id} not found`,
       data: undefined,

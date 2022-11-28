@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import firebase from '../helpers/firebase';
 import Admins from '../models/Admins';
 
 const getAllAdmins = async (req, res) => {
@@ -77,13 +78,23 @@ const createAdmin = async (req, res) => {
         error: true,
       });
     }
+    const newFirebaseUser = await firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    await firebase
+      .auth()
+      .setCustomUserClaims(newFirebaseUser.uid, { role: 'ADMIN' });
+
     const newAdmin = new Admins({
       name: req.body.name,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: req.body.password,
       dni: req.body.dni,
       phone: req.body.phone,
+      password: req.body.password,
+      firebaseUid: newFirebaseUser.uid,
     });
 
     const result = await newAdmin.save();
@@ -116,13 +127,20 @@ const updateAdmins = async (req, res) => {
       { ...req.body },
       { new: true },
     );
+
     if (updatedAdmin) {
+      await firebase.auth().updateUser(updatedAdmin.firebaseUid, {
+        email: req.body.email,
+        password: req.body.password,
+      });
+
       return res.status(200).json({
         message: `Admin with id ${req.params.id} updated successfully`,
         data: updatedAdmin,
         error: false,
       });
     }
+
     return res.status(404).json({
       message: `Admin with id ${req.params.id} not found`,
       data: undefined,
@@ -146,11 +164,16 @@ const deleteAdmins = async (req, res) => {
     });
   }
   try {
-    const deletedAdmin = await Admins.findByIdAndDelete(req.params.id);
+    const findAdminById = await Admins.findById(req.params.id);
+    if (findAdminById) {
+      await firebase.auth().deleteUser(findAdminById.firebaseUid);
+      const deletedAdmin = await Admins.findByIdAndDelete(req.params.id);
 
-    if (deletedAdmin) {
-      return res.status(204).json();
+      if (deletedAdmin) {
+        return res.status(204).json();
+      }
     }
+
     return res.status(404).json({
       message: `Admin with id ${req.params.id} not found`,
       data: undefined,
