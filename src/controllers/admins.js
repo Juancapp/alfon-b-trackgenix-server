@@ -62,12 +62,14 @@ const getAdminById = async (req, res) => {
 
 const createAdmin = async (req, res) => {
   try {
-    const newFirebaseUser = await firebase.auth().createUser({
-      email: req.body.email,
-      password: req.body.password,
-    });
-
-    await firebase.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'ADMIN' });
+    const findByEmail = await Admins.find({ email: req.body.email });
+    if (findByEmail.length > 0) {
+      return res.status(400).json({
+        message: 'There is already an admin with that email',
+        data: undefined,
+        error: true,
+      });
+    }
 
     const findByDni = await Admins.find({ dni: req.body.dni });
     if (findByDni.length > 0) {
@@ -77,6 +79,15 @@ const createAdmin = async (req, res) => {
         error: true,
       });
     }
+    const newFirebaseUser = await firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    await firebase
+      .auth()
+      .setCustomUserClaims(newFirebaseUser.uid, { role: 'ADMIN' });
+
     const newAdmin = new Admins({
       name: req.body.name,
       lastName: req.body.lastName,
@@ -116,6 +127,12 @@ const updateAdmins = async (req, res) => {
       { ...req.body },
       { new: true },
     );
+
+    await firebase.auth().updateUser(updatedAdmin.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     if (updatedAdmin) {
       return res.status(200).json({
         message: `Admin with id ${req.params.id} updated successfully`,
@@ -146,6 +163,9 @@ const deleteAdmins = async (req, res) => {
     });
   }
   try {
+    const findAdminById = await Admins.findById(req.params.id);
+    firebase.auth().updateUser(findAdminById.firebaseUid);
+
     const deletedAdmin = await Admins.findByIdAndDelete(req.params.id);
 
     if (deletedAdmin) {
