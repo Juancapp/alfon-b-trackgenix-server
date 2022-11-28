@@ -1,6 +1,6 @@
 import express from 'express';
 import adminsControllers from '../controllers/admins';
-import adminValidation from '../validations/admins';
+import { validateNewUser, validateUpdateUser } from '../validations/admins';
 import checkAuth from '../middlewares/authMiddleware';
 
 const router = express.Router();
@@ -11,13 +11,13 @@ router
   .post(
     '/',
     checkAuth(['SUPER_ADMIN']),
-    adminValidation.validateNewUser,
+    validateNewUser,
     adminsControllers.createAdmin,
   )
   .put(
     '/:id',
     checkAuth(['SUPER_ADMIN']),
-    adminValidation.validateUpdateUser,
+    validateUpdateUser,
     adminsControllers.updateAdmins,
   )
   .delete('/:id', checkAuth(['SUPER_ADMIN']), adminsControllers.deleteAdmins);

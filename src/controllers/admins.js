@@ -93,6 +93,7 @@ const createAdmin = async (req, res) => {
       email: req.body.email,
       dni: req.body.dni,
       phone: req.body.phone,
+      password: req.body.password,
       firebaseUid: newFirebaseUser.uid,
     });
 
