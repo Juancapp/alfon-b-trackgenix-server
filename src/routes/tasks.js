@@ -10,16 +10,16 @@ router
   .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), tasksControllers.getTasksById)
   .post(
     '/',
-    checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']),
+    checkAuth(['SUPER_ADMIN', 'ADMIN']),
     tasksValidations.validateTask,
     tasksControllers.createTask,
   )
   .put(
     '/:id',
-    checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']),
+    checkAuth(['SUPER_ADMIN', 'ADMIN']),
     tasksValidations.validateTask,
     tasksControllers.updateTask,
   )
-  .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), tasksControllers.deleteTask);
+  .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN']), tasksControllers.deleteTask);
 
 export default router;

@@ -10,7 +10,6 @@ router
   .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), employeeControllers.getEmployeeById)
   .post(
     '/',
-    checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']),
     validateEmployees.validateEmployees,
     employeeControllers.createEmployee,
   )
