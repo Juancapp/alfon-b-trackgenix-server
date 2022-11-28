@@ -128,7 +128,7 @@ const updateAdmins = async (req, res) => {
       { new: true },
     );
 
-    await firebase.auth().updateUser(updatedAdmin.firebaseUid, {
+    await firebase.auth().updateUser(req.body.firebaseUid, {
       email: req.body.email,
       password: req.body.password,
     });
@@ -164,7 +164,7 @@ const deleteAdmins = async (req, res) => {
   }
   try {
     const findAdminById = await Admins.findById(req.params.id);
-    firebase.auth().updateUser(findAdminById.firebaseUid);
+    firebase.auth().deleteUser(findAdminById.firebaseUid);
 
     const deletedAdmin = await Admins.findByIdAndDelete(req.params.id);
 
