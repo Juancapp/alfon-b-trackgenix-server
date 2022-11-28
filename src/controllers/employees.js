@@ -78,16 +78,18 @@ const createEmployee = async (req, res) => {
       });
     }
 
+    const newFirebaseUser = await firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     const newEmployee = new Employees({
       name: req.body.name,
       lastName: req.body.lastName,
       phone: req.body.phone,
       email: req.body.email,
       dni: req.body.dni,
-    });
-    const newFirebaseUser = await firebase.auth().createUser({
-      email: req.body.email,
-      password: req.body.password,
+      firebaseUid: newFirebaseUser.uid,
     });
 
     await firebase
@@ -126,8 +128,9 @@ const updateEmployee = async (req, res) => {
       { ...req.body },
       { new: true },
     );
+
     if (updatedEmployee) {
-      await firebase.auth().updateUser(req.body.firebaseUid, {
+      await firebase.auth().updateUser(updatedEmployee.firebaseUid, {
         email: req.body.email,
         password: req.body.password,
       });

@@ -8,7 +8,6 @@ const validateEmployees = (req, res, next) => {
       .required(),
     phone: Joi.number().min(10000000).max(999999999999999).required(),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-    password: Joi.string().pattern(/^[a-zA-Z0-9]{8,50}$/).required(),
     dni: Joi.number().min(100000).max(999999999999).required(),
   });
 
@@ -32,7 +31,6 @@ const updateEmployee = (req, res, next) => {
       .required(),
     phone: Joi.number().min(10000000).max(999999999999999).required(),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-    password: Joi.string().pattern(/^[a-zA-Z0-9]{8,50}$/).required(),
     dni: Joi.number().min(100000).max(999999999999).required(),
   });
 
