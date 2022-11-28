@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import firebase from '../helpers/firebase';
+// import Users from '../models/Users';
 import Admins from '../models/Admins';
 
 const getAllAdmins = async (req, res) => {
@@ -60,14 +62,12 @@ const getAdminById = async (req, res) => {
 
 const createAdmin = async (req, res) => {
   try {
-    const findByEmail = await Admins.find({ email: req.body.email });
-    if (findByEmail.length > 0) {
-      return res.status(400).json({
-        message: 'There is already an admin with that email',
-        data: undefined,
-        error: true,
-      });
-    }
+    const newFirebaseUser = await firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    await firebase.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'ADMIN' });
 
     const findByDni = await Admins.find({ dni: req.body.dni });
     if (findByDni.length > 0) {
@@ -81,9 +81,9 @@ const createAdmin = async (req, res) => {
       name: req.body.name,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: req.body.password,
       dni: req.body.dni,
       phone: req.body.phone,
+      firebaseUid: newFirebaseUser.uid,
     });
 
     const result = await newAdmin.save();
