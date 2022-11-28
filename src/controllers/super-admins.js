@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import SuperAdmins from '../models/Super-admins';
+import firebase from '../helpers/firebase';
 
 const getAllSuperAdmins = async (req, res) => {
   try {
@@ -76,14 +77,22 @@ const createSuperAdmin = async (req, res) => {
         error: true,
       });
     }
+    const newFirebaseUser = await firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    await firebase
+      .auth()
+      .setCustomUserClaims(newFirebaseUser.uid, { role: 'SUPER_ADMIN' });
 
     const newSuperAdmins = new SuperAdmins({
       name: req.body.name,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: req.body.password,
       dni: req.body.dni,
       phone: req.body.phone,
+      firebaseUid: newFirebaseUser.uid,
     });
 
     const createdSuperAdmins = await newSuperAdmins.save();
@@ -111,13 +120,18 @@ const updateSuperAdmin = async (req, res) => {
     });
   }
   try {
-    const { id } = req.params;
     const updatedSuperAdmins = await SuperAdmins.findByIdAndUpdate(
-      { _id: id },
+      { _id: req.params.id },
       { ...req.body },
       { new: true },
     );
+
     if (updatedSuperAdmins) {
+      await firebase.auth().updateUser(req.body.firebaseUid, {
+        email: req.body.email,
+        password: req.body.password,
+      });
+
       return res.status(200).json({
         message: `Super Admin with id ${req.params.id} updated successfully`,
         data: updatedSuperAdmins,
@@ -147,11 +161,16 @@ const deleteSuperAdmin = async (req, res) => {
     });
   }
   try {
-    const { id } = req.params;
-    const deletedSuperAdmins = await SuperAdmins.findByIdAndDelete(id);
-    if (deletedSuperAdmins) {
-      return res.status(204).json();
+    const findSuperAdminById = await SuperAdmins.findById(req.params.id);
+    if (findSuperAdminById) {
+      await firebase.auth().deleteUser(findSuperAdminById.firebaseUid);
+      const deletedSuperAdmin = await SuperAdmins.findByIdAndDelete(req.params.id);
+
+      if (deletedSuperAdmin) {
+        return res.status(204).json();
+      }
     }
+
     return res.status(404).json({
       message: `SuperAdmins with id ${req.params.id} not found`,
       data: undefined,
