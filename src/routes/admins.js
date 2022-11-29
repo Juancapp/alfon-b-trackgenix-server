@@ -6,8 +6,8 @@ import checkAuth from '../middlewares/authMiddleware';
 const router = express.Router();
 
 router
-  .get('/', checkAuth(['SUPER_ADMIN']), adminsControllers.getAllAdmins)
-  .get('/:id', checkAuth(['SUPER_ADMIN']), adminsControllers.getAdminById)
+  .get('/', checkAuth(['SUPER_ADMIN', 'ADMIN']), adminsControllers.getAllAdmins)
+  .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN']), adminsControllers.getAdminById)
   .post(
     '/',
     checkAuth(['SUPER_ADMIN']),
