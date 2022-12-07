@@ -58,6 +58,31 @@ const getEmployeeById = async (req, res) => {
   }
 };
 
+const getEmployeeByFireBaseUid = async (req, res) => {
+  const employeeFirebaseUid = req.params.firebaseUid;
+  try {
+    const employee = await Employees.find({ firebaseUid: employeeFirebaseUid });
+    if (employee) {
+      return res.status(200).json({
+        message: 'Employee found successfully',
+        data: employee,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `Employee with id ${employeeFirebaseUid} not found`,
+      data: undefined,
+      error: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 const createEmployee = async (req, res) => {
   try {
     const findByEmail = await Employees.find({ email: req.body.email });
@@ -200,6 +225,7 @@ export default {
   getAllEmployees,
   getEmployeeById,
   createEmployee,
+  getEmployeeByFireBaseUid,
   updateEmployee,
   deleteEmployee,
 };
