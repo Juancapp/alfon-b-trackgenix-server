@@ -8,6 +8,7 @@ const router = express.Router();
 router
   .get('/', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), employeeControllers.getAllEmployees)
   .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), employeeControllers.getEmployeeById)
+  .get('/fuid/:firebaseUid', employeeControllers.getEmployeeByFireBaseUid)
   .post(
     '/',
     validateEmployees,
