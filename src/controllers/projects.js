@@ -13,7 +13,7 @@ const getAllProjects = async (req, res) => {
     }
     return res.status(200).json({
       message: 'Projects found successfully',
-      data: projects,
+      data: projects.filter((project) => project.active === true),
       error: false,
     });
   } catch (error) {
@@ -66,7 +66,7 @@ const createProject = async (req, res) => {
       endDate: req.body.endDate,
       description: req.body.description,
       clientName: req.body.clientName,
-      active: req.body.active,
+      active: true,
     });
     const result = await newProject.save();
     return res.status(201).json({

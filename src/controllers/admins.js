@@ -16,7 +16,7 @@ const getAllAdmins = async (req, res) => {
 
     return res.status(200).json({
       message: 'Admins found successfully',
-      data: admins,
+      data: admins.filter((admin) => admin.active === true),
       error: false,
     });
   } catch (error) {
@@ -119,6 +119,7 @@ const createAdmin = async (req, res) => {
       dni: req.body.dni,
       phone: req.body.phone,
       password: req.body.password,
+      active: true,
       firebaseUid: newFirebaseUser.uid,
     });
 

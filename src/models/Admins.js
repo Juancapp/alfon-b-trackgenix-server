@@ -9,6 +9,7 @@ const adminSchema = new Schema({
   dni: { type: Number, required: true },
   phone: { type: Number, required: true },
   firebaseUid: { type: String, required: true },
+  active: { type: Boolean, required: true },
 });
 
 export default mongoose.model('Admin', adminSchema);
