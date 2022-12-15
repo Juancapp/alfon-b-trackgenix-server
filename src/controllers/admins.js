@@ -59,6 +59,31 @@ const getAdminById = async (req, res) => {
   }
 };
 
+const getAdminByFireBaseUid = async (req, res) => {
+  const adminFirebaseUid = req.params.firebaseUid;
+  try {
+    const admin = await Admins.find({ firebaseUid: adminFirebaseUid });
+    if (admin) {
+      return res.status(200).json({
+        message: 'Admin found successfully',
+        data: admin,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `Admin with id ${adminFirebaseUid} not found`,
+      data: undefined,
+      error: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 const createAdmin = async (req, res) => {
   try {
     const findByEmail = await Admins.find({ email: req.body.email });
@@ -191,6 +216,7 @@ const deleteAdmins = async (req, res) => {
 export default {
   getAllAdmins,
   getAdminById,
+  getAdminByFireBaseUid,
   createAdmin,
   updateAdmins,
   deleteAdmins,

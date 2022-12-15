@@ -58,6 +58,31 @@ const getSuperAdminById = async (req, res) => {
   }
 };
 
+const getSuperAdminByFireBaseUid = async (req, res) => {
+  const superAdminFirebaseUid = req.params.firebaseUid;
+  try {
+    const superAdmin = await SuperAdmins.find({ firebaseUid: superAdminFirebaseUid });
+    if (superAdmin) {
+      return res.status(200).json({
+        message: 'Super Admin found successfully',
+        data: superAdmin,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `Employee with id ${superAdminFirebaseUid} not found`,
+      data: undefined,
+      error: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 const createSuperAdmin = async (req, res) => {
   try {
     const findByEmail = await SuperAdmins.find({ email: req.body.email });
@@ -188,6 +213,7 @@ const deleteSuperAdmin = async (req, res) => {
 export default {
   getAllSuperAdmins,
   getSuperAdminById,
+  getSuperAdminByFireBaseUid,
   createSuperAdmin,
   updateSuperAdmin,
   deleteSuperAdmin,
