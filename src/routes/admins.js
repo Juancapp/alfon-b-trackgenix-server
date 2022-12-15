@@ -8,6 +8,7 @@ const router = express.Router();
 router
   .get('/', checkAuth(['SUPER_ADMIN', 'ADMIN']), adminsControllers.getAllAdmins)
   .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN']), adminsControllers.getAdminById)
+  .get('/fuid/:firebaseUid', checkAuth(['SUPER_ADMIN', 'ADMIN']), adminsControllers.getAdminByFireBaseUid)
   .post(
     '/',
     checkAuth(['SUPER_ADMIN']),
