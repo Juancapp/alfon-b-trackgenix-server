@@ -33,6 +33,8 @@ export const validateUpdateUser = (req, res, next) => {
     phone: Joi.number().min(10000000).max(999999999999999).required(),
     email: Joi.string().email({ tlds: { allow: false } }).required(),
     dni: Joi.number().min(100000).max(999999999999).required(),
+    active: Joi.boolean().required(),
+    firebaseUid: Joi.string().required(),
   });
 
   const validation = adminValidation.validate(req.body);
