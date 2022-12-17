@@ -155,11 +155,22 @@ const updateAdmins = async (req, res) => {
     );
 
     if (updatedAdmin) {
+      if (updatedAdmin.active === false) {
+        await firebase.auth().updateUser(updatedAdmin.firebaseUid, {
+          email: req.body.email,
+          password: req.body.password,
+          disabled: true,
+        });
+        return res.status(200).json({
+          message: 'Admin deleted',
+          data: updatedAdmin,
+          error: true,
+        });
+      }
       await firebase.auth().updateUser(updatedAdmin.firebaseUid, {
         email: req.body.email,
         password: req.body.password,
       });
-
       return res.status(200).json({
         message: `Admin with id ${req.params.id} updated successfully`,
         data: updatedAdmin,
