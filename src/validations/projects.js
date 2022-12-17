@@ -13,7 +13,11 @@ const validateCreation = (req, res, next) => {
     description: Joi.string().min(10).max(50).required(),
     clientName: Joi.string().min(3).max(50).required(),
     active: Joi.boolean().required(),
-    employees: Joi.array().items(employeeValidation),
+    employees: Joi.array().items(employeeValidation).unique((a, b) => a.role === b.role && a.role === 'PM').has(Joi.object({
+      employee: Joi.string().min(3).max(50).required(),
+      role: Joi.string().valid('PM').required(),
+      rate: Joi.number().required(),
+    })),
   });
 
   const validation = projectValidation.validate(req.body);
