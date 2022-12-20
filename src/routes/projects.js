@@ -16,7 +16,7 @@ router
   )
   .put(
     '/:id',
-    checkAuth(['SUPER_ADMIN', 'ADMIN']),
+    checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']),
     projectsValidations.validateCreation,
     projectsControllers.updateProject,
   )
