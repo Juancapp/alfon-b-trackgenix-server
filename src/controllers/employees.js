@@ -180,6 +180,66 @@ const updateEmployee = async (req, res) => {
   }
 };
 
+const updateEmployeeMyProfile = async (req, res) => {
+  const employeeId = req.params.id;
+  const { token } = req.headers;
+
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(employeeId)) {
+    return res.status(400).json({
+      message: `Employee id ${employeeId} not valid`,
+      data: undefined,
+      error: true,
+    });
+  }
+
+  const decodedToken = await firebase.auth().verifyIdToken(token);
+  // eslint-disable-next-line dot-notation
+  const decodedTokenId = decodedToken.user_id;
+  const decodedTokenRole = decodedToken.role;
+  const foundEmployeeById = await Employees.findById(employeeId);
+  // eslint-disable-next-line no-underscore-dangle
+  if (decodedTokenRole === 'EMPLOYEE' && foundEmployeeById.firebaseUid !== decodedTokenId) {
+    return res.status(400).json({
+      message: 'You can only edit your own employee',
+      data: undefined,
+      error: true,
+    });
+  }
+
+  try {
+    const { id } = req.params;
+    const updatedEmployee = await Employees.findByIdAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true },
+    );
+
+    if (updatedEmployee) {
+      await firebase.auth().updateUser(updatedEmployee.firebaseUid, {
+        email: req.body.email,
+        password: req.body.password,
+      });
+
+      return res.status(200).json({
+        message: `Employee with id ${id} updated successfully`,
+        data: updatedEmployee,
+        error: false,
+      });
+    }
+    return res.status(404).json({
+      message: `Employee with id ${id} not found`,
+      data: undefined,
+      error: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Server error: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 const deleteEmployee = async (req, res) => {
   const employeeId = req.params.id;
 
@@ -227,5 +287,6 @@ export default {
   createEmployee,
   getEmployeeByFireBaseUid,
   updateEmployee,
+  updateEmployeeMyProfile,
   deleteEmployee,
 };

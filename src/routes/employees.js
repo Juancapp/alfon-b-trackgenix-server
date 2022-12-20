@@ -16,10 +16,16 @@ router
   )
   .put(
     '/:id',
-    checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']),
+    checkAuth(['SUPER_ADMIN', 'ADMIN']),
     validateUpdateEmployee,
     employeeControllers.updateEmployee,
   )
-  .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), employeeControllers.deleteEmployee);
+  .put(
+    '/profile/:id',
+    checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']),
+    validateUpdateEmployee,
+    employeeControllers.updateEmployeeMyProfile,
+  )
+  .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN']), employeeControllers.deleteEmployee);
 
 export default router;
