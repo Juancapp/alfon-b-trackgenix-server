@@ -259,8 +259,8 @@ const deleteEmployee = async (req, res) => {
       const deletedEmployee = await Employees.findByIdAndDelete(id);
 
       if (deletedEmployee) {
-        return res.status(200).json({
-          message: 'Employee deleted succesfully',
+        return res.status(204).json({
+          message: 'Employee deleted successfully',
           data: deletedEmployee,
           error: false,
         });
