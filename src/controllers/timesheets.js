@@ -137,7 +137,7 @@ const deleteTimesheets = async (req, res) => {
     const { id } = req.params;
     const deletedTimesheet = await Timesheets.findByIdAndDelete(id);
     if (deletedTimesheet) {
-      return res.status(200).json({
+      return res.status(204).json({
         message: `Timesheet with id ${id} successfully deleted`,
         data: deletedTimesheet,
         error: false,
