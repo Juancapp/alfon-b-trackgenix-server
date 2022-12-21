@@ -192,6 +192,76 @@ const updateAdmins = async (req, res) => {
   }
 };
 
+const updateAdminsMyProfile = async (req, res) => {
+  const { id } = req.params;
+  const { token } = req.headers;
+
+  if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).json({
+      message: `Admin with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  }
+
+  const decodedToken = await firebase.auth().verifyIdToken(token);
+  const decodedTokenId = decodedToken.user_id;
+  const decodedTokenRole = decodedToken.role;
+  const foundAdminById = await Admins.findById(id);
+
+  if (decodedTokenRole === 'ADMIN' && foundAdminById.firebaseUid !== decodedTokenId) {
+    return res.status(400).json({
+      message: 'You can only edit your own admin',
+      data: undefined,
+      error: true,
+    });
+  }
+
+  try {
+    const updatedAdmin = await Admins.findByIdAndUpdate(
+      { _id: req.params.id },
+      { ...req.body },
+      { new: true },
+    );
+
+    if (updatedAdmin) {
+      if (updatedAdmin.active === false) {
+        await firebase.auth().updateUser(updatedAdmin.firebaseUid, {
+          email: req.body.email,
+          password: req.body.password,
+          disabled: true,
+        });
+        return res.status(200).json({
+          message: 'Admin deleted',
+          data: updatedAdmin,
+          error: true,
+        });
+      }
+      await firebase.auth().updateUser(updatedAdmin.firebaseUid, {
+        email: req.body.email,
+        password: req.body.password,
+      });
+      return res.status(200).json({
+        message: `Admin with id ${req.params.id} updated successfully`,
+        data: updatedAdmin,
+        error: false,
+      });
+    }
+
+    return res.status(404).json({
+      message: `Admin with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: `Server Error ${err}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 const deleteAdmins = async (req, res) => {
   if (req.params.id && !mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(400).json({
@@ -231,5 +301,6 @@ export default {
   getAdminByFireBaseUid,
   createAdmin,
   updateAdmins,
+  updateAdminsMyProfile,
   deleteAdmins,
 };
