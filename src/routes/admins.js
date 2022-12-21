@@ -17,9 +17,16 @@ router
   )
   .put(
     '/:id',
-    checkAuth(['SUPER_ADMIN']),
+    checkAuth(['SUPER_ADMIN', 'ADMIN']),
     validateUpdateUser,
     adminsControllers.updateAdmins,
+  )
+
+  .put(
+    '/profile/:id',
+    checkAuth(['SUPER_ADMIN', 'ADMIN']),
+    validateUpdateUser,
+    adminsControllers.updateAdminsMyProfile,
   )
   .delete('/:id', checkAuth(['SUPER_ADMIN']), adminsControllers.deleteAdmins);
 
