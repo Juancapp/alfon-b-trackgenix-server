@@ -2,9 +2,9 @@ import Joi from 'joi';
 
 export const validateEmployees = (req, res, next) => {
   const employeeValidation = Joi.object({
-    name: Joi.string().pattern(/^[A-Za-z]+$/).min(3).max(50)
+    name: Joi.string().pattern(/^([^0-9]*)$/i).min(3).max(50)
       .required(),
-    lastName: Joi.string().pattern(/^[A-Za-z]+$/).min(3).max(50)
+    lastName: Joi.string().pattern(/^([^0-9]*)$/i).min(3).max(50)
       .required(),
     phone: Joi.number().min(10000000).max(999999999999999).required(),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
@@ -26,9 +26,9 @@ export const validateEmployees = (req, res, next) => {
 
 export const validateUpdateEmployee = (req, res, next) => {
   const employeeValidation = Joi.object({
-    name: Joi.string().pattern(/^[A-Za-z]+$/).min(3).max(50)
+    name: Joi.string().pattern(/^([^0-9]*)$/i).min(3).max(50)
       .required(),
-    lastName: Joi.string().pattern(/^[A-Za-z]+$/).min(3).max(50)
+    lastName: Joi.string().pattern(/^([^0-9]*)$/i).min(3).max(50)
       .required(),
     phone: Joi.number().min(10000000).max(999999999999999).required(),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
